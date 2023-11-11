@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { faCheck, faTimes, faInfoCircle, faFontAwesome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './RootRegister.css'
-import { ref, set } from 'firebase/database';
+import { ref, set, push, child } from 'firebase/database';
 import { db } from "./firebase";
 
 
@@ -60,16 +60,17 @@ const RootRegister = () => {
         }
     
         try {
-            const usersRef = ref(db, 'admin'); // Replace 'users' with your desired database path
-    
+            const usersRef = ref(db,'Admin'); // Replace 'users' with your desired database path
+
             // Create a new user entry with the username and password
             const newUser = {
                 username: user,
                 password: password,
             };
-    
+            
+            const newChildRef = push(usersRef);
             // Push the new user data to the database
-            await set(ref(usersRef), newUser);
+            await set(newChildRef, newUser);
     
             setSuccess(true);
         } catch (error) {
