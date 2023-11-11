@@ -2,9 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { faCheck, faTimes, faInfoCircle, faFontAwesome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './RootRegister.css'
-import { ref, set, push, child } from 'firebase/database';
-import { db } from "./firebase";
-
+import { registerUserInFirebase } from "./firebase";
 
 //Allowed Characters
 //Password: Must consists 1 lowercase, 1 uppercase, 1 numerical, 1 special character
@@ -58,20 +56,9 @@ const RootRegister = () => {
             setErrMsg('Please fill out the form correctly.');
             return;
         }
-    
-        try {
-            const usersRef = ref(db,'Admin'); // Replace 'users' with your desired database path
 
-            // Create a new user entry with the username and password
-            const newUser = {
-                username: user,
-                password: password,
-            };
-            
-            const newChildRef = push(usersRef);
-            // Push the new user data to the database
-            await set(newChildRef, newUser);
-    
+        try {
+            await registerUserInFirebase(user, password); //Register user into DB
             setSuccess(true);
         } catch (error) {
             console.error('Firebase Error:', error);
@@ -84,7 +71,7 @@ const RootRegister = () => {
             {
                 success ? (
                     <section>
-                        <h1>{user} sign up success!</h1>
+                        <h1>{user} signed up successfully!</h1>
                     </section>
                 ) : (
                     <section>

@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import AuthContext from './context/Authenticator';
-import { db } from './firebase';
-import { ref, query, orderByChild, equalTo, onValue } from 'firebase/database';
+import { authenticateUser } from './firebase';
 
 const Login = () => {
     const { setAuth } = useContext(AuthContext);
@@ -23,38 +22,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        try {
-            const usersRef = ref(db, 'Admin');
-            const userQuery = query(usersRef, orderByChild('username'), equalTo(user));
-
-            onValue(userQuery, (snapshot) => {
-                if (snapshot.exists()) {
-                    const userDataValue = snapshot.val();
-                    
-                    for (const adminKey in userDataValue)  {
-                        const adminData = userDataValue[adminKey];
-
-                        if (adminData.username === user && adminData.password === password) {
-                            console.log('Password matched');
-                            setAuth({ user, password });
-                            setSuccess(true);
-                        }
-                    }
-                        console.log('Incorrect password');
-                        setErrMsg('Incorrect password');
-                        errRef.current.focus();
-                } else {
-                    console.log('User not found');
-                    setErrMsg('User not found');
-                    errRef.current.focus();
-                }
-            });
-        } catch (err) {
-            console.error('Firebase Error:', err);
-            setErrMsg('An error occurred: ' + err.message);
-            errRef.current.focus();
-        }
+        authenticateUser(user, password, setAuth, setSuccess, setErrMsg, errRef); //Authentication Backend
     };
 
     return (

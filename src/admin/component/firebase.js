@@ -1,6 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getDatabase } from 'firebase/database';
+import { getDatabase, ref, push, set, query, orderByChild, equalTo, onValue } from 'firebase/database';
+import { hashValue } from './HashPassword';
+import { compareHashValue } from './HashPassword';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAUv4mDaTr3XY5qnLT08hx8eECGtsP3beE",
@@ -16,4 +18,57 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getDatabase(app);
 
-export { auth, db };
+//RootRegister.js query
+const registerUserInFirebase = async (username, password) => {
+  try {
+    const usersRef = ref(db, 'Admin');
+    const hashedPass = await hashValue(password);
+    const newUser = {
+      username: username,
+      password: hashedPass,
+    };
+    const newChildRef = push(usersRef);
+    await set(newChildRef, newUser);
+    return true; // Success
+  } catch (error) {
+    console.error('Firebase Error:', error);
+    throw new Error('An error occurred: ' + error.message);
+  }
+}
+
+//Login.js authenticate user
+const authenticateUser = async (user, password, setAuth, setSuccess, setErrMsg, errRef) => {
+  try {
+    const usersRef = ref(db, 'Admin');
+    const userQuery = query(usersRef, orderByChild('username'), equalTo(user));
+
+    onValue(userQuery, (snapshot) => {
+      if (snapshot.exists()) {
+        const userDataValue = snapshot.val();
+
+        for (const adminKey in userDataValue) {
+          const adminData = userDataValue[adminKey];
+
+          if (adminData.username === user && compareHashValue(password, adminData.password)) {
+            console.log('Password matched');
+            setAuth({ user, password });
+            setSuccess(true);
+          }
+        }
+        console.log('Incorrect password');
+        setErrMsg('Incorrect password');
+        errRef.current.focus();
+      } else {
+        console.log('User not found');
+        setErrMsg('User not found');
+        errRef.current.focus();
+      }
+    });
+  } catch (err) {
+    console.error('Firebase Error:', err);
+    setErrMsg('An error occurred: ' + err.message);
+    errRef.current.focus();
+  }
+}
+
+export { auth, db, registerUserInFirebase, authenticateUser };
