@@ -1,0 +1,61 @@
+/* LoginForm.css */
+
+/* Style the container for the login form */
+.login-form-container {
+  text-align: center;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  width: 300px;
+  opacity: 0.95;
+  margin: 0 auto;
+  margin-top: 10%;
+}
+
+/* Style the h1 element within the login form */
+.login-form-container h1 {
+  color: #007bff;
+}
+
+/* Style the input fields within the form */
+.login-form-container input {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* Style the login button */
+.login-form-container button {
+  width: 100%;
+  background-color: #82022b;
+  color: #fff;
+  margin: 10px 0;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 15px;
+}
+
+/* Change the button color on hover */
+.login-form-container button:hover {
+  background-color: #5c001e;
+}
+
+/* Style the forgot password link */
+.login-form-container #forgotPassword {
+  display: block;
+  margin-top: 20px;
+  cursor: pointer;
+  color: black;
+  text-decoration: none;
+}
+
+/* Change the link color on hover */
+.login-form-container #forgotPassword:hover {
+  color: red;
+  text-decoration: underline;
+}
