@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import AuthContext from './context/Authenticator';
 import { authenticateUser } from './firebase';
+import './Login.css';
 
 const Login = () => {
     const { setAuth } = useContext(AuthContext);
@@ -45,9 +46,9 @@ const Login = () => {
                         >
                             {errMsg}
                         </p>
-                        <h1>Sign In</h1>
                         <form onSubmit={handleSubmit}>
-                            <label htmlFor='username'>UserName:</label>
+                            <h1>Login</h1>
+                            <label htmlFor='username'>Username:</label>
                             <input
                                 type='text'
                                 id='username'
@@ -65,9 +66,9 @@ const Login = () => {
                                 value={password}
                                 required
                             ></input>
-                            <button>Sign In</button>
+                            <button>Login</button>
+                            <a href='/'>Forgot Password</a>
                         </form>
-                        <a href='/'>Forgot Password</a>
                     </section>
                 )
             }
