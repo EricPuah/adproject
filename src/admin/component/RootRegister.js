@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { faCheck, faTimes, faInfoCircle, faFontAwesome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './RootRegister.css'
-import { registerUserInFirebase } from "./firebase";
+import { registerUserInFirebase, checkRepeatedUser } from "./firebase";
 
 //Allowed Characters
 //Password: Must consists 1 lowercase, 1 uppercase, 1 numerical, 1 special character
@@ -16,6 +16,7 @@ const RootRegister = () => {
     const [user, setUser] = useState('');
     const [validName, setValidName] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
+    const [usernameExists, setUsernameExists] = useState(false);
 
     const [password, setPassword] = useState('');
     const [validPassword, setValidPassword] = useState(false);
@@ -34,8 +35,20 @@ const RootRegister = () => {
 
     //Validate username validty
     useEffect(() => {
-        const result = USER_REGEX.test(user);
-        setValidName(result);
+        const checkUserAvailability = async () => {
+            const result = USER_REGEX.test(user);
+            setValidName(result);
+
+            if (user && result) {
+                try {
+                    const isUsernameAvailable = await checkRepeatedUser(user);
+                    setUsernameExists(isUsernameAvailable);
+                } catch (error) {
+                    console.error('Error checking username availability:', error);
+                }
+            }
+        };
+        checkUserAvailability();
     }, [user]);
 
     //Validate password match
@@ -82,12 +95,16 @@ const RootRegister = () => {
                             {/* Username Field & Validation Output */}
                             <label htmlFor="username">
                                 Username:
-                                <span className={validName ? "valid" : "hide"}>
-                                    <FontAwesomeIcon icon={faCheck} />
-                                </span>
-                                <span className={validName || !user ? "hide" : "invalid"}>
-                                    <FontAwesomeIcon icon={faTimes} />
-                                </span>
+                                {user && (
+                                    <>
+                                        <span className={(validName && !usernameExists) ? "hide" : "invalid"}>
+                                            <FontAwesomeIcon icon={faTimes} />
+                                        </span>
+                                        <span className={validName && !usernameExists ? "valid" : "hide"}>
+                                            <FontAwesomeIcon icon={faCheck} />
+                                        </span>
+                                    </>
+                                )}
                             </label>
                             <input
                                 type="text"
@@ -105,8 +122,13 @@ const RootRegister = () => {
                                 <FontAwesomeIcon icon={faInfoCircle} />
                                 4 to 24 characters. <br />
                                 Must begin with a letter. <br />
-                                Letters, numbers, underscores, hyphens allowed.
+                                Letters, numbers, underscores, hyphens allowed. <br />
                             </p>
+                            <p id='uidnote' className={(user && usernameExists) ? "instructions" : "offscreen"}>
+                                <FontAwesomeIcon icon={faTimes} className='invalid' />
+                                The username has already been taken.
+                            </p>
+
                             {/* Password Field & Validation Output*/}
                             <label htmlFor="password">
                                 Password:
@@ -151,7 +173,7 @@ const RootRegister = () => {
                                 Must match the first password input field.
                             </p>
                             {/* Sign Up Button */}
-                            <button >Sign Up</button>
+                            <button disabled={!validMatch || !validName || !validPassword || usernameExists}>Sign Up</button>
                         </form>
                     </section>
                 )}

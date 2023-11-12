@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getDatabase, ref, push, set, query, orderByChild, equalTo, onValue } from 'firebase/database';
+import { getDatabase, ref, push, set, query, orderByChild, equalTo, onValue, get, child } from 'firebase/database';
 import { hashValue } from './HashPassword';
 import { compareHashValue } from './HashPassword';
 
@@ -35,6 +35,24 @@ const registerUserInFirebase = async (username, password) => {
     throw new Error('An error occurred: ' + error.message);
   }
 }
+
+const checkRepeatedUser = async (username) => {
+  try {
+    const usersRef = ref(db, 'Admin');
+    const snapshot = await get(usersRef);
+
+    if (snapshot.exists()) {
+      const userData = snapshot.val();
+      // Check if the exact username exists
+      return Object.values(userData).some((user) => user.username === username); // True if existed
+
+    }
+    return false; // No users in the database
+  } catch (error) {
+    console.error('Firebase Error:', error);
+    throw new Error('An error occurred: ' + error.message);
+  }
+};
 
 //Login.js authenticate user
 const authenticateUser = async (user, password, setAuth, setSuccess, setErrMsg, errRef) => {
@@ -71,4 +89,4 @@ const authenticateUser = async (user, password, setAuth, setSuccess, setErrMsg, 
   }
 }
 
-export { auth, db, registerUserInFirebase, authenticateUser };
+export { auth, db, registerUserInFirebase, checkRepeatedUser, authenticateUser };
