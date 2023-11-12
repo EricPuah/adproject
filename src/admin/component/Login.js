@@ -47,7 +47,7 @@ const Login = () => {
                             {errMsg}
                         </p>
                         <form onSubmit={handleSubmit}>
-                            <h1>Login</h1>
+                            <img src="https://i.imgur.com/mTwMfDE.png" alt='UTMFleet Logo'></img>
                             <label htmlFor='username'>Username:</label>
                             <input
                                 type='text'

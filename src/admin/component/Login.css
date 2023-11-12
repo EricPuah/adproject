@@ -18,6 +18,12 @@ form {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
+img {
+  width: 200px;
+  height: 150px;
+  margin-left: 100px;
+}
+
 h1 {
   text-align: center;
 }
