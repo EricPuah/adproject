@@ -1,61 +1,76 @@
-/* LoginForm.css */
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: url('https://dvcdev.utm.my/wp-content/uploads/sites/22/2018/11/UTMimage13.jpg');
+  background-size: cover;
+  background-position: center;
+}
 
-/* Style the container for the login form */
-.login-form-container {
-  text-align: center;
-  background-color: #fff;
-  border-radius: 5px;
+form {
+  max-width: 400px;
+  width: 100%;
   padding: 20px;
-  width: 300px;
-  opacity: 0.95;
-  margin: 0 auto;
-  margin-top: 10%;
+  background-color: rgba(255, 255, 255, 0.8); /* Add some transparency to the background */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Style the h1 element within the login form */
-.login-form-container h1 {
-  color: #007bff;
+h1 {
+  text-align: center;
 }
 
-/* Style the input fields within the form */
-.login-form-container input {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-/* Style the login button */
-.login-form-container button {
-  width: 100%;
-  background-color: #82022b;
-  color: #fff;
-  margin: 10px 0;
-  padding: 10px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  font-size: 15px;
-}
-
-/* Change the button color on hover */
-.login-form-container button:hover {
-  background-color: #5c001e;
-}
-
-/* Style the forgot password link */
-.login-form-container #forgotPassword {
+label {
   display: block;
-  margin-top: 20px;
-  cursor: pointer;
-  color: black;
-  text-decoration: none;
+  margin-bottom: 8px;
 }
 
-/* Change the link color on hover */
-.login-form-container #forgotPassword:hover {
-  color: red;
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  color:white;
+  font-size: medium;
+  font-weight: 200;
+  width: 400px;
+  background-color:#82022b;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 16px; /* Add margin to separate button from inputs */
+}
+
+button:hover {
+  background-color:#5c001e;
+}
+
+a {
+  text-decoration: none;
+  color: #007bff;
+  margin-top: 16px;
+  display: block;
+  text-align: center;
+}
+
+a:hover {
   text-decoration: underline;
+}
+
+.errmsg {
+  color: #ff0000;
+  margin-bottom: 16px;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
 }
