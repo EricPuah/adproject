@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect, useContext } from 'react';
+import { Navigate } from 'react-router-dom';
 import AuthContext from './context/Authenticator';
 import { authenticateUser } from './firebase';
 import styles from './Login.module.css'
@@ -31,11 +32,7 @@ const Login = () => {
             {
                 success ? (
                     <section className={styles.section} >
-                        <h1 className={styles.h1}>You are logged in!</h1>
-                        <br />
-                        <p>
-                            <a href='/'>Go to Home</a>
-                        </p>
+                        <Navigate to="/private" />
                     </section>
                 ) : (
                     <section className={styles.section}>

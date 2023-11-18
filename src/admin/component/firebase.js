@@ -69,10 +69,12 @@ const authenticateUser = async (user, password, setAuth, setSuccess, setErrMsg, 
 
           if (adminData.username === user && compareHashValue(password, adminData.password)) {
             console.log('Password matched');
+            localStorage.setItem('adminData', JSON.stringify(adminData));
             setAuth({ user, password });
             setSuccess(true);
           }
         }
+        
         console.log('Incorrect password');
         setErrMsg('Incorrect password');
         errRef.current.focus();

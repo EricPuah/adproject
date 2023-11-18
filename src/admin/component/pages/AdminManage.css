@@ -1,0 +1,64 @@
+/* AdminManage.css */
+
+/* Reset margin and padding for the body and html elements */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+/* Apply basic styling to the table */
+.admin-manage-list-container {
+  width: 70%;
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+
+/* Style table header */
+.admin-manage-list-title {
+  background-color: #007BFF;
+  color: #fff;
+}
+
+/* Style table cells */
+.admin-manage-list-item {
+  border: 1px solid #ddd;
+  padding: 15px; /* Increased padding for better spacing */
+  text-align: left;
+}
+
+/* Style alternate rows for better readability */
+.admin-manage-list tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Hover effect on table rows */
+.admin-manage-list tr:hover {
+  background-color: #cce5ff;
+}
+
+/* Additional styles for the box */
+.admin-manage-box {
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+  max-width: 800px;
+  margin: 0px auto;
+}
+
+/* Additional styles for buttons */
+.admin-manage-button {
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 20px;
+  cursor: pointer;
+}
+
+/* Additional styles for headings */
+.admin-manage-heading {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}

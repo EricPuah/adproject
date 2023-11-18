@@ -1,0 +1,45 @@
+/* VerticalNavbar.css */
+
+/* Apply styles to the entire page */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  .vertical-navbar {
+    width: 200px; /* Set the desired width for your vertical navbar */
+    height: 100%; /* Fill the entire height of the page */
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    position: fixed; /* Fix the navbar's position */
+    overflow-y: auto; /* Add a scrollbar if the content overflows the navbar */
+  
+    /* Adjust the font size */
+    font-size: 16px; /* Change the value to set your desired font size */
+  }
+  
+  .navbar-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px;
+  }
+  
+  .navbar-list li {
+    margin-bottom: 30px;
+  }
+  
+  .navbar-list li a {
+    text-decoration: none;
+    color: #fff;
+  
+    /* Adjust the font size for links */
+    font-size: 20px; /* Change the value to set your desired font size for links */
+  }
+  
+  .navbar-list li a:hover {
+    color: #007bff;
+  }
+  
