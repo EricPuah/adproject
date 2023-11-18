@@ -1,4 +1,4 @@
-section {
+.section {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,7 +9,7 @@ section {
   background-position: center;
 }
 
-form {
+.form {
   max-width: 400px;
   width: 100%;
   padding: 20px;
@@ -18,22 +18,22 @@ form {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-img {
+.img {
   width: 200px;
   height: 150px;
   margin-left: 100px;
 }
 
-h1 {
+.h1 {
   text-align: center;
 }
 
-label {
+.label {
   display: block;
   margin-bottom: 8px;
 }
 
-input {
+.input {
   width: 100%;
   padding: 8px;
   margin-bottom: 16px;
@@ -42,7 +42,7 @@ input {
   box-sizing: border-box;
 }
 
-button {
+.button {
   color:white;
   font-size: medium;
   font-weight: 200;
@@ -55,11 +55,11 @@ button {
   margin-top: 16px; /* Add margin to separate button from inputs */
 }
 
-button:hover {
+.button:hover {
   background-color:#5c001e;
 }
 
-a {
+.a {
   text-decoration: none;
   color: #007bff;
   margin-top: 16px;
@@ -67,7 +67,7 @@ a {
   text-align: center;
 }
 
-a:hover {
+.a:hover {
   text-decoration: underline;
 }
 

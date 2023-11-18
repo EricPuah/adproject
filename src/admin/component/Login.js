@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import AuthContext from './context/Authenticator';
 import { authenticateUser } from './firebase';
-import './Login.css';
+import styles from './Login.module.css'
 
 const Login = () => {
     const { setAuth } = useContext(AuthContext);
@@ -30,26 +30,26 @@ const Login = () => {
         <>
             {
                 success ? (
-                    <section>
-                        <h1>You are logged in!</h1>
+                    <section className={styles.section} >
+                        <h1 className={styles.h1}>You are logged in!</h1>
                         <br />
                         <p>
                             <a href='/'>Go to Home</a>
                         </p>
                     </section>
                 ) : (
-                    <section>
+                    <section className={styles.section}>
                         <p
                             ref={errRef}
-                            className={errMsg ? 'errmsg' : 'offscreen'}
+                            className={errMsg ? styles.errMsg : styles.offscreen}
                             aria-live='assertive'
                         >
                             {errMsg}
                         </p>
-                        <form onSubmit={handleSubmit}>
-                            <img src="https://i.imgur.com/mTwMfDE.png" alt='UTMFleet Logo'></img>
-                            <label htmlFor='username'>Username:</label>
-                            <input
+                        <form className={styles.form} onSubmit={handleSubmit}>
+                            <img className={styles.img} src="https://i.imgur.com/mTwMfDE.png" alt='UTMFleet Logo'></img>
+                            <label className={styles.label} htmlFor='username'>Username:</label>
+                            <input className={styles.input}
                                 type='text'
                                 id='username'
                                 ref={userRef}
@@ -58,16 +58,16 @@ const Login = () => {
                                 value={user}
                                 required
                             ></input>
-                            <label htmlFor='password'>Password:</label>
-                            <input
+                            <label className={styles.label} htmlFor='password'>Password:</label>
+                            <input className={styles.input}
                                 type='password'
                                 id='password'
                                 onChange={(e) => setPassword(e.target.value)}
                                 value={password}
                                 required
                             ></input>
-                            <button>Login</button>
-                            <a href='/'>Forgot Password</a>
+                            <button className={styles.button}>Login</button>
+                            <a className={styles.a}href='/'>Forgot Password</a>
                         </form>
                     </section>
                 )
