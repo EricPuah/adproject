@@ -36,13 +36,6 @@ const Login = () => {
                     </section>
                 ) : (
                     <section className={styles.section}>
-                        <p
-                            ref={errRef}
-                            className={errMsg ? styles.errMsg : styles.offscreen}
-                            aria-live='assertive'
-                        >
-                            {errMsg}
-                        </p>
                         <form className={styles.form} onSubmit={handleSubmit}>
                             <img className={styles.img} src="https://i.imgur.com/mTwMfDE.png" alt='UTMFleet Logo'></img>
                             <label className={styles.label} htmlFor='username'>Username:</label>
@@ -64,7 +57,14 @@ const Login = () => {
                                 required
                             ></input>
                             <button className={styles.button}>Login</button>
-                            <a className={styles.a}href='/'>Forgot Password</a>
+                            <a className={styles.a} href='/'>Forgot Password</a>
+                            <p
+                                ref={errRef}
+                                className={errMsg ? styles.errMsg : styles.offscreen}
+                                aria-live='assertive'
+                            >
+                                {errMsg}
+                            </p>
                         </form>
                     </section>
                 )
