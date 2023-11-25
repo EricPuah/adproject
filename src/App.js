@@ -7,6 +7,7 @@ import AdminSettings from './admin/component/pages/AdminSettings';
 import AdminProfile from './admin/component/pages/AdminProfile';
 import AdminManage from './admin/component/pages/AdminManage';
 import AdminProfileEdit from './admin/component/pages/AdminProfileEdit';
+import AddNewAdmin from './admin/component/RootRegister';
 
 
 const App = () => {
@@ -37,6 +38,7 @@ const App = () => {
         <Route path='/AdminManage' element={<AdminManage />} />
         <Route path='/AdminSettings' element={<AdminSettings />} />
         <Route path='/AdminProfileEdit' element={<AdminProfileEdit />}></Route>
+        <Route path='/AddNewAdmin' element={<AddNewAdmin />}></Route>
       </Routes>
     </Router>
   );

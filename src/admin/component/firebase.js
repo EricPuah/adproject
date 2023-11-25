@@ -71,6 +71,7 @@ const authenticateUser = async (user, password, setAuth, setSuccess, setErrMsg, 
         if (adminData.username === user && await compare(password, adminData.password)) { 
           passwordMatched = true; 
           console.log('Password matched'); 
+          localStorage.setItem('adminData', JSON.stringify(adminData));
           setAuth({ user, password }); 
           break; 
         } 

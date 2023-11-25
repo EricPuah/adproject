@@ -12,6 +12,7 @@ class AdminNavbar extends Component {
                     <li><Link to='/AdminManage'>Manage Admin</Link></li>
                     <li><Link to='/AdminProfile'>Profile</Link></li>
                     <li><Link to='/AdminSettings'>Settings</Link></li>
+                    <li><Link to='/AddNewAdmin'>Add New Admin</Link></li>
                 </ul>
             </div>
         )
