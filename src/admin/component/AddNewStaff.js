@@ -15,7 +15,7 @@ const AddNewStaff = () => {
     const errRef = useRef();
 
     const [user, setUser] = useState('');
-    const [validName, setValidName] = useState(false);AddDriverInFirebase
+    const [validName, setValidName] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
     const [usernameExists, setUsernameExists] = useState(false);
 
