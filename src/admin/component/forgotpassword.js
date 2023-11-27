@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { db } from './firebase'; // Import your Firebase database module
 import { getDatabase, ref, get, update } from 'firebase/database';
 import emailjs from 'emailjs-com';
+import styles from './forgotpassword.module.css';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -33,7 +34,7 @@ const ForgotPassword = () => {
         }
       }
   
-      setMessage('Email not found in the database.');
+      setMessage('Invalid Email');
     } catch (error) {
       setMessage(`Error: ${error.message}`);
     }
@@ -70,19 +71,19 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div>
-      <h2>Forgot Password</h2>
-      <p>Please enter your email to receive a temporary password.</p>
+    <div className={styles.container}>
+      <h2 className={styles.h2}>Forgot Password</h2>
+      <p className={styles.p}>Please enter your email to receive a temporary password.</p>
 
-      <label>Email:</label>
-      <input
+      <label className={styles.label}>Email:</label>
+      <input className= {styles.input}
         type="email" // Use type="email" for email input
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter your email"
       />
 
-      <button onClick={handleResetPassword}>Reset Password</button>
+      <button className={styles.button} onClick={handleResetPassword}>Reset Password</button>
 
       {message && <p>{message}</p>}
     </div>

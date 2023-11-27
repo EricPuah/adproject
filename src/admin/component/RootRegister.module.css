@@ -7,8 +7,10 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background-color: #3498db; /* Blue background for the section */
-  margin: auto; /* Center the section horizontally */
+  background-color: #3498db;
+  /* Blue background for the section */
+  margin: auto;
+  /* Center the section horizontally */
 }
 
 .form {
@@ -17,54 +19,94 @@
   justify-content: space-evenly;
   flex-grow: 1;
   padding: 20px;
-  background-color: #ecf0f1; /* Light gray background for the form */
+  background-color: #ecf0f1;
+  /* Light gray background for the form */
 }
 
 .a,
 .a:visited {
-  color: #2c3e50; /* Dark gray color for links */
+  color: #2c3e50;
+  /* Dark gray color for links */
 }
 
 .input[type="text"],
+.input[type="date"],
+.input[type="tel"],
+.input[type="email"],
 .input[type="password"],
-.button,
-.textarea {
+.option .textarea {
   font-family: 'Nunito', sans-serif;
   font-size: 22px;
   padding: 0.25rem;
   border-radius: 0.5rem;
-  background-color: #fff; /* White background for inputs */
-  border: 1px solid #bdc3c7; /* Light gray border */
-  color: #2c3e50; /* Dark gray text color for inputs */
+  background-color: #fff;
+  /* White background for inputs */
+  border: 1px solid #bdc3c7;
+  /* Light gray border */
+  color: #2c3e50;
+  /* Dark gray text color for inputs */
 }
 
-.label,
-.button {
+.label {
   font-family: 'Nunito', sans-serif;
   font-size: 22px;
-  color: #2c3e50; /* Dark gray color for labels and buttons */
+  color: #2c3e50;
+  /* Dark gray color for labels and buttons */
   margin-top: 1rem;
 }
 
 .button {
-  padding: 0.5rem;
-  background-color: #3498db; /* Blue background for buttons */
-  color: #fff; /* White text color for buttons */
+  appearance: button;
+  backface-visibility: hidden;
+  background-color: #405cf5;
+  border-radius: 6px;
+  border-width: 0;
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .1) 0 2px 5px 0, rgba(0, 0, 0, .07) 0 1px 1px 0;
+  box-sizing: border-box;
+  color: #fff;
   cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 22px;
+  height: 44px;
+  line-height: 1.15;
+  margin: 12px 0 0;
+  outline: none;
+  overflow: hidden;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transform: translateZ(0);
+  transition: all .2s, box-shadow .08s ease-in;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
 }
+
+.button:disabled {
+  cursor: default;
+}
+
+.button:hover {
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
+}
+
 
 .instructions {
   font-size: 0.75rem;
   border-radius: 0.5rem;
-  background: #34495e; /* Darker blue background for instructions */
-  color: #ecf0f1; /* Light text color for instructions */
+  background: #34495e;
+  /* Darker blue background for instructions */
+  color: #ecf0f1;
+  /* Light text color for instructions */
   padding: 0.25rem;
   position: relative;
   bottom: -10px;
   font-family: 'Nunito', sans-serif;
 }
 
-.instructions > svg {
+.instructions>svg {
   margin-right: 0.25rem;
 }
 
@@ -88,8 +130,10 @@
 }
 
 .errmsg {
-  background-color: #e74c3c; /* Red background for error messages */
-  color: #fff; /* White text color for error messages */
+  background-color: #e74c3c;
+  /* Red background for error messages */
+  color: #fff;
+  /* White text color for error messages */
   font-weight: bold;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
