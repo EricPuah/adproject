@@ -1,0 +1,14 @@
+.LocationTracker {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  form {
+    margin-top: 20px;
+  }
+  
+  Map {
+    height: 400px;
+    margin-top: 20px;
+    width: 400px;
+  }
