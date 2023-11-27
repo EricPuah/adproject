@@ -30,7 +30,7 @@ const App = () => {
         {/* Login route */}
         <Route path="/login" element={<Login />} />
 
-        <Route path="/resetpassowrd" element={<ResetPassword/>} />
+        <Route path="/resetpassword" element={<ResetPassword/>} />
         
         
         {/* Private route */}

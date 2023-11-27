@@ -57,7 +57,7 @@ const Login = () => {
                                 required
                             ></input>
                             <button className={styles.button}>Login</button>
-                            <a className={styles.a} href='/resetpassowrd'>Forgot Password</a>
+                            <a className={styles.a} href='/resetpassword'>Forgot Password</a>
                             <p
                                 ref={errRef}
                                 className={errMsg ? styles.errMsg : styles.offscreen}
