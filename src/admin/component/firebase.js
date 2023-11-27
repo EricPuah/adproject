@@ -25,6 +25,7 @@ const registerUserInFirebase = async (username, password) => {
     const newUser = {
       username: username,
       password: hashedPass,
+      isRootAdmin: false,
     };
     const newChildRef = push(usersRef);
     await set(newChildRef, newUser);
