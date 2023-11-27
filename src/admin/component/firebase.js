@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getDatabase, ref, push, set, query, orderByChild, equalTo, onValue, get, child } from 'firebase/database';
+import { serverTimestamp, getDatabase, ref, push, set, query, orderByChild, equalTo, onValue, get, child } from 'firebase/database';
 import { hash, compare } from 'bcryptjs'
 
 const firebaseConfig = {
@@ -16,6 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getDatabase(app);
+
 
 //RootRegister.js query (OLD)
 const registerUserInFirebase = async (username, password) => {
@@ -55,6 +56,7 @@ const AddDriverInFirebase = async (username, email, phone, staffID, role, expiry
       staffID: staffID,
       role: role,
       expiry: expiry,
+      dateOfCreation: new Date().toLocaleDateString('en-GB'),
     };
     const newChildRef = push(usersRef);
     await set(newChildRef, newUser);
@@ -83,6 +85,7 @@ const AddAdminInFirebase = async (username, email, phone, staffID, role) => {
       phone: phone,
       staffID: staffID,
       role: role,
+      dateOfCreation: new Date().toLocaleDateString('en-GB'),
     };
     const newChildRef = push(usersRef);
     await set(newChildRef, newUser);
