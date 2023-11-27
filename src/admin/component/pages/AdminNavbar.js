@@ -1,18 +1,26 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-import './AdminNavBar.css'
+import styles from './AdminNavBar.module.css'
+import { AiOutlineDashboard } from "react-icons/ai";
+import { TbMapSearch } from "react-icons/tb";
+import { CgProfile } from "react-icons/cg";
+import { MdManageAccounts } from "react-icons/md";
+import { IoMdLogOut } from "react-icons/io";
 
 class AdminNavbar extends Component {
+    handleLogout = () => {
+        localStorage.removeItem('adminData');
+    }
+
     render() {
         return (
-            <div className='vertical-navbar'>
-                <ul className='navbar-list'>
-                    <li><Link to='/AdminDashBoard'>Dashboard</Link></li>
-                    <li><Link to='/AdminMaps'>Maps</Link></li>
-                    <li><Link to='/AdminManage'>Manage Admin</Link></li>
-                    <li><Link to='/AdminProfile'>Profile</Link></li>
-                    <li><Link to='/AdminSettings'>Settings</Link></li>
-                    <li><Link to='/AddNewAdmin'>Add New Admin</Link></li>
+            <div className={styles.verticalnavbar}>
+                <ul className={styles.navbarlist}>
+                    <li className={styles.dashboard}><AiOutlineDashboard className={styles.dashboardicon} />Dashboard</li>
+                    <li className={styles.list}><TbMapSearch className={styles.mapsicon} /><Link to='/AdminMaps' className={styles.hover}>Maps</Link></li>
+                    <li className={styles.list}><CgProfile className={styles.profileicon} /><Link to='/AdminManage' className={styles.hover}>Manage Admin</Link></li>
+                    <li className={styles.list}><Link to='/AdminProfile' className={styles.hover}><MdManageAccounts className={styles.manageicon}/>Profile</Link></li>
+                    <li className={styles.list}><Link to='/login' className={styles.logout} onClick={this.handleLogout}><IoMdLogOut className={styles.logouticon}/>Logout</Link></li>
                 </ul>
             </div>
         )

@@ -1,0 +1,76 @@
+/* AdminProfileEdit.css */
+
+/* Container styling */
+.adminprofile {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  /* Label styling */
+  .label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+    text-align: left;
+    padding-left: 10px;
+  }
+  
+  /* Input and select styling */
+  .input[type="text"]{
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+  }
+
+  .username{
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    display: block;
+  }
+
+  .select{
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+  }
+  
+  /* Text area styling */
+  .textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    resize: none; /* Prevent text area resizing */
+  }
+  
+  /* Save button styling */
+  .button[type="button"] {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  /* Optional: Add media queries for responsiveness if needed */
+  @media (max-width: 768px) {
+    .admin-profile-edit-container {
+      max-width: 100%;
+    }
+  }
+  

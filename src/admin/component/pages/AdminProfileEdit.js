@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './AdminProfileEdit.css';
+import styles from './AdminProfileEdit.module.css';
 import AdminNavbar from './AdminNavbar';
 import { ref, get, update, query, orderByChild, equalTo, onValue, set } from 'firebase/database';
 import { db } from './../firebase';
@@ -78,21 +78,22 @@ function AdminProfileEdit() {
     return (
         <div>
             <AdminNavbar />
-            <div className='box'>
+            <div className={styles.box}>
                 <form>
-                    <div className='admin-profile-edit-container'>
-                        <label className='label'>Name: {username}</label>
-                        <label className='label'>Email: </label>
-                        <input type='text' name='email' value={email} onChange={(e) => setEmail(e.target.value)}></input>
-                        <label className='label'>Phone Number: </label>
-                        <input type='text' name='phone' value={phone} onChange={(e) => setPhone(e.target.value)}></input>
+                    <div className={styles.adminprofile}>
+                        <label className={styles.label}>Name: </label>
+                        <label className={styles.username}>{username}</label>
+                        <label className={styles.label}>Email: </label>
+                        <input className={styles.input} type='text' name='email' value={email} onChange={(e) => setEmail(e.target.value)}></input>
+                        <label className={styles.label}>Phone Number: </label>
+                        <input className={styles.input} type='text' name='phone' value={phone} onChange={(e) => setPhone(e.target.value)}></input>
                         {!email || !isValidEmail(email) ? (
                             <Link to="/AdminProfileEdit">
-                                <button className='button' type="button" onClick={() => alert('Please enter a valid email address.')}>Save</button>
+                                <button className={styles.button} type="button" onClick={() => alert('Please enter a valid email address.')}>Save</button>
                             </Link>
                         ) : (
                             <Link to="/AdminProfile">
-                                <button className='button' type="button" onClick={updateProfile}>Save</button>
+                                <button className={styles.button} type="button" onClick={updateProfile}>Save</button>
                             </Link>
                         )}
                     </div>
