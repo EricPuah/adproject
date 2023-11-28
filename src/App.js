@@ -7,7 +7,9 @@ import AdminManage from './admin/component/pages/AdminManage';
 import AdminProfileEdit from './admin/component/pages/AdminProfileEdit';
 import AddNewAdmin from './admin/component/AddNewStaff';
 import AdminMaps from './admin/component/pages/AdminMaps';
-import ResetPassword from './admin/component/forgotpassword';
+import ResetPassword from './admin/component/resetpassword';
+import ChangePassword from './admin/component/changepassword';
+import LocationTracker from './admin/component/pages/LocationTracker';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -30,16 +32,17 @@ const App = () => {
         {/* Login route */}
         <Route path="/login" element={<Login />} />
 
-        <Route path="/resetpassword" element={<ResetPassword/>} />
+        <Route path="/changepassword" element={<ChangePassword/>} />
         
         
         {/* Private route */}
         <Route path="/private" element={<AdminNavbar />} isAuthenticated={isAuthenticated}/>
         <Route path='/AdminProfile' element={<AdminProfile />} />
         <Route path='/AdminManage' element={<AdminManage />} />
-        <Route path='/AdminMaps' element={<AdminMaps />} />
         <Route path='/AdminProfileEdit' element={<AdminProfileEdit />}></Route>
         <Route path='/AddNewAdmin' element={<AddNewAdmin />}></Route>
+        <Route path='/resetpassword' element={<ResetPassword />}></Route>
+        <Route path='/AdminMaps' element={<LocationTracker />}></Route>
       </Routes>
     </Router>
   );
