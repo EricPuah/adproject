@@ -1,10 +1,9 @@
-// src/LocationTracker.js
-
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import io from 'socket.io-client';
 import './LocationTracker.css';
+import AdminNavbar from './AdminNavbar';
 
 const serverEndpoint = 'http://localhost:5000'; // Replace with your backend server address
 
@@ -37,38 +36,41 @@ function LocationTracker() {
   };
 
   return (
-    <div className="LocationTracker">
-      <h1>Live Location Tracker</h1>
+    <div>
+      <div>
+        <AdminNavbar />
+      </div>
+      <div className="map-container">
+        <MapContainer
+          center={[1.559803, 103.637998]}
+          zoom={16}
+          style={{ height: '600px', width: '60%' }}
+          onClick={handleMapClick}
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
 
-      <MapContainer
-        center={[1.559803, 103.637998]}
-        zoom={16}
-        style={{ height: '600px', width: '50%' , marginLeft: 100}}
-        onClick={handleMapClick}
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-
-        {/* Static Marker */}
-        <Marker position={[1.559742, 103.634763]}>
-          <Popup>FABU Bus Stop</Popup>
-        </Marker>
-
-        {/* Dynamic Markers */}
-        {markers.map((marker) => (
-          <Marker key={marker.id} position={[marker.lat, marker.lon]}>
-            <Popup>{marker.name}</Popup>
+          {/* Static Marker */}
+          <Marker position={[1.559742, 103.634763]}>
+            <Popup>FABU Bus Stop</Popup>
           </Marker>
-        ))}
 
-        {/* Display clicked location, if available */}
-        {clickedLocation && (
-          <Marker position={clickedLocation}>
-            <Popup>Clicked Location</Popup>
-          </Marker>
-        )}
-      </MapContainer>
+          {/* Dynamic Markers */}
+          {markers.map((marker) => (
+            <Marker key={marker.id} position={[marker.lat, marker.lon]}>
+              <Popup>{marker.name}</Popup>
+            </Marker>
+          ))}
+
+          {/* Display clicked location, if available */}
+          {clickedLocation && (
+            <Marker position={clickedLocation}>
+              <Popup>Clicked Location</Popup>
+            </Marker>
+          )}
+        </MapContainer>
+      </div>
     </div>
   );
 }
