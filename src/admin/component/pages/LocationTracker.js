@@ -42,8 +42,8 @@ function LocationTracker() {
 
       <MapContainer
         center={[1.559803, 103.637998]}
-        zoom={15}
-        style={{ height: '400px', width: '100%' }}
+        zoom={16}
+        style={{ height: '600px', width: '50%' , marginLeft: 100}}
         onClick={handleMapClick}
       >
         <TileLayer
