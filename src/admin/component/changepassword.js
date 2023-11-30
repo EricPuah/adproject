@@ -6,11 +6,13 @@ import emailjs from 'emailjs-com';
 import styles from './forgotpassword.module.css';
 
 const ForgotPassword = () => {
+  const [currentStep, setCurrentStep] = useState('email');
   const [email, setEmail] = useState('');
-  const [otp, setOtp] = useState('');
+  const [otp, setOtp] = useState(Array(6).fill(''));
   const [message, setMessage] = useState(null);
   const [showOtpInput, setShowOtpInput] = useState(false);
   const navigate = useNavigate();
+
 
   const handleGenerateOtp = async () => {
     try {
@@ -30,7 +32,8 @@ const ForgotPassword = () => {
               await update(ref(db, userPath), { otp: generatedOtp });
               sendOtpEmail(email, generatedOtp);
               setMessage('OTP sent. Check your email.');
-              setShowOtpInput(true); // Show OTP input field after sending OTP
+              setShowOtpInput(true);
+              setCurrentStep('otp');
             } catch (updateError) {
               setMessage(`Error updating OTP: ${updateError.message}`);
             }
@@ -56,7 +59,9 @@ const ForgotPassword = () => {
           const userEmail = usersData[code].email;
           const userOtp = usersData[code].otp;
 
-          if (userEmail === email && userOtp === otp) {
+          const enteredOtpString = otp.join('');
+
+          if (userEmail === email && userOtp === enteredOtpString) {
             navigate(`/resetpassword?email=${email}&code=${code}`);
             return;
           }
@@ -95,38 +100,64 @@ const ForgotPassword = () => {
       });
   };
 
+  const handleOtpInputChange = (e, index) => {
+    const newOtp = otp.slice(); // Create a copy of the current OTP array
+    newOtp[index] = e.target.value; // Update the value of the corresponding digit
+    setOtp(newOtp); // Update the state with the new OTP array
+  };
+
   return (
     <div className={styles.container}>
       <h2 className={styles.h2}>Forgot Password</h2>
-      <p className={styles.p}>Please enter your email to receive an OTP.</p>
+      <p className={styles.p}>
+        {currentStep === 'email'
+          ? 'Please enter your email to receive an OTP.'
+          : 'Please enter the OTP sent to your email.'}
+      </p>
 
-      <label className={styles.label}>Email:</label>
-      <input
-        className={styles.input}
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Enter your email"
-      />
+      {currentStep === 'email' && (
+        <>
+          <label className={styles.label}>Email:</label>
+          <input
+            className={styles.input}
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+          />
+          <button className={styles.button} onClick={handleGenerateOtp}>
+            {currentStep === 'otp' ? 'Resend OTP' : 'Send OTP'}
+          </button>
+        </>
+      )}
 
-      <button className={styles.button} onClick={handleGenerateOtp}>
-        {showOtpInput ? 'Resend OTP' : 'Send OTP'}
-      </button>
+
 
       {message && <p>{message}</p>}
 
-      {showOtpInput && (
+      {currentStep === 'otp' && (
         <>
           <label className={styles.label}>OTP:</label>
-          <input
-            className={styles.input}
-            type="text"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            placeholder="Enter OTP"
-          />
+
+          <div className={styles.otpContainer}>
+            {Array.from({ length: 6 }, (_, index) => (
+              <input
+                key={index}
+                className={styles.otpInput}
+                type="text"
+                maxLength="1"
+                value={otp[index] || ''} // Use value of the corresponding digit
+                onChange={(e) => handleOtpInputChange(e, index)}
+              />
+            ))}
+          </div>
+          <br></br>
           <button className={styles.button} onClick={handleVerifyOtp}>
             Verify OTP
+          </button>
+          <br></br>
+          <button className={styles.button} onClick={handleGenerateOtp}>
+            {currentStep === 'otp' ? 'Resend OTP' : 'Send OTP'}
           </button>
         </>
       )}
