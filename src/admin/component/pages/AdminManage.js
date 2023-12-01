@@ -4,6 +4,7 @@ import AdminNavbar from './AdminNavbar';
 import { ref, onValue, query, orderByChild, equalTo, get, remove } from 'firebase/database';
 import { db } from './../firebase';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 function AdminManage() {
     const [admins, setAdmins] = useState([]);
@@ -41,7 +42,7 @@ function AdminManage() {
         }
     }
 
-    const rootAdmin = JSON.parse(localStorage.getItem('adminData'));
+    const rootAdmin = JSON.parse(Cookies.get('_auth_state'));
     const adminStatus = rootAdmin.isRootAdmin;
 
     console.log('adminStatus:', adminStatus);

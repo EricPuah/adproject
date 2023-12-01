@@ -1,16 +1,21 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Authenticator } from './admin/component/context/Authenticator';
+import { AuthProvider } from 'react-auth-kit'; //npm install react-auth-kit@^2.0.0
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Authenticator>
-    <App />
-    </Authenticator>
+    <AuthProvider
+      authType={"cookie"}
+      authName={'_auth'}
+      cookieDomain={window.location.hostname}
+      cookieSecure={window.location.protocol === 'https:'}
+    >
+      <App />
+    </AuthProvider>
   </React.StrictMode>
 );
 
