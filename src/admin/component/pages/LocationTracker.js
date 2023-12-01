@@ -1,15 +1,15 @@
-// LocationTracker.js
-
-import React from 'react';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import React, { useState, useEffect } from 'react';
+import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 import './LocationTracker.css';
 import AdminNavbar from './AdminNavbar';
 
 const containerStyle = {
   width: '60%',
   height: '600px',
-  marginLeft: 300,
-  marginTop: 50
+  position: 'absolute',
+  top: '40px',
+  left: '250px',
+  padding: '20px',
 };
 
 const center = {
@@ -17,22 +17,26 @@ const center = {
   lng: 103.637998,
 };
 
+// Initial static markers
+const staticMarkers = [
+  { position: { lat: 1.5593613531032313, lng: 103.63280919934147 }, name: 'KRP 1' },
+  { position: { lat: 1.55, lng: 103.63 }, name: 'Marker 2' },
+  // Add more static markers as needed
+];
+
 function LocationTracker() {
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyCJ6a-xeKOWK4JWSifzJJfSUNWvlGaLfzU',
   });
 
-  const [map, setMap] = React.useState(null);
+  const [map, setMap] = useState(null);
 
   const onLoad = React.useCallback(function callback(map) {
-    // This is just an example of getting and using the map instance!!! don't just blindly copy!
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
     setMap(map);
   }, []);
 
-  const onUnmount = React.useCallback(function callback(map) {
+  const onUnmount = React.useCallback(function callback() {
     setMap(null);
   }, []);
 
@@ -40,26 +44,35 @@ function LocationTracker() {
     return <p>Error loading map: {loadError.message}</p>;
   }
 
-  return isLoaded ? (
+  if (!isLoaded) {
+    return <p>Loading map...</p>;
+  }
+
+  return (
     <div>
       <div>
         <AdminNavbar />
       </div>
-      <div>
+      <div style={containerStyle}>
         <GoogleMap
-          mapContainerStyle={containerStyle}
+          mapContainerStyle={{ width: '100%', height: '100%' }}
           center={center}
           zoom={16}
           onLoad={onLoad}
           onUnmount={onUnmount}
+          className="google-map"
         >
-          {/* Child components, such as markers, info windows, etc. */}
-          <></>
+          {/* Render static markers */}
+          {staticMarkers.map((marker, index) => (
+            <Marker
+              key={index}
+              position={marker.position}
+              title={marker.name}
+            />
+          ))}
         </GoogleMap>
       </div>
     </div>
-  ) : (
-    <p>Loading map...</p>
   );
 }
 
