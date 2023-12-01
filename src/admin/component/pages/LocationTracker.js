@@ -1,93 +1,66 @@
-import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-import io from 'socket.io-client';
+// LocationTracker.js
+
+import React from 'react';
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import './LocationTracker.css';
 import AdminNavbar from './AdminNavbar';
 
-const serverEndpoint = 'http://localhost:5000'; // Replace with your backend server address
+const containerStyle = {
+  width: '60%',
+  height: '600px',
+  marginLeft: 300,
+  marginTop: 50
+};
+
+const center = {
+  lat: 1.559803,
+  lng: 103.637998,
+};
 
 function LocationTracker() {
-  const [markers, setMarkers] = useState([
-    { id: 1, lat: 1.5597079477240423, lon: 103.63475718659937, name: 'Central Point', imageUrl: 'C:/Users/ericp/Downloads/bus-stop-symbol-logo-2DD67FCDE5-seeklogo.com.png' },
-    { id: 2, lat: 1.5628199411691888, lon: 103.63647962572057, name: 'FKA', imageUrl: 'C:/Users/ericp/Downloads/bus-stop-symbol-logo-2DD67FCDE5-seeklogo.com.png' },
-    { id: 3, lat: 1.5593522903631798, lon: 103.63282641074402, name: 'KRP', imageUrl: 'C:/Users/ericp/Downloads/bus-stop-symbol-logo-2DD67FCDE5-seeklogo.com.png' }
-  ]);
-  const [DynamicMarker, setDynamicMarkers] = useState([]);
-  const [clickedLocation, setClickedLocation] = useState(null);
-
-  useEffect(() => {
-    // Connect to the WebSocket server
-    const socket = io(serverEndpoint);
-
-    // Listen for real-time location updates
-    socket.on('locationUpdate', (newMarker) => {
-      setDynamicMarkers((prevMarkers) => {
-        // Update existing marker or add a new one
-        const updatedMarkers = prevMarkers.filter((marker) => marker.id !== newMarker.id);
-        return [...updatedMarkers, newMarker];
-      });
-    });
-
-    // Cleanup on component unmount
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-
-  // Handle map click
-  const handleMapClick = (event) => {
-    setClickedLocation([event.latlng.lat, event.latlng.lng]);
-  };
-
-  const customIcon = (imageUrl) => new L.Icon({
-    iconUrl: imageUrl,
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32],
+  const { isLoaded, loadError } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: 'AIzaSyCJ6a-xeKOWK4JWSifzJJfSUNWvlGaLfzU',
   });
 
-  return (
+  const [map, setMap] = React.useState(null);
+
+  const onLoad = React.useCallback(function callback(map) {
+    // This is just an example of getting and using the map instance!!! don't just blindly copy!
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+    setMap(map);
+  }, []);
+
+  const onUnmount = React.useCallback(function callback(map) {
+    setMap(null);
+  }, []);
+
+  if (loadError) {
+    return <p>Error loading map: {loadError.message}</p>;
+  }
+
+  return isLoaded ? (
     <div>
-      <AdminNavbar />
-      <div className='map-container'>
-        <MapContainer
-          center={[1.559803, 103.637998]}
+      <div>
+        <AdminNavbar />
+      </div>
+      <div>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
           zoom={16}
-          style={{ height: '600px', width: '60%' }}
-          onClick={handleMapClick}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
         >
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-
-          {/* Static Marker */}
-          {markers.map((marker) => (
-            <Marker key={marker.id} position={[marker.lat, marker.lon]} icon={customIcon(marker.imageUrl)}>
-              <Popup>{marker.name}</Popup>
-            </Marker>
-          ))}
-
-          {/* Dynamic Markers */}
-          {DynamicMarker.map((DynamicMarker) => (
-            <Marker key={DynamicMarker.id} position={[DynamicMarker.lat, DynamicMarker.lon]}>
-              <Popup>{DynamicMarker.name}</Popup>
-            </Marker>
-          ))}
-
-          {/* Display clicked location, if available */}
-          {clickedLocation && (
-            <Marker position={clickedLocation}>
-              <Popup>Clicked Location</Popup>
-            </Marker>
-          )}
-        </MapContainer>
+          {/* Child components, such as markers, info windows, etc. */}
+          <></>
+        </GoogleMap>
       </div>
     </div>
+  ) : (
+    <p>Loading map...</p>
   );
 }
 
 export default LocationTracker;
-
-
