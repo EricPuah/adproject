@@ -2,14 +2,17 @@
 
 import React from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import './LocationTracker.css';
+import './LocationTracker.css'; // Import the common CSS file
 import AdminNavbar from './AdminNavbar';
 
 const containerStyle = {
   width: '60%',
   height: '600px',
-  marginLeft: 300,
-  marginTop: 50
+  position: 'absolute',
+  top: '40%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  padding: '20px',
 };
 
 const center = {
@@ -26,7 +29,6 @@ function LocationTracker() {
   const [map, setMap] = React.useState(null);
 
   const onLoad = React.useCallback(function callback(map) {
-    // This is just an example of getting and using the map instance!!! don't just blindly copy!
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
     setMap(map);
@@ -45,13 +47,14 @@ function LocationTracker() {
       <div>
         <AdminNavbar />
       </div>
-      <div>
+      <div style={containerStyle}>
         <GoogleMap
-          mapContainerStyle={containerStyle}
+          mapContainerStyle={{ width: '100%', height: '100%' }}
           center={center}
           zoom={16}
           onLoad={onLoad}
           onUnmount={onUnmount}
+          className="google-map" // Add a class for styling
         >
           {/* Child components, such as markers, info windows, etc. */}
           <></>
