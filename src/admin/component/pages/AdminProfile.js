@@ -3,7 +3,8 @@ import styles from './AdminProfile.module.css'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import AdminProfileEdit from './AdminProfileEdit';
 import AdminNavbar from './AdminNavbar';
- 
+import Cookies from 'js-cookie';
+
 
 class AdminProfile extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class AdminProfile extends Component {
   }
 
   componentDidMount() {
-    const adminDataString = localStorage.getItem('adminData');
+    const adminDataString = Cookies.get('_auth_state');
 
     if (adminDataString) {
       const adminData = JSON.parse(adminDataString);

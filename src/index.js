@@ -3,14 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Authenticator } from './admin/component/context/Authenticator';
+import { AuthProvider } from 'react-auth-kit'; //npm install react-auth-kit@^2.0.0
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Authenticator>
+    <AuthProvider
+      authType={"cookie"}
+      authName={'_auth'}
+      cookieDomain={window.location.hostname}
+      cookieSecure={window.location.protocol === 'https:'}
+    >
     <App />
-    </Authenticator>
+    </AuthProvider>
   </React.StrictMode>
 );
 

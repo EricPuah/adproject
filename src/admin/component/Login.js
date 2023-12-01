@@ -3,9 +3,11 @@ import { Navigate } from 'react-router-dom';
 import AuthContext from './context/Authenticator';
 import { authenticateUser } from './firebase';
 import styles from './Login.module.css'
+import { useSignIn } from 'react-auth-kit'
 
 const Login = () => {
-    const { setAuth } = useContext(AuthContext);
+    const signIn = useSignIn();
+    //const { setAuth } = useContext(AuthContext);
     const userRef = useRef();
     const errRef = useRef();
 
@@ -24,7 +26,39 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        authenticateUser(user, password, setAuth, setSuccess, setErrMsg, errRef); //Authentication Backend
+        //authenticateUser(user, password, setAuth, setSuccess, setErrMsg, errRef); //Authentication Backend
+
+        try {
+
+            const response = await fetch('http://localhost:8081/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username: user, password: password }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+
+            if (data.success) {
+                signIn ({
+                    token: data.token,
+                    expiresIn: 24,
+                    tokenType: "Bearer",
+                    authState: { username: user, isRootAdmin: data.isRootAdmin, role: data.role},
+                })
+                setSuccess(true);
+            } else {
+                setErrMsg(`Error: ${data.error}`);
+            }
+        } catch (error) {
+            console.error('Fetch Error:', error);
+            setErrMsg('An error occurred: ' + error.message);
+        }
     };
 
     return (
