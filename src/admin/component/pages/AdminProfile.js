@@ -16,7 +16,7 @@ class AdminProfile extends Component {
   }
 
   componentDidMount() {
-    const adminDataString = localStorage.getItem('adminData');
+    const adminDataString = Cookies.get('_auth_state');
 
     if (adminDataString) {
       const adminData = JSON.parse(adminDataString);

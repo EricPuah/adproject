@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import styles from './AdminNavBar.module.css';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { TbMapSearch } from 'react-icons/tb';
@@ -13,6 +13,7 @@ const AdminNavbar = () => {
 
   const handleLogout = () => {
     signOut();
+    Navigate("/login");
     localStorage.removeItem('adminData');
   };
 

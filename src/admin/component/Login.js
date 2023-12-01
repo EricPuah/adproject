@@ -47,7 +47,7 @@ const Login = () => {
             if (data.success) {
                 signIn ({
                     token: data.token,
-                    expiresIn: 1,
+                    expiresIn: 24,
                     tokenType: "Bearer",
                     authState: { username: user, isRootAdmin: data.isRootAdmin, role: data.role},
                 })
