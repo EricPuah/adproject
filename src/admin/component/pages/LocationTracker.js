@@ -1,14 +1,28 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 import './LocationTracker.css';
+=======
+// LocationTracker.js
+
+import React from 'react';
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import './LocationTracker.css'; // Import the common CSS file
+>>>>>>> 85a78c8703b4f7ea061eb779e60fa73fd1cecb11
 import AdminNavbar from './AdminNavbar';
 
 const containerStyle = {
   width: '60%',
   height: '600px',
   position: 'absolute',
+<<<<<<< HEAD
   top: '40px',
   left: '250px',
+=======
+  top: '40%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+>>>>>>> 85a78c8703b4f7ea061eb779e60fa73fd1cecb11
   padding: '20px',
 };
 
@@ -33,6 +47,11 @@ function LocationTracker() {
   const [map, setMap] = useState(null);
 
   const onLoad = React.useCallback(function callback(map) {
+<<<<<<< HEAD
+=======
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+>>>>>>> 85a78c8703b4f7ea061eb779e60fa73fd1cecb11
     setMap(map);
   }, []);
 
@@ -60,7 +79,11 @@ function LocationTracker() {
           zoom={16}
           onLoad={onLoad}
           onUnmount={onUnmount}
+<<<<<<< HEAD
           className="google-map"
+=======
+          className="google-map" // Add a class for styling
+>>>>>>> 85a78c8703b4f7ea061eb779e60fa73fd1cecb11
         >
           {/* Render static markers */}
           {staticMarkers.map((marker, index) => (
