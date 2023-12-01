@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import io from 'socket.io-client';
 import './LocationTracker.css';
@@ -8,7 +9,12 @@ import AdminNavbar from './AdminNavbar';
 const serverEndpoint = 'http://localhost:5000'; // Replace with your backend server address
 
 function LocationTracker() {
-  const [markers, setMarkers] = useState([]);
+  const [markers, setMarkers] = useState([
+    { id: 1, lat: 1.5597079477240423, lon: 103.63475718659937, name: 'Central Point', imageUrl: 'C:/Users/ericp/Downloads/bus-stop-symbol-logo-2DD67FCDE5-seeklogo.com.png' },
+    { id: 2, lat: 1.5628199411691888, lon: 103.63647962572057, name: 'FKA', imageUrl: 'C:/Users/ericp/Downloads/bus-stop-symbol-logo-2DD67FCDE5-seeklogo.com.png' },
+    { id: 3, lat: 1.5593522903631798, lon: 103.63282641074402, name: 'KRP', imageUrl: 'C:/Users/ericp/Downloads/bus-stop-symbol-logo-2DD67FCDE5-seeklogo.com.png' }
+  ]);
+  const [DynamicMarker, setDynamicMarkers] = useState([]);
   const [clickedLocation, setClickedLocation] = useState(null);
 
   useEffect(() => {
@@ -17,7 +23,7 @@ function LocationTracker() {
 
     // Listen for real-time location updates
     socket.on('locationUpdate', (newMarker) => {
-      setMarkers((prevMarkers) => {
+      setDynamicMarkers((prevMarkers) => {
         // Update existing marker or add a new one
         const updatedMarkers = prevMarkers.filter((marker) => marker.id !== newMarker.id);
         return [...updatedMarkers, newMarker];
@@ -35,16 +41,21 @@ function LocationTracker() {
     setClickedLocation([event.latlng.lat, event.latlng.lng]);
   };
 
+  const customIcon = (imageUrl) => new L.Icon({
+    iconUrl: imageUrl,
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+  });
+
   return (
     <div>
-      <div>
-        <AdminNavbar />
-      </div>
-      <div className="map-container">
+      <AdminNavbar />
+      <div className='map-container'>
         <MapContainer
           center={[1.559803, 103.637998]}
           zoom={16}
-          style={{ height: '600px', width: '75%'}}
+          style={{ height: '600px', width: '60%' }}
           onClick={handleMapClick}
         >
           <TileLayer
@@ -52,14 +63,16 @@ function LocationTracker() {
           />
 
           {/* Static Marker */}
-          <Marker position={[1.559742, 103.634763]}>
-            <Popup>FABU Bus Stop</Popup>
-          </Marker>
+          {markers.map((marker) => (
+            <Marker key={marker.id} position={[marker.lat, marker.lon]} icon={customIcon(marker.imageUrl)}>
+              <Popup>{marker.name}</Popup>
+            </Marker>
+          ))}
 
           {/* Dynamic Markers */}
-          {markers.map((marker) => (
-            <Marker key={marker.id} position={[marker.lat, marker.lon]}>
-              <Popup>{marker.name}</Popup>
+          {DynamicMarker.map((DynamicMarker) => (
+            <Marker key={DynamicMarker.id} position={[DynamicMarker.lat, DynamicMarker.lon]}>
+              <Popup>{DynamicMarker.name}</Popup>
             </Marker>
           ))}
 
@@ -76,3 +89,5 @@ function LocationTracker() {
 }
 
 export default LocationTracker;
+
+
