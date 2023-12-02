@@ -4,6 +4,7 @@ import Login from './admin/component/Login';
 import AdminNavbar from './admin/component/pages/AdminNavbar';
 import AdminProfile from './admin/component/pages/AdminProfile';
 import AdminManage from './admin/component/pages/AdminManage';
+import AdminManageBus from './admin/component/pages/AdminManageBus';
 import AdminProfileEdit from './admin/component/pages/AdminProfileEdit';
 import AddNewAdmin from './admin/component/AddNewStaff';
 import AdminMaps from './admin/component/pages/AdminMaps';
@@ -65,6 +66,12 @@ const App = () => {
         <Route path={'/AdminMaps'} element={
           <RequireAuth loginPath={'/login'}>
             <LocationTracker />
+          </RequireAuth>
+        } />
+
+        <Route path={'/AdminManageBus'} element={
+          <RequireAuth loginPath={'/login'}>
+            <AdminManageBus />
           </RequireAuth>
         } />
 

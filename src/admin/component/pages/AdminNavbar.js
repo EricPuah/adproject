@@ -36,6 +36,11 @@ const AdminNavbar = () => {
           </Link>
         </li>
         <li className={styles.list}>
+          <Link to='/AdminManageBus' className={styles.hover}>
+            <CgProfile className={styles.manageicon} />Manage Bus Driver
+          </Link>
+        </li>
+        <li className={styles.list}>
           <Link to='/AdminProfile' className={styles.hover}>
             <MdManageAccounts className={styles.manageicon} />Profile
           </Link>

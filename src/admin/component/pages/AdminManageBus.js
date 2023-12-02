@@ -66,13 +66,14 @@ function AdminManage() {
                                 <th className={styles.header}>Username</th>
                                 <th className={styles.header}>Email</th>
                                 <th className={styles.header}>Phone</th>
+                                <th className={styles.header}>License Expiry</th>
                                 {isRootAdmin && <th className={styles.header}></th>}
                             </tr>
                         </thead>
                         <tbody>
                             {admins
                                 .filter((admin) => !admin.isRootAdmin)
-                                .filter((admin) => admin.role === 'admin')
+                                .filter((admin) => admin.role === 'driver')
                                 .map((admin, index) => (
                                     <tr key={index} className={styles.listitem}>
                                         <td className={styles.data}>{index + 1}</td>
@@ -93,6 +94,9 @@ function AdminManage() {
                                         </td>
                                         <td className={styles.data}>
                                             <span className={styles.detaillabel}>{admin.phone}</span> 
+                                        </td>
+                                        <td className={styles.data}>
+                                            <span className={styles.detaillabel}>{admin.expiry}</span> 
                                         </td>
                                         {!admin.isRootAdmin && (
                                             <td className={styles.data}>
