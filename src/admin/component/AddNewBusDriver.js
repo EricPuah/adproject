@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, navigate } from 'react';
 import { faCheck, faTimes, faInfoCircle, faFontAwesome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './RootRegister.module.css';
@@ -108,6 +108,7 @@ const AddNewBusDriver = () => {
                 await AddAdminInFirebase(fullName, user, email, phone, StaffID, role); //Register user into DB
             }
             setSuccess(true);
+            navigate('/AddNewBusDriver');
         } catch (error) {
             console.error('Firebase Error:', error);
             setErrMsg('An error occurred: ' + error.message);
