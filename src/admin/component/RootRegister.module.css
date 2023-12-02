@@ -142,3 +142,11 @@
 .line {
   display: inline-block;
 }
+
+.input:disabled {
+  color: #999; /* Change this to the desired color for disabled text */
+  /* You can also set other styles for disabled input fields if needed */
+  background-color: #f0f0f0; /* Change this to the desired background color for disabled input */
+  border: 1px solid #ccc; /* Change this to the desired border color for disabled input */
+  /* Add any other styles as needed */
+}

@@ -55,7 +55,7 @@ function AdminManage() {
             <AdminNavbar />
             <div className={styles.container}>
                 <div className={styles.listcontainer}>
-                    <h2 className={styles.listtitle}>Admins List</h2>
+                    <h2 className={styles.listtitle}>UTMFleet Management Admin List</h2>
                     <table className={styles.listtable}>
                         <thead>
                             <tr>

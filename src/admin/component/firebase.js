@@ -37,7 +37,7 @@ const registerUserInFirebase = async (username, password) => {
   }
 }
 
-const AddDriverInFirebase = async (username, email, phone, staffID, role, expiry) => {
+const AddDriverInFirebase = async (fullname, username, email, phone, staffID, role, expiry) => {
   const length = 8;
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let temporaryPassword = 'Abc@1234';
@@ -48,6 +48,7 @@ const AddDriverInFirebase = async (username, email, phone, staffID, role, expiry
   try {
     const usersRef = ref(db, 'Admin');
     const newUser = {
+      fullname: fullname,
       username: username,
       password: hashedPass,
       isRootAdmin: false,
@@ -67,7 +68,7 @@ const AddDriverInFirebase = async (username, email, phone, staffID, role, expiry
   }
 }
 
-const AddAdminInFirebase = async (username, email, phone, staffID, role) => {
+const AddAdminInFirebase = async (fullname, username, email, phone, staffID, role) => {
   try {
     const length = 8;
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -78,6 +79,7 @@ const AddAdminInFirebase = async (username, email, phone, staffID, role) => {
     const hashedPass = await hash(temporaryPassword, 10);
     const usersRef = ref(db, 'Admin');
     const newUser = {
+      fullname: fullname,
       username: username,
       password: hashedPass,
       isRootAdmin: false,

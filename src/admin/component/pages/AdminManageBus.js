@@ -55,7 +55,7 @@ function AdminManage() {
             <AdminNavbar />
             <div className={styles.container}>
                 <div className={styles.listcontainer}>
-                    <h2 className={styles.listtitle}>Admins List</h2>
+                    <h2 className={styles.listtitle}>UTMFleet Bus Driver List</h2>
                     <table className={styles.listtable}>
                         <thead>
                             <tr>
@@ -114,7 +114,7 @@ function AdminManage() {
                     </table>
                     {isRootAdmin && (
                         <div className={styles.addadminbuttoncontainer}>
-                            <Link to={'/AddNewAdmin'}>
+                            <Link to={'/AddNewBusDriver'}>
                                 <button className={styles.addadminbutton}>Add Admin</button>
                             </Link>
                         </div>

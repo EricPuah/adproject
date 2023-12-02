@@ -6,7 +6,8 @@ import AdminProfile from './admin/component/pages/AdminProfile';
 import AdminManage from './admin/component/pages/AdminManage';
 import AdminManageBus from './admin/component/pages/AdminManageBus';
 import AdminProfileEdit from './admin/component/pages/AdminProfileEdit';
-import AddNewAdmin from './admin/component/AddNewStaff';
+import AddNewAdmin from './admin/component/AddNewAdmin';
+import AddNewBusDriver from './admin/component/AddNewBusDriver';
 import AdminMaps from './admin/component/pages/AdminMaps';
 import ResetPassword from './admin/component/resetpassword';
 import ChangePassword from './admin/component/changepassword';
@@ -54,6 +55,12 @@ const App = () => {
         <Route path={'/AddNewAdmin'} element={
           <RequireAuth loginPath={'/login'}>
             <AddNewAdmin />
+          </RequireAuth>
+        } />
+
+        <Route path={'/AddNewBusDriver'} element={
+          <RequireAuth loginPath={'/AddNewBusDriver'}>
+            <AddNewBusDriver />
           </RequireAuth>
         } />
 

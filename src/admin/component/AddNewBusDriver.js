@@ -9,8 +9,9 @@ const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PHONE_REGEX = /^\d+$/;
 const STAFFID_REGEX = /^[a-zA-Z0-9]+$/;
+const USER_FULLNAME = /^[A-Za-z\s@]+$/
 
-const AddNewStaff = () => {
+const AddNewBusDriver = () => {
     const userRef = useRef();
     const errRef = useRef();
 
@@ -31,11 +32,14 @@ const AddNewStaff = () => {
     const [validStaffID, setValidStaffID] = useState(false);
     const [staffIDFocus, setStaffIDFocus] = useState(false);
 
-    const [role, setRole] = useState('');
+    const [role, setRole] = useState('driver');
 
     const [DriverExpiry, setDriverExpiry] = useState('');
     const [DriverExpiryFocus, setDriverExpiryFocus] = useState(false);
 
+    const [fullName, setFullName] = useState('');
+    const [validFullName, setValidFullName] = useState(false);
+    const [fullNameFocus, setFullNameFocus] = useState(false);
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
@@ -44,6 +48,12 @@ const AddNewStaff = () => {
     useEffect(() => {
         userRef.current.focus();
     }, []);
+
+    //Validate Full Name
+    useEffect(() => {
+        const result = USER_FULLNAME.test(fullName);
+        setValidFullName(result);
+    }, [fullName]);
 
     //Validate username validty
     useEffect(() => {
@@ -92,10 +102,10 @@ const AddNewStaff = () => {
         }
 
         try {
-            if(role === 'driver') {
-                await AddDriverInFirebase(user, email, phone, StaffID, role, DriverExpiry); //Register user into DB
+            if (role === 'driver') {
+                await AddDriverInFirebase(fullName, user, email, phone, StaffID, role, DriverExpiry); //Register user into DB
             } else {
-                await AddAdminInFirebase(user, email, phone, StaffID, role); //Register user into DB
+                await AddAdminInFirebase(fullName, user, email, phone, StaffID, role); //Register user into DB
             }
             setSuccess(true);
         } catch (error) {
@@ -122,6 +132,35 @@ const AddNewStaff = () => {
                         </p>
                         <h1>Add New Admin</h1>
                         {/* Username Field & Validation Output */}
+                        <label htmlFor="username" className={styles.label}>
+                            Full Name:
+                            {fullName && (
+                                <>
+                                    <span className={(validFullName) ? styles.hide : styles.invalid}>
+                                        <FontAwesomeIcon icon={faTimes} />
+                                    </span>
+                                    <span className={validFullName ? styles.valid : styles.hide}>
+                                        <FontAwesomeIcon icon={faCheck} />
+                                    </span>
+                                </>
+                            )}
+                        </label>
+                        <input className={styles.input}
+                            type="text"
+                            id="fullName"
+                            ref={userRef}
+                            autoComplete='off'
+                            onChange={(e) => setFullName(e.target.value)}
+                            required
+                            aria-invalid={validFullName ? "false" : "true"}
+                            aria-describedby='uidnote'
+                            onFocus={() => setFullNameFocus(true)}
+                            onBlur={() => setFullNameFocus(false)}
+                        ></input>
+                        <p id='uidnote' className={fullNameFocus && fullName && !validFullName ? `${styles.instructions}` : `${styles.offscreen}`}>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            Please enter the valid full name.
+                        </p>
                         <label htmlFor="username" className={styles.label}>
                             Username:
                             {user && (
@@ -248,13 +287,16 @@ const AddNewStaff = () => {
                         <label htmlFor="username" className={styles.label}>
                             Staff Role:
                         </label>
-
-                        <select className={styles.option} required onChange={(e) => setRole(e.target.value)}>
-                            <option value="" disabled selected>Select an option</option>
-                            <option value="admin">UTMFleet Management Admin</option>
-                            <option value="driver">UTMFleet Bus Driver</option>
-                        </select>
-
+                        <input className={styles.input}
+                            type="text"
+                            id="staffRole"
+                            autoComplete='off'
+                            value = {"UTMFleet Bus Driver"}
+                            disabled
+                            aria-invalid={validStaffID ? "false" : "true"}
+                            aria-describedby='uidnote'
+                        ></input>
+                        
                         {role === 'driver' && (
                             <>
                                 <label htmlFor="username" className={styles.label}>
@@ -296,4 +338,4 @@ const AddNewStaff = () => {
     );
 };
 
-export default AddNewStaff
+export default AddNewBusDriver
