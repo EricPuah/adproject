@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker, InfoWindow,Polyline } from '@react-google-maps/api';
 import './LocationTracker.css';
 import AdminNavbar from './AdminNavbar';
 import CustomMarker from '../../../assets/bus-stop.png';
@@ -71,6 +71,11 @@ const staticMarkers = [
   { position: { lat: 1.5751600074453354, lng: 103.6181358780248}, name: 'KDOJ 2' },
 ];
 
+const busData = [
+  { id: 1, position: { lat: 1.5586928453191957, lng: 103.63528569782638 }, route: [{ lat: 1.5586928453191957, lng: 103.63528569782638}, { lat: 1.5603304157190552, lng: 103.63485874559022 }] },
+  // Add more buses with their routes as needed
+];
+
 function LocationTracker() {
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
@@ -112,9 +117,9 @@ function LocationTracker() {
           zoom={16}
           onLoad={onLoad}
           onUnmount={onUnmount}
+          mapId = "556e9663519326d5"
           className="google-map"
         >
-          {/* Render static markers */}
           {staticMarkers.map((marker) => (
             <div key={marker.name}>
               <Marker
@@ -139,10 +144,36 @@ function LocationTracker() {
               )}
             </div>
           ))}
+
+          {busData.map((bus) => (
+            <div key={bus.id}>
+              <Marker
+                position={bus.position}
+                onClick={() => handleMarkerClick(bus)}
+                options={{
+                  icon: {
+                    url: CustomMarker,
+                    scaledSize: new window.google.maps.Size(18, 18),
+                  },
+                }}
+              />
+              {selectedMarker === bus && (
+                <Polyline
+                  path={bus.route}
+                  options={{
+                    strokeColor: "#00FF00",
+                    strokeOpacity: 1,
+                    strokeWeight: 2,
+                  }}
+                />
+              )}
+            </div>
+          ))}
         </GoogleMap>
       </div>
     </div>
   );
 }
+
 
 export default LocationTracker;
