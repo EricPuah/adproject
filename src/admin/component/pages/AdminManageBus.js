@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 function AdminManage() {
     const [admins, setAdmins] = useState([]);
     const [isRootAdmin, setisRootAdmin] = useState(false);
+    const [role, setRole] = useState(false);
 
     useEffect(() => {
         const cookieData = Cookies.get('_auth_state');
@@ -16,6 +17,7 @@ function AdminManage() {
         if (cookieData) {
             const rootAdmin = JSON.parse(cookieData);
             setisRootAdmin(rootAdmin.isRootAdmin);
+            setRole(rootAdmin.role);
             console.log(isRootAdmin);
         }
 
@@ -112,10 +114,10 @@ function AdminManage() {
                                 ))}
                         </tbody>
                     </table>
-                    {isRootAdmin && (
+                    {role ==='admin' && (
                         <div className={styles.addadminbuttoncontainer}>
                             <Link to={'/AddNewBusDriver'}>
-                                <button className={styles.addadminbutton}>Add Admin</button>
+                                <button className={styles.addadminbutton}>Add Bus Driver</button>
                             </Link>
                         </div>
                     )}

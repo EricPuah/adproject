@@ -45,14 +45,15 @@ const AdminNavbar = () => {
           </li>
         ) : null}
 
-        {userRole ? (
+        {userRole === "admin" ? (
           <li className={styles.list}>
+            <CgProfile className={styles.profileicon} />
             <Link to='/AdminManageBus' className={styles.hover}>
-              <CgProfile className={styles.manageicon} />Manage Bus Driver
+              Manage Bus Driver
             </Link>
           </li>
         ) : null}
-        
+
         <li className={styles.list}>
           <Link to='/AdminProfile' className={styles.hover}>
             <MdManageAccounts className={styles.manageicon} />Profile

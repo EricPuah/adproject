@@ -130,7 +130,7 @@ const AddNewBusDriver = () => {
                         <p ref={errRef} className={errMsg ? `${styles.errmsg}` : `${styles.offscreen}`} aria-live="assertive">
                             {errMsg}
                         </p>
-                        <h1>Add New Admin</h1>
+                        <h1>Add New Bus Driver</h1>
                         {/* Username Field & Validation Output */}
                         <label htmlFor="username" className={styles.label}>
                             Full Name:
@@ -329,7 +329,7 @@ const AddNewBusDriver = () => {
 
 
                         {/* Sign Up Button */}
-                        <button className={styles.button} disabled={!validName || usernameExists}>Add New Staff</button>
+                        <button className={styles.button} disabled={!validName || usernameExists}>Add New Bus Driver</button>
                     </form>
                 </section>
             )

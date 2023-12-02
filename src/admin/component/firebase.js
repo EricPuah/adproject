@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { serverTimestamp, getDatabase, ref, push, set, query, orderByChild, equalTo, onValue, get, child } from 'firebase/database';
 import { hash, compare } from 'bcryptjs'
+import emailjs from 'emailjs-com';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAUv4mDaTr3XY5qnLT08hx8eECGtsP3beE",
@@ -40,10 +41,10 @@ const registerUserInFirebase = async (username, password) => {
 const AddDriverInFirebase = async (fullname, username, email, phone, staffID, role, expiry) => {
   const length = 8;
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let temporaryPassword = 'Abc@1234';
-  // for (let i = 0; i < length; i++) {
-  //   temporaryPassword += characters.charAt(Math.floor(Math.random() * characters.length));
-  // }
+  let temporaryPassword = '';
+  for (let i = 0; i < length; i++) {
+    temporaryPassword += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
   const hashedPass = await hash(temporaryPassword, 10);
   try {
     const usersRef = ref(db, 'Admin');
@@ -59,6 +60,12 @@ const AddDriverInFirebase = async (fullname, username, email, phone, staffID, ro
       expiry: expiry,
       dateOfCreation: new Date().toLocaleDateString('en-GB'),
     };
+    const emailParams = {
+      to_email: email,
+      subject: 'BusTeknologi: Your New Account Details',
+      message: `Hello ${fullname},\n\nYour account has been created successfully!\nUsername: ${username}\nTemporary Password: ${temporaryPassword}`,
+    };
+    await emailjs.send('service_26lac6k', 'template_2xd2bje', emailParams, 'PRJ-0y9h6INVAd4ZA');
     const newChildRef = push(usersRef);
     await set(newChildRef, newUser);
     return true; // Success
@@ -72,10 +79,10 @@ const AddAdminInFirebase = async (fullname, username, email, phone, staffID, rol
   try {
     const length = 8;
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let temporaryPassword = 'Abc@1234';
-    // for (let i = 0; i < length; i++) {
-    //   temporaryPassword += characters.charAt(Math.floor(Math.random() * characters.length));
-    // }
+    let temporaryPassword = '';
+    for (let i = 0; i < length; i++) {
+      temporaryPassword += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
     const hashedPass = await hash(temporaryPassword, 10);
     const usersRef = ref(db, 'Admin');
     const newUser = {
@@ -89,6 +96,12 @@ const AddAdminInFirebase = async (fullname, username, email, phone, staffID, rol
       role: role,
       dateOfCreation: new Date().toLocaleDateString('en-GB'),
     };
+    const emailParams = {
+      to_email: email,
+      subject: 'BusTeknologi: Your New Account Details',
+      message: `Hello ${fullname},\n\nYour account has been created successfully!\nUsername: ${username}\nTemporary Password: ${temporaryPassword}`,
+    };
+    await emailjs.send('service_26lac6k', 'template_2xd2bje', emailParams, 'PRJ-0y9h6INVAd4ZA');
     const newChildRef = push(usersRef);
     await set(newChildRef, newUser);
     return true; // Success
