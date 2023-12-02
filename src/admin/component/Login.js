@@ -66,7 +66,7 @@ const Login = () => {
             {
                 success ? (
                     <section className={styles.section} >
-                        <Navigate to="/private" />
+                        <Navigate to="/AdminMaps" />
                     </section>
                 ) : (
                     <section className={styles.section}>
