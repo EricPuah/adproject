@@ -4,29 +4,42 @@ import AdminNavbar from './AdminNavbar';
 import { ref, get, update, query, orderByChild, equalTo, onValue, set } from 'firebase/database';
 import { db } from './../firebase';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { searchUserProfile } from './../firebase';
 
 function AdminProfileEdit() {
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
+    const [staffID, setStaffID] = useState('');
 
     useEffect(() => {
-        // Fetch data from localStorage
-        const adminDataString = localStorage.getItem('adminData');
-        if (adminDataString) {
-            const adminData = JSON.parse(adminDataString);
-            // Set the username in the formData state
-            setUsername(adminData.username);
-            setEmail(adminData.email);
-            setPhone(adminData.phone);
-            // Fetch additional data from Firebase based on the username
-            // const username = adminData.username; // Replace with the actual username
-            // fetchUserData(username);
-        } else {
-            console.error('Admin data not found in localStorage');
-        }
-    }, [username]);
+        const fetchData = async () => {
+            // Fetch data from localStorage
+            const cookieData = Cookies.get('_auth_state');
+            if (cookieData) {
+                const adminData = JSON.parse(cookieData);
+                const userProfileData = await searchUserProfile(adminData.username);
+                
+                // Set the username, email, and phone in the state
+                setUsername(userProfileData.username);
+                setEmail(userProfileData.email);
+                setPhone(userProfileData.phone);
+                setStaffID(userProfileData.staffId);
+    
+                // Fetch additional data from Firebase based on the username
+                // const username = adminData.username; // Replace with the actual username
+                // fetchUserData(username);
+            } else {
+                console.error('Admin data not found in localStorage');
+            }
+        };
+    
+        fetchData(); // Call the async function
+    
+    }, []); // The dependency array is empty since we only want to run this effect once
+    
 
     const fetchUserData = async (username) => {
         try {
@@ -81,8 +94,11 @@ function AdminProfileEdit() {
             <div className={styles.box}>
                 <form>
                     <div className={styles.adminprofile}>
-                        <label className={styles.label}>Name: </label>
+                    <h1 className={styles.heading}>Edit Profile Information</h1>
+                        <label className={styles.label}>Username: </label>
                         <label className={styles.username}>{username}</label>
+                        <label className={styles.label}>UTM StaffID: </label>
+                        <label className={styles.username}>{staffID}</label>
                         <label className={styles.label}>Email: </label>
                         <input className={styles.input} type='text' name='email' value={email} onChange={(e) => setEmail(e.target.value)}></input>
                         <label className={styles.label}>Phone Number: </label>

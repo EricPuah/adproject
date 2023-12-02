@@ -157,4 +157,38 @@ const authenticateUser = async (user, password, setAuth, setSuccess, setErrMsg, 
   }
 }
 
-export { auth, db, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser };
+//Admin Profile: Find User from Database and Return to page
+const searchUserProfile = async (user) => {
+  try {
+    const userRef = ref(db, 'Admin');
+    const userQuery = query(userRef, orderByChild('username'), equalTo(user));
+    const snapshot = await get(userQuery);
+
+    if (snapshot.exists()) {
+      const userDataValue = snapshot.val();
+
+      for (const adminKey in userDataValue) {
+        const userdbData = userDataValue[adminKey];
+
+        if (userdbData.username === user) {
+          const adminData = {
+            email: userdbData.email,
+            phone: userdbData.phone,
+            staffId: userdbData.staffID,
+            username: userdbData.username,
+          }
+          return adminData;
+        }
+      }
+    } else {
+      console.log('User not found');
+      return null; 
+    }
+
+  } catch (err) {
+    console.error('Firebase Error:', err);
+    throw err;
+  }
+}
+
+export { auth, db, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile };

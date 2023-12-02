@@ -18,6 +18,7 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/changepassword" element={<ChangePassword />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
 
         <Route path={'/'} element={
           <RequireAuth loginPath={'/login'}>
