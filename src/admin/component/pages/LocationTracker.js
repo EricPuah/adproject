@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GoogleMap, useJsApiLoader, Marker, InfoWindow,Polyline } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker, InfoWindow, Polyline, mapId} from '@react-google-maps/api';
 import './LocationTracker.css';
 import AdminNavbar from './AdminNavbar';
 import CustomMarker from '../../../assets/bus-stop.png';
@@ -117,7 +117,7 @@ function LocationTracker() {
           zoom={16}
           onLoad={onLoad}
           onUnmount={onUnmount}
-          mapId = "556e9663519326d5"
+          options={{mapId: "556e9663519326d5"}}
           className="google-map"
         >
           {staticMarkers.map((marker) => (
