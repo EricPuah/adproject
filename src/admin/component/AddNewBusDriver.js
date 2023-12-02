@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect, navigate } from 'react';
 import { faCheck, faTimes, faInfoCircle, faFontAwesome } from '@fortawesome/free-solid-svg-icons';
+import { Navigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './RootRegister.module.css';
 import { AddDriverInFirebase, AddAdminInFirebase, checkRepeatedUser } from "./firebase";
@@ -108,7 +109,6 @@ const AddNewBusDriver = () => {
                 await AddAdminInFirebase(fullName, user, email, phone, StaffID, role); //Register user into DB
             }
             setSuccess(true);
-            navigate('/AddNewBusDriver');
         } catch (error) {
             console.error('Firebase Error:', error);
             setErrMsg('An error occurred: ' + error.message);
@@ -120,9 +120,7 @@ const AddNewBusDriver = () => {
             <AdminNavbar />
 
             {success ? (
-                <section className={styles.section}>
-                    <h1>{user} signed up successfully!</h1>
-                </section>
+                    <Navigate to="/AdminManageBus" />
             ) : (
                 <section className={styles.section}>
                     {/* Register Form */}
