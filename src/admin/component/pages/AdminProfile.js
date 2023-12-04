@@ -50,10 +50,10 @@ class AdminProfile extends Component {
                 <li className={styles.listItem}>{data.email}</li>
                 <label className={styles.label}>Phone Number: </label>
                 <li className={styles.listItem}>{data.phone}</li>
-                <Link to={'/AdminProfileEdit'}>
+                <Link to={'/AdminEditProfile'}>
                   <button className={styles.button}>Edit Profile</button>
                 </Link>
-                <Link to={'/resetpassword'}>
+                <Link to={`/changepassword?email=${data.email}&code=${data.userKey}`}>
                   <button className={styles.buttonch}>Change Password</button>
                 </Link>
               </div>

@@ -9,8 +9,8 @@ import AdminProfileEdit from './admin/component/pages/AdminProfileEdit';
 import AddNewAdmin from './admin/component/AddNewAdmin';
 import AddNewBusDriver from './admin/component/AddNewBusDriver';
 import AdminMaps from './admin/component/pages/AdminMaps';
-import ResetPassword from './admin/component/resetpassword';
 import ChangePassword from './admin/component/changepassword';
+import ResetPassword from './admin/component/resetpassword';
 import LocationTracker from './admin/component/pages/LocationTracker';
 import { RequireAuth } from 'react-auth-kit';
 
@@ -18,6 +18,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
+        
         <Route path="/login" element={<Login />} />
         <Route path="/changepassword" element={<ChangePassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
@@ -28,11 +29,11 @@ const App = () => {
           </RequireAuth>
         } />
 
-        <Route path={'/private'} element={
+        {/* <Route path={'/private'} element={
           <RequireAuth loginPath={'/login'}>
             <AdminNavbar />
           </RequireAuth>
-        } />
+        } /> */}
 
         <Route path={'/AdminProfile'} element={
           <RequireAuth loginPath={'/login'}>

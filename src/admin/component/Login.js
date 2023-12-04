@@ -47,7 +47,7 @@ const Login = () => {
             if (data.success) {
                 signIn ({
                     token: data.token,
-                    expiresIn: 24,
+                    expiresIn: 36000,
                     tokenType: "Bearer",
                     authState: { username: user, isRootAdmin: data.isRootAdmin, role: data.role},
                 })
@@ -91,7 +91,7 @@ const Login = () => {
                                 required
                             ></input>
                             <button className={styles.button}>Login</button>
-                            <a className={styles.a} href='/changepassword'>Forgot Password</a>
+                            <a className={styles.a} href='/resetpassword'>Forgot Password</a>
                             <p
                                 ref={errRef}
                                 className={errMsg ? styles.errMsg : styles.offscreen}

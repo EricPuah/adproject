@@ -1,168 +1,81 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { db } from './firebase'; // Import your Firebase database module
 import { ref, get, update } from 'firebase/database';
-import emailjs from 'emailjs-com';
-import styles from './forgotpassword.module.css';
+import styles from './resetpassword.module.css';
+import { changePasswordInDB } from './firebase'
+import { useSignOut } from 'react-auth-kit';
 
-const ForgotPassword = () => {
-  const [currentStep, setCurrentStep] = useState('email');
-  const [email, setEmail] = useState('');
-  const [otp, setOtp] = useState(Array(6).fill(''));
-  const [message, setMessage] = useState(null);
-  const [showOtpInput, setShowOtpInput] = useState(false);
+const ResetPassword = () => {
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [resetStatus, setResetStatus] = useState('');
+  const location = useLocation();
   const navigate = useNavigate();
 
+  // Extract the email and user code from the URL parameters
+  const searchParams = new URLSearchParams(location.search);
+  const email = searchParams.get('email');
+  const code = searchParams.get('code');
 
-  const handleGenerateOtp = async () => {
+  const handleResetPassword = async () => {
     try {
+      if (newPassword !== confirmPassword) {
+        setResetStatus('Passwords do not match. Please make sure both passwords are the same.');
+        return;
+      }
+
       const usersRef = ref(db, 'Admin');
       const usersSnapshot = await get(usersRef);
       const usersData = usersSnapshot.val();
 
-      if (usersData) {
-        for (const code in usersData) {
-          const userEmail = usersData[code].email;
+      // Find the user with the provided email and code
+      const userId = Object.keys(usersData).find(
+        (key) => usersData[key].email === email && key === code
+      );
 
-          if (userEmail === email) {
-            const generatedOtp = generateOtp();
-            const userPath = `Admin/${code}`;
+      if (userId) {
+        await changePasswordInDB(userId, confirmPassword)
 
-            try {
-              await update(ref(db, userPath), { otp: generatedOtp });
-              sendOtpEmail(email, generatedOtp);
-              setMessage('OTP sent. Check your email.');
-              setShowOtpInput(true);
-              setCurrentStep('otp');
-            } catch (updateError) {
-              setMessage(`Error updating OTP: ${updateError.message}`);
-            }
-            return;
-          }
-        }
+        setResetStatus('Password reset successfully. You can now log in with your new password.');
       }
-
-      setMessage('Invalid Email');
-    } catch (error) {
-      setMessage(`Error: ${error.message}`);
-    }
-  };
-
-  const handleVerifyOtp = async () => {
-    try {
-      const usersRef = ref(db, 'Admin');
-      const usersSnapshot = await get(usersRef);
-      const usersData = usersSnapshot.val();
-
-      if (usersData) {
-        for (const code in usersData) {
-          const userEmail = usersData[code].email;
-          const userOtp = usersData[code].otp;
-
-          const enteredOtpString = otp.join('');
-
-          if (userEmail === email && userOtp === enteredOtpString) {
-            navigate(`/resetpassword?email=${email}&code=${code}`);
-            return;
-          }
-        }
+      else {
+        setResetStatus('Invalid or expired verification information. Please try again.');
       }
-
-      setMessage('Invalid OTP');
     } catch (error) {
-
-      setMessage(`Error: ${error.message}`);
+      console.log("3rd");
+      setResetStatus(`Error: ${error.message}`);
     }
-  };
-
-  const generateOtp = () => {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-  };
-
-  const sendOtpEmail = (userEmail, generatedOtp) => {
-    const templateParams = {
-      to_email: userEmail,
-      otp: generatedOtp,
-    };
-
-    emailjs
-      .send(
-        'service_6b9zw5a', // replace with your Email.js service ID
-        'template_0zrp5zg', // replace with your Email.js template ID
-        templateParams,
-        'BkYPmogqsG5jl45iH'
-      )
-      .then((response) => {
-        console.log('Email sent successfully:', response);
-      })
-      .catch((error) => {
-        console.error('Error sending email:', error);
-      });
-  };
-
-  const handleOtpInputChange = (e, index) => {
-    const newOtp = otp.slice(); // Create a copy of the current OTP array
-    newOtp[index] = e.target.value; // Update the value of the corresponding digit
-    setOtp(newOtp); // Update the state with the new OTP array
   };
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.h2}>Forgot Password</h2>
-      <p className={styles.p}>
-        {currentStep === 'email'
-          ? 'Please enter your email to receive an OTP.'
-          : 'Please enter the OTP sent to your email.'}
-      </p>
+      <h2 className={styles.h2}>Reset Password</h2>
+      <p className={styles.p}>Enter your new password:</p>
 
-      {currentStep === 'email' && (
-        <>
-          <label className={styles.label}>Email:</label>
-          <input
-            className={styles.input}
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-          />
-          <button className={styles.button} onClick={handleGenerateOtp}>
-            {currentStep === 'otp' ? 'Resend OTP' : 'Send OTP'}
-          </button>
-        </>
-      )}
+      <input
+        className={styles.input}
+        type="password"
+        value={newPassword}
+        onChange={(e) => setNewPassword(e.target.value)}
+        placeholder="Enter your new password"
+      />
 
+      <input
+        className={styles.input}
+        type="password"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+        placeholder="Confirm your new password"
+      />
 
+      <button className={styles.button} onClick={handleResetPassword}>
+        Reset Password
+      </button>
 
-      {message && <p>{message}</p>}
-
-      {currentStep === 'otp' && (
-        <>
-          <label className={styles.label}>OTP:</label>
-
-          <div className={styles.otpContainer}>
-            {Array.from({ length: 6 }, (_, index) => (
-              <input
-                key={index}
-                className={styles.otpInput}
-                type="text"
-                maxLength="1"
-                value={otp[index] || ''} // Use value of the corresponding digit
-                onChange={(e) => handleOtpInputChange(e, index)}
-              />
-            ))}
-          </div>
-          <br></br>
-          <button className={styles.button} onClick={handleVerifyOtp}>
-            Verify OTP
-          </button>
-          <br></br>
-          <button className={styles.button} onClick={handleGenerateOtp}>
-            {currentStep === 'otp' ? 'Resend OTP' : 'Send OTP'}
-          </button>
-        </>
-      )}
+      {resetStatus && <p>{resetStatus}</p>}
     </div>
   );
 };
 
-export default ForgotPassword;
+export default ResetPassword;

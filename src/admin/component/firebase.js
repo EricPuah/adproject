@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { serverTimestamp, getDatabase, ref, push, set, query, orderByChild, equalTo, onValue, get, child } from 'firebase/database';
+import { serverTimestamp, getDatabase, ref, push, set, query, orderByChild, equalTo, onValue, get, child, update } from 'firebase/database';
 import { hash, compare } from 'bcryptjs'
 import emailjs from 'emailjs-com';
 
@@ -191,13 +191,14 @@ const searchUserProfile = async (user) => {
             phone: userdbData.phone,
             staffId: userdbData.staffID,
             username: userdbData.username,
+            userKey: adminKey,
           }
           return adminData;
         }
       }
     } else {
       console.log('User not found');
-      return null; 
+      return null;
     }
 
   } catch (err) {
@@ -206,4 +207,27 @@ const searchUserProfile = async (user) => {
   }
 }
 
-export { auth, db, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile };
+const changePasswordInDB = async (userId, newPassword) => {
+  try {
+    const userRef = ref(db, `Admin/${userId}`);
+
+    if (userRef) {
+      const hashedPass = await hash(newPassword, 10);
+      await update(userRef,
+        {
+          password: hashedPass
+        });
+      console.log('Password updated successfully');
+      return true;
+    } else {
+      console.log('User not found');
+      return false;
+    }
+  } catch (err) {
+    console.error('Firebase Error:', err);
+    throw err;
+  }
+};
+
+
+export { auth, db, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB };
