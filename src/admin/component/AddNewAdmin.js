@@ -102,11 +102,8 @@ const AddNewStaff = () => {
         }
 
         try {
-            if (role === 'driver') {
-                await AddDriverInFirebase(fullName, user, email, phone, StaffID, role, DriverExpiry); //Register user into DB
-            } else {
                 await AddAdminInFirebase(fullName, user, email, phone, StaffID, role); //Register user into DB
-            }
+            
             setSuccess(true);
         } catch (error) {
             console.error('Firebase Error:', error);
