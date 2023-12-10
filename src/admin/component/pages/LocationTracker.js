@@ -69,13 +69,15 @@ const staticMarkers = [
   { position: { lat: 1.5665533254432862, lng: 103.64036316383651 }, name: 'N29' },
   { position: { lat: 1.5757059386867645, lng: 103.61964077715756 }, name: 'KDOJ 1' },
   { position: { lat: 1.5751600074453354, lng: 103.6181358780248 }, name: 'KDOJ 2' },
-  { position: { lat: 1.54379981263783, lng: 103.632324475812 }, name: 'V01' }
+  { position: { lat: 1.5437683566287588, lng: 103.63235248106939 }, name: 'V01' }
 ];
 
-const busRoute = [
-  {
-    id: 1,
-    position: { lat: 1.5586928453191957, lng: 103.63528569782638 },
+const busData = [
+  { id: 1, position: { lat: 1.5586928453191957, lng: 103.63528569782638 } },
+];
+
+const busRoutes = {
+  ['F1/F2/F3']: {
     route: [
       [1.55969, 103.63487], //Fabu Bus Stop
       [1.55999, 103.63485],
@@ -213,10 +215,9 @@ const busRoute = [
       [1.55921, 103.63498],
       [1.55940, 103.63492],
       [1.55969, 103.63487],
-    ]
-  },
-  // Add more buses with their routes as needed
-];
+    ],
+  }
+};
 
 function LocationTracker() {
   const { isLoaded, loadError } = useJsApiLoader({
@@ -240,8 +241,8 @@ function LocationTracker() {
     setSelectedMarker(marker);
   };
 
-  const handleButtonClick = () => {
-    setShowBusRoute(!showBusRoute); // Toggle the showBusData state
+  const handleBusRouteToggle = () => {
+    setShowBusRoute(!showBusRoute);
   };
 
   if (loadError) {
@@ -256,10 +257,6 @@ function LocationTracker() {
     <div>
       <div>
         <AdminNavbar />
-        {/* Button to show/hide busData */}
-        <button onClick={handleButtonClick}>
-          {showBusRoute ? 'Hide Bus Data' : 'Show Bus Data'}
-        </button>
       </div>
       <div style={containerStyle}>
         <GoogleMap
@@ -295,34 +292,39 @@ function LocationTracker() {
               )}
             </div>
           ))}
-
-          {showBusData &&
-            busData.map((bus) => (
-              <div key={bus.id}>
-                <Marker
-                  position={bus.position}
-                  onClick={() => handleMarkerClick(bus)}
-                  options={{
-                    icon: {
-                      url: CustomMarker,
-                      scaledSize: new window.google.maps.Size(18, 18),
-                    },
-                  }}
-                />
-                {selectedMarker === bus && (
-                  <Polyline
-                    path={bus.route.map(([lat, lng]) => ({ lat, lng }))}
-                    options={{
-                      strokeColor: "#FF0000",
-                      strokeOpacity: 1,
-                      strokeWeight: 5,
-                    }}
-                  />
-                )}
-              </div>
+          {showBusRoute &&
+            Object.keys(busRoutes).map((routeKey) => (
+              <Polyline
+                key={routeKey}
+                path={busRoutes[routeKey].route}
+                options={{
+                  strokeColor: '#FF0000',
+                  strokeOpacity: 1,
+                  strokeWeight: 5,
+                }}
+              />
             ))}
+          {busData.map((bus) => (
+            <Marker
+              key={bus.id}
+              position={bus.position}
+              options={{
+                icon: {
+                  url: CustomMarker,
+                  scaledSize: new window.google.maps.Size(18, 18),
+                },
+              }}
+            />
+          ))}
         </GoogleMap>
       </div>
+      <button
+        className="bus-route-toggle-button"
+        onMouseEnter={handleBusRouteToggle}
+        onMouseLeave={handleBusRouteToggle}
+      >
+        Toggle Bus Route
+      </button>
     </div>
   );
 }
