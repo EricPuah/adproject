@@ -69,9 +69,10 @@ const staticMarkers = [
   { position: { lat: 1.5665533254432862, lng: 103.64036316383651 }, name: 'N29' },
   { position: { lat: 1.5757059386867645, lng: 103.61964077715756 }, name: 'KDOJ 1' },
   { position: { lat: 1.5751600074453354, lng: 103.6181358780248 }, name: 'KDOJ 2' },
+  { position: { lat: 1.54379981263783, lng: 103.632324475812 }, name: 'V01' }
 ];
 
-const busData = [
+const busRoute = [
   {
     id: 1,
     position: { lat: 1.5586928453191957, lng: 103.63528569782638 },
@@ -225,6 +226,7 @@ function LocationTracker() {
 
   const [map, setMap] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState(null);
+  const [showBusRoute, setShowBusRoute] = useState(false);
 
   const onLoad = React.useCallback(function callback(map) {
     setMap(map);
@@ -236,6 +238,10 @@ function LocationTracker() {
 
   const handleMarkerClick = (marker) => {
     setSelectedMarker(marker);
+  };
+
+  const handleButtonClick = () => {
+    setShowBusRoute(!showBusRoute); // Toggle the showBusData state
   };
 
   if (loadError) {
@@ -250,6 +256,10 @@ function LocationTracker() {
     <div>
       <div>
         <AdminNavbar />
+        {/* Button to show/hide busData */}
+        <button onClick={handleButtonClick}>
+          {showBusRoute ? 'Hide Bus Data' : 'Show Bus Data'}
+        </button>
       </div>
       <div style={containerStyle}>
         <GoogleMap
@@ -286,30 +296,31 @@ function LocationTracker() {
             </div>
           ))}
 
-          {busData.map((bus) => (
-            <div key={bus.id}>
-              <Marker
-                position={bus.position}
-                onClick={() => handleMarkerClick(bus)}
-                options={{
-                  icon: {
-                    url: CustomMarker,
-                    scaledSize: new window.google.maps.Size(18, 18),
-                  },
-                }}
-              />
-              {selectedMarker === bus && (
-                <Polyline
-                  path={bus.route.map(([lat, lng]) => ({ lat, lng }))}
+          {showBusData &&
+            busData.map((bus) => (
+              <div key={bus.id}>
+                <Marker
+                  position={bus.position}
+                  onClick={() => handleMarkerClick(bus)}
                   options={{
-                    strokeColor: "#00FF00",
-                    strokeOpacity: 1,
-                    strokeWeight: 2,
+                    icon: {
+                      url: CustomMarker,
+                      scaledSize: new window.google.maps.Size(18, 18),
+                    },
                   }}
                 />
-              )}
-            </div>
-          ))}
+                {selectedMarker === bus && (
+                  <Polyline
+                    path={bus.route.map(([lat, lng]) => ({ lat, lng }))}
+                    options={{
+                      strokeColor: "#FF0000",
+                      strokeOpacity: 1,
+                      strokeWeight: 5,
+                    }}
+                  />
+                )}
+              </div>
+            ))}
         </GoogleMap>
       </div>
     </div>
