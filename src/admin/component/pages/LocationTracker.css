@@ -2,3 +2,10 @@
   margin-left: 25%;
   padding-top: 2%;
 }
+
+.bus-route-toggle-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+}
