@@ -245,6 +245,22 @@ function LocationTracker() {
     setShowBusRoute(!showBusRoute);
   };
 
+  useEffect(() => {
+    // Handle the side effect of changing showBusRoute
+    // This ensures Polyline elements are re-rendered when showBusRoute changes
+    if (showBusRoute && map) {
+      Object.keys(busRoutes).forEach((routeKey) => {
+        const polyline = new window.google.maps.Polyline({
+          path: busRoutes[routeKey].route,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1,
+          strokeWeight: 5,
+          map: map,
+        });
+      });
+    }
+  }, [showBusRoute, map]);
+
   if (loadError) {
     return <p>Error loading map: {loadError.message}</p>;
   }
