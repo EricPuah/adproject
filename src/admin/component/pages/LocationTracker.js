@@ -318,11 +318,7 @@ function LocationTracker() {
           ))}
         </GoogleMap>
       </div>
-      <button
-        className="bus-route-toggle-button"
-        onMouseEnter={handleBusRouteToggle}
-        onMouseLeave={handleBusRouteToggle}
-      >
+      <button className="bus-route-toggle-button" onClick={handleBusRouteToggle}>
         Toggle Bus Route
       </button>
     </div>
