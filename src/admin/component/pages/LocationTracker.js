@@ -101,15 +101,20 @@ function LocationTracker() {
   };
 
   const handleShowBusRoute = (routeKey) => {
-    console.log('Clicked on route:', routeKey);
-    // Toggle the visibility of the route
-    if (visibleRoutes.includes(routeKey)) {
-      setVisibleRoutes(visibleRoutes.filter((key) => key !== routeKey));
-    } else {
-      setVisibleRoutes([...visibleRoutes, routeKey]);
-    }
-  };
+    // Check if the routeKey is in the visibleRoutes array
+    const isVisible = visibleRoutes.includes(routeKey);
 
+    // Update the visibleRoutes array based on the current visibility
+    setVisibleRoutes((prevVisibleRoutes) => {
+      if (isVisible) {
+        // If the route is visible, remove it
+        return prevVisibleRoutes.filter((key) => key !== routeKey);
+      } else {
+        // If the route is not visible, add it
+        return [...prevVisibleRoutes, routeKey];
+      }
+    });
+  };
   if (loadError) {
     return <p>Error loading map: {loadError.message}</p>;
   }
@@ -152,7 +157,7 @@ function LocationTracker() {
               />
             );
           })}
-          
+
           {/* Static markers */}
           {staticMarkers.map((marker) => (
             <div key={marker.name}>
