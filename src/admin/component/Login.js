@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import AuthContext from './context/Authenticator';
 import { authenticateUser } from './firebase';
 import styles from './Login.module.css'
 import { useSignIn } from 'react-auth-kit'
@@ -53,11 +52,10 @@ const Login = () => {
                 })
                 setSuccess(true);
             } else {
-                setErrMsg(`Error: ${data.error}`);
+                setErrMsg(`Incorrect Username or Password.`);
             }
         } catch (error) {
-            console.error('Fetch Error:', error);
-            setErrMsg('An error occurred: ' + error.message);
+            setErrMsg(`Incorrect Username or Password.`);
         }
     };
 

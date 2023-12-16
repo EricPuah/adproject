@@ -54,7 +54,7 @@ const AdminNavbar = () => {
         ) : null}
 
         <li className={styles.list}>
-          <Link to='/AdminProfile' className={styles.hover}>
+          <Link to='/ProfileInformation' className={styles.hover}>
             <MdManageAccounts className={styles.manageicon} />Profile
           </Link>
         </li>

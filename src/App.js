@@ -36,7 +36,7 @@ const App = () => {
           </RequireAuth>
         } /> */}
 
-        <Route path={'/AdminProfile'} element={
+        <Route path={'/ProfileInformation'} element={
           <RequireAuth loginPath={'/login'}>
             <AdminProfile />
           </RequireAuth>
@@ -48,7 +48,7 @@ const App = () => {
           </RequireAuth>
         } />
 
-        <Route path={'/AdminProfileEdit'} element={
+        <Route path={'/ProfileInformationEdit'} element={
           <RequireAuth loginPath={'/login'}>
             <AdminProfileEdit />
           </RequireAuth>
