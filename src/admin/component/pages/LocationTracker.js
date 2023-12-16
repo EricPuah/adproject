@@ -204,6 +204,8 @@ function LocationTracker() {
             const route = busRoutes[routeKey].route;
             const isRouteVisible = visibleRoutes.includes(routeKey);
 
+            console.log('Route Coordinates for', routeKey, ':', route);
+            
             return (
               <button
                 key={routeKey}
