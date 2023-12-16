@@ -197,7 +197,7 @@ function LocationTracker() {
         </div>
 
         {/* Button Container */}
-        <div style={buttonContainerStyle}>
+        <div className ='buttonContainerStyle'>
           {/* Static buttons for each route */}
           {Object.keys(busRoutes).map((routeKey) => {
             const route = busRoutes[routeKey].route;
