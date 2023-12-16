@@ -87,6 +87,7 @@ function LocationTracker() {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [showBusRoute, setShowBusRoute] = useState(false);
+  const [visibleRoutes, setVisibleRoutes] = useState([]);
 
   const onLoad = React.useCallback(function callback(map) {
     setMap(map);
@@ -101,8 +102,12 @@ function LocationTracker() {
   };
 
   const handleShowBusRoute = (routeKey) => {
-    setSelectedRoute(routeKey);
-    setShowBusRoute(!showBusRoute); // Toggle the visibility of the route
+    // Toggle the visibility of the route
+    if (visibleRoutes.includes(routeKey)) {
+      setVisibleRoutes(visibleRoutes.filter((key) => key !== routeKey));
+    } else {
+      setVisibleRoutes([...visibleRoutes, routeKey]);
+    }
   };
 
   if (loadError) {
@@ -113,6 +118,7 @@ function LocationTracker() {
     return <p>Loading map...</p>;
   }
 
+  
   return (
     <div>
       <div>
@@ -169,25 +175,24 @@ function LocationTracker() {
             </div>
           ))}
 
-          {/* Show the selected route as a polyline when the button is clicked */}
-          {Object.keys(busRoutes).map((routeKey) => {
+           {/* Show one button per route */}
+           {Object.keys(busRoutes).map((routeKey) => {
             const route = busRoutes[routeKey].route;
+            const isRouteVisible = visibleRoutes.includes(routeKey);
 
             return (
               <React.Fragment key={routeKey}>
-                {showBusRoute && selectedRoute === routeKey && (
-                  <Polyline
-                    path={route}
-                    options={{
-                      strokeColor: "#FF0000", // Red color for the polyline
-                      strokeOpacity: 1,
-                      strokeWeight: 2,
-                    }}
-                  />
-                )}
+                <Polyline
+                  path={route}
+                  options={{
+                    strokeColor: "#FF0000",
+                    strokeOpacity: isRouteVisible ? 1 : 0, // Set opacity based on visibility
+                    strokeWeight: 5,
+                  }}
+                />
                 <button
                   onClick={() => handleShowBusRoute(routeKey)}
-                  style={{ margin: '5px' }}
+                  style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
                 >
                   {`Show ${routeKey} Route`}
                 </button>
