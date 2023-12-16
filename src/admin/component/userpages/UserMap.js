@@ -71,17 +71,18 @@ const staticMarkers = [
     { position: { lat: 1.5751600074453354, lng: 103.6181358780248 }, name: 'KDOJ 2' },
 ];
 
-const [selectedMarker, setSelectedMarker] = useState(null);
 
 function UserMap() {
     const [searchQuery, setSearchQuery] = useState('');
     const [map, setMap] = useState(null);
-    const [userLocation, setUserLocation] = useState(null); // Track the user's location
+    const [userLocation, setUserLocation] = useState(null);
+    const [selectedMarker, setSelectedMarker] = useState(null); // Track the user's location
 
     const { isLoaded, loadError } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: 'AIzaSyCJ6a-xeKOWK4JWSifzJJfSUNWvlGaLfzU',
     });
+    
 
     const onLoad = React.useCallback(function callback(map) {
         setMap(map);
