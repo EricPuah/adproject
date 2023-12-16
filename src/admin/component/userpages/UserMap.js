@@ -3,6 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow, Polyline } from '@react-google-maps/api';
 import styles from './UserMap.module.css';
 import CustomMarker from '../../../assets/currentLocation.png';
+import busStops from '../../../assets/bus-stop.png';
 import UserSideBar from './UserSideBar';
 
 const containerStyle = {
@@ -134,7 +135,7 @@ function UserMap() {
     }, [map, isLoaded, onLoad, onUnmount]);
 
     const handleMarkerClick = (marker) => {
-        // Handle marker click if needed
+        setSelectedMarker(marker);
     };
 
     if (loadError) {
@@ -182,7 +183,7 @@ function UserMap() {
                                 onClick={() => handleMarkerClick(marker)}
                                 options={{
                                     icon: {
-                                        url: CustomMarker,
+                                        url: busStops,
                                         scaledSize: new window.google.maps.Size(18, 18),
                                     },
                                 }}

@@ -102,7 +102,7 @@ function LocationTracker() {
 
   const handleShowBusRoute = (routeKey) => {
     setSelectedRoute(routeKey);
-    setShowBusRoute(true);
+    setShowBusRoute(!showBusRoute); // Toggle the visibility of the route
   };
 
   if (loadError) {
@@ -168,22 +168,18 @@ function LocationTracker() {
               />
             </div>
           ))}
+
+          {/* Show the selected route as a polyline when the button is clicked */}
           {Object.keys(busRoutes).map((routeKey) => {
             const route = busRoutes[routeKey].route;
 
             return (
               <React.Fragment key={routeKey}>
-                {route.map((coordinates, index) => (
-                  <Marker
-                    key={index}
-                    position={{ lat: coordinates[0], lng: coordinates[1] }}
-                  />
-                ))}
                 {showBusRoute && selectedRoute === routeKey && (
                   <Polyline
                     path={route}
                     options={{
-                      strokeColor: "#00FF00",
+                      strokeColor: "#FF0000", // Red color for the polyline
                       strokeOpacity: 1,
                       strokeWeight: 2,
                     }}
