@@ -125,9 +125,8 @@ function LocationTracker() {
       </div>
       <div style={containerStyle}>
         {/* Map Container */}
-        <div style={mapStyle}>
           <GoogleMap
-            mapContainerStyle={mapStyle}
+            mapContainerStyle={{ width: '100%', height: '100%' }}
             center={center}
             zoom={16}
             onLoad={onLoad}
@@ -216,7 +215,6 @@ function LocationTracker() {
           })}
         </div>
       </div>
-    </div>
   );
 }
 
