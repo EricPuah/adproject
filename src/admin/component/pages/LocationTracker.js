@@ -126,98 +126,98 @@ function LocationTracker() {
       </div>
       <div style={containerStyle}>
         {/* Map Container */}
-          <GoogleMap
-            mapContainerStyle={{ width: '100%', height: '100%' }}
-            center={center}
-            zoom={16}
-            onLoad={onLoad}
-            onUnmount={onUnmount}
-            options={{ mapId: "556e9663519326d5" }}
-            className="google-map"
-          >
-            {/* Static markers */}
-            {staticMarkers.map((marker) => (
-              <div key={marker.name}>
-                <Marker
-                  position={marker.position}
-                  onClick={() => handleMarkerClick(marker)}
-                  options={{
-                    icon: {
-                      url: CustomMarker,
-                      scaledSize: new window.google.maps.Size(18, 18),
-                    },
-                  }}
-                />
-                {selectedMarker === marker && (
-                  <InfoWindow
-                    position={marker.position}
-                    onCloseClick={() => setSelectedMarker(null)}
-                  >
-                    <div>
-                      <h3>{marker.name}</h3>
-                    </div>
-                  </InfoWindow>
-                )}
-              </div>
-            ))}
-
-            {/* Bus markers */}
-            {busData.map((bus) => (
-              <div key={bus.id}>
-                <Marker
-                  position={bus.position}
-                  onClick={() => handleMarkerClick(bus)}
-                  options={{
-                    icon: {
-                      url: CustomMarker,
-                      scaledSize: new window.google.maps.Size(18, 18),
-                    },
-                  }}
-                />
-              </div>
-            ))}
-
-            {/* Polylines for bus routes */}
-            {Object.keys(busRoutes).map((routeKey) => {
-              const route = busRoutes[routeKey].route;
-              const isRouteVisible = visibleRoutes.includes(routeKey);
-
-              return (
-                <Polyline
-                  key={routeKey}
-                  path={route}
-                  options={{
-                    strokeColor: "#FF0000",
-                    strokeOpacity: isRouteVisible ? 1 : 0, // Set opacity based on visibility
-                    strokeWeight: 5,
-                  }}
-                />
-              );
-            })}
-          </GoogleMap>
-        </div>
-
-        {/* Button Container */}
-        <div className ='buttonContainerStyle'>
-          {/* Static buttons for each route */}
+        <GoogleMap
+          mapContainerStyle={{ width: '100%', height: '100%' }}
+          center={center}
+          zoom={16}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+          options={{ mapId: "556e9663519326d5" }}
+          className="google-map"
+        >
           {Object.keys(busRoutes).map((routeKey) => {
             const route = busRoutes[routeKey].route;
             const isRouteVisible = visibleRoutes.includes(routeKey);
+            console.log('Rendering Polyline for route:', routeKey);
 
-            console.log('Route Coordinates for', routeKey, ':', route);
-            
             return (
-              <button
+              <Polyline
                 key={routeKey}
-                onClick={() => handleShowBusRoute(routeKey)}
-                style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
-              >
-                {`${routeKey}`}
-              </button>
+                path={route}
+                options={{
+                  strokeColor: "#FF0000",
+                  strokeOpacity: isRouteVisible ? 1 : 0, // Set opacity based on visibility
+                  strokeWeight: 5,
+                }}
+              />
             );
           })}
-        </div>
+          
+          {/* Static markers */}
+          {staticMarkers.map((marker) => (
+            <div key={marker.name}>
+              <Marker
+                position={marker.position}
+                onClick={() => handleMarkerClick(marker)}
+                options={{
+                  icon: {
+                    url: CustomMarker,
+                    scaledSize: new window.google.maps.Size(18, 18),
+                  },
+                }}
+              />
+              {selectedMarker === marker && (
+                <InfoWindow
+                  position={marker.position}
+                  onCloseClick={() => setSelectedMarker(null)}
+                >
+                  <div>
+                    <h3>{marker.name}</h3>
+                  </div>
+                </InfoWindow>
+              )}
+            </div>
+          ))}
+
+          {/* Bus markers */}
+          {busData.map((bus) => (
+            <div key={bus.id}>
+              <Marker
+                position={bus.position}
+                onClick={() => handleMarkerClick(bus)}
+                options={{
+                  icon: {
+                    url: CustomMarker,
+                    scaledSize: new window.google.maps.Size(18, 18),
+                  },
+                }}
+              />
+            </div>
+          ))}
+        </GoogleMap>
       </div>
+
+      {/* Button Container */}
+      <div className='buttonContainerStyle'>
+        {/* Static buttons for each route */}
+        {Object.keys(busRoutes).map((routeKey) => {
+          const route = busRoutes[routeKey].route;
+          const isRouteVisible = visibleRoutes.includes(routeKey);
+
+          console.log('Route Coordinates for', routeKey, ':', route);
+
+          return (
+            <button
+              key={routeKey}
+              onClick={() => handleShowBusRoute(routeKey)}
+              style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
+            >
+              {`${routeKey}`}
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
