@@ -190,7 +190,7 @@ function LocationTracker() {
                     strokeWeight: 5,
                   }}
                 />
-                <button
+                <button className='button'
                   onClick={() => handleShowBusRoute(routeKey)}
                   style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
                 >
