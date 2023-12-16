@@ -86,7 +86,7 @@ function LocationTracker() {
 
   const [map, setMap] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState(null);
-  const [visibleRoutes, setVisibleRoutes] = useState([]);
+  const [visibleRoute, setVisibleRoute] = useState(null);
 
   const onLoad = React.useCallback(function callback(map) {
     setMap(map);
@@ -101,20 +101,16 @@ function LocationTracker() {
   };
 
   const handleShowBusRoute = (routeKey) => {
-    // Check if the routeKey is in the visibleRoutes array
-    const isVisible = visibleRoutes.includes(routeKey);
-
-    // Update the visibleRoutes array based on the current visibility
-    setVisibleRoutes((prevVisibleRoutes) => {
-      if (isVisible) {
-        // If the route is visible, remove it
-        return prevVisibleRoutes.filter((key) => key !== routeKey);
-      } else {
-        // If the route is not visible, add it
-        return [...prevVisibleRoutes, routeKey];
-      }
-    });
+    // Check if the clicked route is already visible
+    if (visibleRoute === routeKey) {
+      // If yes, close the route
+      setVisibleRoute(null);
+    } else {
+      // If not, set the clicked route to be visible
+      setVisibleRoute(routeKey);
+    }
   };
+
   if (loadError) {
     return <p>Error loading map: {loadError.message}</p>;
   }
@@ -142,7 +138,7 @@ function LocationTracker() {
         >
           {Object.keys(busRoutes).map((routeKey) => {
             const route = busRoutes[routeKey].route;
-            const isRouteVisible = visibleRoutes.includes(routeKey);
+            const isRouteVisible = visibleRoute === routeKey;
             console.log('Rendering Polyline for route:', routeKey);
 
             return (
@@ -206,10 +202,9 @@ function LocationTracker() {
       <div className='buttonContainerStyle'>
         {/* Static buttons for each route */}
         {Object.keys(busRoutes).map((routeKey) => {
-          const route = busRoutes[routeKey].route;
-          const isRouteVisible = visibleRoutes.includes(routeKey);
+          const isRouteVisible = visibleRoute === routeKey;
 
-          console.log('Route Coordinates for', routeKey, ':', route);
+          console.log('Route Coordinates for', routeKey, ':', busRoutes[routeKey].route);
 
           return (
             <button
