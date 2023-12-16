@@ -8,7 +8,6 @@ import AdminManageBus from './admin/component/pages/AdminManageBus';
 import AdminProfileEdit from './admin/component/pages/AdminProfileEdit';
 import AddNewAdmin from './admin/component/AddNewAdmin';
 import AddNewBusDriver from './admin/component/AddNewBusDriver';
-import AdminMaps from './admin/component/pages/AdminMaps';
 import ChangePassword from './admin/component/changepassword';
 import ResetPassword from './admin/component/resetpassword';
 import LocationTracker from './admin/component/pages/LocationTracker';
