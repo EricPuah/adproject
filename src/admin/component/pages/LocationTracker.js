@@ -101,6 +101,7 @@ function LocationTracker() {
   };
 
   const handleShowBusRoute = (routeKey) => {
+    console.log('Clicked on route:', routeKey);
     // Toggle the visibility of the route
     if (visibleRoutes.includes(routeKey)) {
       setVisibleRoutes(visibleRoutes.filter((key) => key !== routeKey));
@@ -209,7 +210,7 @@ function LocationTracker() {
                 onClick={() => handleShowBusRoute(routeKey)}
                 style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
               >
-                {`Show ${routeKey} Route`}
+                {`${routeKey}`}
               </button>
             );
           })}
