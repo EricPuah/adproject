@@ -118,7 +118,7 @@ function LocationTracker() {
     return <p>Loading map...</p>;
   }
 
-  
+
   return (
     <div>
       <div>
@@ -175,13 +175,13 @@ function LocationTracker() {
             </div>
           ))}
 
-           {/* Show one button per route */}
-           {Object.keys(busRoutes).map((routeKey) => {
+          {/* Show one button per route */}
+          {Object.keys(busRoutes).map((routeKey) => {
             const route = busRoutes[routeKey].route;
             const isRouteVisible = visibleRoutes.includes(routeKey);
 
             return (
-              <React.Fragment key={routeKey}>
+              <div key={routeKey}>
                 <Polyline
                   path={route}
                   options={{
@@ -190,13 +190,13 @@ function LocationTracker() {
                     strokeWeight: 5,
                   }}
                 />
-                <button className='button'
+                <button
                   onClick={() => handleShowBusRoute(routeKey)}
                   style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
                 >
                   {`Show ${routeKey} Route`}
                 </button>
-              </React.Fragment>
+              </div>
             );
           })}
         </GoogleMap>
@@ -204,5 +204,6 @@ function LocationTracker() {
     </div>
   );
 }
+
 
 export default LocationTracker;

@@ -10,7 +10,7 @@
   z-index: 1000;
 }
 
-button {
+.button {
   background-color: #000; /* Add a contrasting color */
   color: #ad1c1c;
   border: 1px solid #000;
