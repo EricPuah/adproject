@@ -13,12 +13,14 @@ import ChangePassword from './admin/component/changepassword';
 import ResetPassword from './admin/component/resetpassword';
 import LocationTracker from './admin/component/pages/LocationTracker';
 import { RequireAuth } from 'react-auth-kit';
+import UserMap from './admin/component/userpages/UserMap';
+import UserFeedback from './admin/component/userpages/UserFeedback';
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        
+        <Route path="/" element={<UserMap />} />
         <Route path="/login" element={<Login />} />
         <Route path="/changepassword" element={<ChangePassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
@@ -81,6 +83,14 @@ const App = () => {
           <RequireAuth loginPath={'/login'}>
             <AdminManageBus />
           </RequireAuth>
+        } />
+
+        <Route path={'/UserMap'} element={
+          <UserMap />
+        } />
+
+        <Route path={'/UserFeedback'} element={
+          <UserFeedback />
         } />
 
       </Routes>

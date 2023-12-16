@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './AdminManageBus.module.css';
 import AdminNavbar from './AdminNavbar';
 import { ref, onValue, query, orderByChild, equalTo, get, remove } from 'firebase/database';
-import { db } from './../firebase';
+import { db } from '../firebase';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 

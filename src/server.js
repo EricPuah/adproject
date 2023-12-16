@@ -32,7 +32,7 @@ app.post('/login', async (req, res) => {
         const { username, password } = req.body;
 
         const adminQuery = await adminRef.orderByChild('username').equalTo(username).once('value');
-        
+
         if (adminQuery.exists()) {
             const adminData = adminQuery.val();
 
@@ -42,7 +42,7 @@ app.post('/login', async (req, res) => {
                 const adminEntry = adminData[adminKey];
 
                 if (adminEntry.username === username && await compare(password, adminEntry.password)) {
-                    const token = jwt.sign({ username: username, key: adminKey}, secretKey);
+                    const token = jwt.sign({ username: username, key: adminKey }, secretKey);
                     console.log(token);
                     passwordMatched = true;
                     res.json({ success: true, token: token, isRootAdmin: adminEntry.isRootAdmin, role: adminEntry.role });
@@ -60,6 +60,34 @@ app.post('/login', async (req, res) => {
     } catch (error) {
         console.error('Firebase Error:', error);
         res.status(500).json({ error: 'An error occurred' });
+    }
+});
+
+app.post('/submit-feedback', async (req, res) => {
+    try {
+        const formData = req.body;
+
+        const { name, email, category, message, rating } = formData;
+
+        const feedbackRef = db.ref('feedback');
+        const newFeedbackRef = push(feedbackRef);
+
+        await set(newFeedbackRef, {
+            name: name,
+            email: email,
+            category: category,
+            message: message,
+            rating: rating,
+            timestamp: admin.database.ServerValue.TIMESTAMP, // Optional: Store timestamp
+        });
+
+        console.log('Received feedback:', formData);
+
+        // Send a response to the client
+        res.status(200).json({ success: true, message: 'Feedback submitted successfully' });
+    } catch (error) {
+        console.error('Error handling feedback:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
 

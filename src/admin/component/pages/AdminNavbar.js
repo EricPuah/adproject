@@ -27,6 +27,7 @@ const AdminNavbar = () => {
         <li className={styles.dashboard}>
           <AiOutlineDashboard className={styles.dashboardicon} />Dashboard
         </li>
+        
         <li className={styles.list}>
           <TbMapSearch className={styles.mapsicon} />
           <Link to='/AdminMaps' className={styles.hover}>

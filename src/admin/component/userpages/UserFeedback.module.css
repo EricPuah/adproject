@@ -1,0 +1,101 @@
+.feedbackContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+}
+
+.feedbackContent {
+    text-align: left;
+    border: 2px solid #3498db;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    padding: 40px 50px 40px 30px;
+    margin-top: 28px;
+}
+
+h1 {
+    color: #3498db;
+    display: flex;
+    justify-content: center;
+}
+
+form {
+    display: inline-block;
+    text-align: left;
+    max-width: 400px;
+}
+
+.formGroup {
+    margin-bottom: 15px;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+p {
+    color: #27ae60;
+}
+
+.ratingSection {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.starLabel {
+    font-size: 24px;
+    color: #000000;
+    /* Star color */
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+/* Hide the default radio button */
+.starLabel input {
+    display: none;
+}
+
+/* Optional: Add hover effect on stars */
+.starLabel:hover {
+    color: #ff9800;
+    /* Hovered star color */
+}
+
+.stars {
+    color: #ff9800;
+}
+
+.starContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 60px;
+    margin-top: 5px;
+}
