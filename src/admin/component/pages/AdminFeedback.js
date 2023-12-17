@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import AdminNavbar from './AdminNavbar'
 import { FaRegStar, FaStar } from "react-icons/fa";
+import { ref, onValue } from 'firebase/database';
+import { db } from './../firebase';
 import styles from './AdminFeedback.module.css'; // Create a CSS module for styling
 
 function AdminFeedback() {
@@ -8,42 +10,67 @@ function AdminFeedback() {
 
     useEffect(() => {
         // Fetch feedback data from the server
-        const fetchFeedbackData = async () => {
-            try {
-                const response = await fetch('http://localhost:8081/get-feedback');
-                if (response.ok) {
-                    const data = await response.json();
-                    setFeedbackData(data);
-                } else {
-                    console.error('Failed to fetch feedback data');
-                }
-            } catch (error) {
-                console.error('Error fetching feedback data:', error);
-            }
-        };
+        const feedbackRef = ref(db, 'feedback');
 
-        fetchFeedbackData();
+        onValue(feedbackRef, (snapshot) => {
+            if (snapshot.exists()) {
+                // Convert the snapshot value to an array of admins
+                const feedBackData = Object.values(snapshot.val());
+                setFeedbackData(feedBackData);
+            } else {
+                console.error('No feedback found in Firebase');
+            }
+        });
     }, []); // Empty dependency array ensures the effect runs once on mount
 
     return (
         <div>
-            <AdminNavbar/>
-            <h1>Admin Feedback</h1>
-            {/* Display feedback data here */}
-            <ul>
-                {feedbackData.map((feedback) => (
-                    <li key={feedback.id}>
-                        <p>Name: {feedback.name}</p>
-                        <p>Email: {feedback.email}</p>
-                        <p>Category: {feedback.category}</p>
-                        <p>Message: {feedback.message}</p>
-                        <p>Rating: {feedback.rating}</p>
-                    </li>
-                ))}
-            </ul>
+            <AdminNavbar />
+            <div className={styles.container}>
+                <div className={styles.listcontainer}>
+                    <h2 className={styles.listtitle}>User Feedback</h2>
+                    <table className={styles.listtable}>
+                        <thead>
+                            <tr>
+                                <th className={styles.header}>No.</th>
+                                <th className={styles.header}>Date of Creation</th>
+                                <th className={styles.header}>Name</th>
+                                <th className={styles.header}>Email</th>
+                                <th className={styles.header}>Category</th>
+                                <th className={styles.header}>Message</th>
+                                <th className={styles.header}>Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {feedbackData.map((feedback, index) => (
+                                <tr key={index} className={styles.listitem}>
+                                    <td className={styles.data}>{index + 1}</td>
+                                    <td className={styles.data}>
+                                        <span className={styles.detaillabel}>{feedback.dateOfCreation}</span>
+                                    </td>
+                                    <td className={styles.data}>
+                                        <span className={styles.detaillabel}>{feedback.name}</span>
+                                    </td>
+                                    <td className={styles.data}>
+                                        <span className={styles.detaillabel}>{feedback.email}</span>
+                                    </td>
+                                    <td className={styles.data}>
+                                        <span className={styles.detaillabel}>{feedback.category}</span>
+                                    </td>
+                                    <td className={`${styles.data} ${styles.messageColumn}`}>
+                                        <span className={styles.detaillabel}>{feedback.message}</span>
+                                    </td>
+                                    <td className={styles.data}>
+                                        <span className={styles.detaillabel}>{feedback.rating}</span>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     );
 }
 
 export default AdminFeedback;
-
