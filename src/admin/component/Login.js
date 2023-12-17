@@ -29,7 +29,7 @@ const Login = () => {
 
         try {
 
-            const response = await fetch('https://adprojectserver.vercel.app:8081/login', {
+            const response = await fetch('https://ad-server-js.vercel.app:8081/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
