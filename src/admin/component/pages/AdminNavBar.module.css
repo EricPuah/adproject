@@ -25,6 +25,8 @@ body {
   /* Adjust the font size */
   font-size: 16px;
   /* Change the value to set your desired font size */
+
+  transition: width 0.3s ease-in-out;
 }
 
 .navbarlist {
@@ -100,4 +102,11 @@ body {
 
 .logout:hover {
   color: #e74c3c;
+}
+
+@media (max-width: 768px) {
+  .verticalnavbar {
+    width: 0;
+    /* Hide the navbar by default on mobile */
+  }
 }

@@ -16,3 +16,14 @@
   right: 20px;
   z-index: 1000;
 };
+
+@media (max-width: 768px) {
+  .buttonContainerStyle {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+}

@@ -6,6 +6,7 @@ import CustomMarker from '../../../assets/currentLocation.png';
 import busStops from '../../../assets/bus-stop.png';
 import UserSideBar from './UserSideBar';
 import busRoutes from '../pages/busRoutes';
+import '../pages/LocationTracker.css'
 
 const containerStyle = {
     width: '60%',
@@ -24,7 +25,6 @@ const defaultCenter = {
 const routeKeys = Object.keys(busRoutes);
 
 const staticMarkers = [
-    { position: { lat: 1.5593613531032313, lng: 103.63280919934147 }, name: 'KRP 1' },
     { position: { lat: 1.5593613531032313, lng: 103.63280919934147 }, name: 'KRP 1' },
     { position: { lat: 1.5594488031178655, lng: 103.63181397038748 }, name: 'KRP 2' },
     { position: { lat: 1.5581984657886114, lng: 103.63013361402903 }, name: 'KRP 3' },
@@ -123,8 +123,6 @@ function UserMap() {
 
                     setUserLocation(location);
 
-                    // Center the map to the user's location
-                    map.panTo(location);
                 },
                 (error) => {
                     console.error('Error getting user location:', error);
