@@ -112,6 +112,28 @@ function UserMap() {
         }
     };
 
+    const updateUserLocation = () => {
+        if (navigator.geolocation && map) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const location = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    };
+
+                    setUserLocation(location);
+
+                    // Center the map to the user's location
+                    map.panTo(location);
+                },
+                (error) => {
+                    console.error('Error getting user location:', error);
+                }
+            );
+        } else {
+            console.error('Geolocation is not supported by this browser or map is not available.');
+        }
+    };
 
     useEffect(() => {
         // Function to request user's current location
@@ -140,6 +162,9 @@ function UserMap() {
 
         // Request user's location when the component mounts
         requestUserLocation();
+        updateUserLocation();
+
+        const updateLocationInterval = setInterval(updateUserLocation, 1000);
 
         // Set up an event listener to refresh the user's location when the map is loaded
         if (isLoaded) {
@@ -151,6 +176,7 @@ function UserMap() {
             if (map) {
                 onUnmount();
             }
+            clearInterval(updateLocationInterval);
         };
     }, [map, isLoaded, onLoad, onUnmount]);
 
