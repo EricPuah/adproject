@@ -26,11 +26,11 @@ function UserSideBar() {
           </Link>
         </li>
 
-        <li className={styles.list}>
+        {/* <li className={styles.list}>
           <Link to='' className={styles.hover}>
             <TbRouteSquare className={styles.routesicon} />Routes
           </Link>
-        </li>
+        </li> */}
 
         <li className={styles.list}>
           <Link to='/UserFeedback' className={styles.hover}>
