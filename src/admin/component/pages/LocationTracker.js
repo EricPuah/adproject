@@ -22,7 +22,6 @@ const center = {
 // Initial static markers
 const staticMarkers = [
   { position: { lat: 1.5593613531032313, lng: 103.63280919934147 }, name: 'KRP 1' },
-  { position: { lat: 1.5593613531032313, lng: 103.63280919934147 }, name: 'KRP 1' },
   { position: { lat: 1.5594488031178655, lng: 103.63181397038748 }, name: 'KRP 2' },
   { position: { lat: 1.5581984657886114, lng: 103.63013361402903 }, name: 'KRP 3' },
   { position: { lat: 1.557820767476252, lng: 103.62933025021609 }, name: 'KRP 4' },
