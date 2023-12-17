@@ -36,7 +36,7 @@ function UserFeedback() {
 
         try {
             // Make a POST request to your server endpoint
-            const response = await fetch('http://localhost:8081/submit-feedback', {
+            const response = await fetch('https://ad-server-js.vercel.app/submit-feedback', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

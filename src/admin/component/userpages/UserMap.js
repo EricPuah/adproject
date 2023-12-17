@@ -135,7 +135,7 @@ function UserMap() {
 
     const sendUserLocationToServer = (location) => {
         // Use fetch or Axios to send a POST request to your server
-        fetch('http://localhost:8081/location', {
+        fetch('https://ad-server-js.vercel.app/location', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
