@@ -5,6 +5,7 @@ import styles from './UserMap.module.css';
 import CustomMarker from '../../../assets/currentLocation.png';
 import busStops from '../../../assets/bus-stop.png';
 import UserSideBar from './UserSideBar';
+import busRoutes from './busRoutes';
 
 const containerStyle = {
     width: '60%',
@@ -19,6 +20,8 @@ const defaultCenter = {
     lat: 1.559803,
     lng: 103.637998,
 };
+
+const routeKeys = Object.keys(busRoutes);
 
 const staticMarkers = [
     { position: { lat: 1.5593613531032313, lng: 103.63280919934147 }, name: 'KRP 1' },
@@ -79,12 +82,14 @@ function UserMap() {
     const [map, setMap] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
     const [selectedMarker, setSelectedMarker] = useState(null); // Track the user's location
+    const [visibleRoute, setVisibleRoute] = useState(null);
+    const [selectedRoute, setSelectedRoute] = useState(null);
 
     const { isLoaded, loadError } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: 'AIzaSyCJ6a-xeKOWK4JWSifzJJfSUNWvlGaLfzU',
     });
-    
+
 
     const onLoad = React.useCallback(function callback(map) {
         setMap(map);
@@ -93,6 +98,20 @@ function UserMap() {
     const onUnmount = React.useCallback(function callback() {
         setMap(null);
     }, []);
+
+    const handleShowBusRoute = (routeKey) => {
+        // Check if the clicked route is already visible
+        if (visibleRoute === routeKey) {
+            // If yes, close the route
+            setVisibleRoute(null);
+            setSelectedRoute(null);
+        } else {
+            // If not, set the clicked route to be visible
+            setVisibleRoute(routeKey);
+            setSelectedRoute(busRoutes[routeKey].route);
+        }
+    };
+
 
     useEffect(() => {
         // Function to request user's current location
@@ -177,6 +196,16 @@ function UserMap() {
                     options={{ mapId: '556e9663519326d5' }}
                     className="google-map"
                 >
+                    {selectedRoute && (
+                        <Polyline
+                            path={selectedRoute}
+                            options={{
+                                strokeColor: "#FF0000", // Change the color as needed
+                                strokeOpacity: 1,
+                                strokeWeight: 5,
+                            }}
+                        />
+                    )}
                     {staticMarkers.map((marker) => (
                         <div key={marker.name}>
                             <Marker
@@ -201,21 +230,37 @@ function UserMap() {
                             )}
                         </div>
                     ))}
-                    {/* Display the user's current location marker */ }
-                    { userLocation && (
-                            <Marker
-                                position={userLocation}
-                                onClick={() => handleMarkerClick(userLocation)}
-                                options={{
-                                    icon: {
-                                        url: CustomMarker,
-                                        scaledSize: new window.google.maps.Size(60, 60),
-                                    },
-                                }}
-                            />
-                        )}
+                    {/* Display the user's current location marker */}
+                    {userLocation && (
+                        <Marker
+                            position={userLocation}
+                            onClick={() => handleMarkerClick(userLocation)}
+                            options={{
+                                icon: {
+                                    url: CustomMarker,
+                                    scaledSize: new window.google.maps.Size(60, 60),
+                                },
+                            }}
+                        />
+                    )}
                     {/* Your other markers and polylines go here */}
                 </GoogleMap>
+            </div>
+
+            <div className='buttonContainerStyle'>
+                {routeKeys.slice(0, 8).map((routeKey) => {
+                    const isRouteVisible = visibleRoute === routeKey;
+
+                    return (
+                        <button
+                            key={routeKey}
+                            onClick={() => handleShowBusRoute(routeKey)}
+                            style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
+                        >
+                            {`${routeKey}`}
+                        </button>
+                    );
+                })}
             </div>
         </div>
     );
