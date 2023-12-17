@@ -70,13 +70,15 @@ const staticMarkers = [
   { position: { lat: 1.5665533254432862, lng: 103.64036316383651 }, name: 'N29' },
   { position: { lat: 1.5757059386867645, lng: 103.61964077715756 }, name: 'KDOJ 1' },
   { position: { lat: 1.5751600074453354, lng: 103.6181358780248 }, name: 'KDOJ 2' },
-  { position: { lat: 1.543828966353402, lng: 103.63239574528227 }, name: 'T01' }
+  vb
 ];
 
 const busData = [
   { id: 1, position: { lat: 1.5586928453191957, lng: 103.63528569782638 }, route: [{ lat: 1.5586928453191957, lng: 103.63528569782638 }, { lat: 1.5603304157190552, lng: 103.63485874559022 }] },
   // Add more buses with their routes as needed
 ];
+
+const routeKeys = Object.keys(busRoutes);
 
 function LocationTracker() {
   const { isLoaded, loadError } = useJsApiLoader({
@@ -87,6 +89,7 @@ function LocationTracker() {
   const [map, setMap] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [visibleRoute, setVisibleRoute] = useState(null);
+  const [selectedRoute, setSelectedRoute] = useState(null);
 
   const onLoad = React.useCallback(function callback(map) {
     setMap(map);
@@ -105,9 +108,11 @@ function LocationTracker() {
     if (visibleRoute === routeKey) {
       // If yes, close the route
       setVisibleRoute(null);
+      setSelectedRoute(null);
     } else {
       // If not, set the clicked route to be visible
       setVisibleRoute(routeKey);
+      setSelectedRoute(busRoutes[routeKey].route);
     }
   };
 
@@ -136,23 +141,16 @@ function LocationTracker() {
           options={{ mapId: "556e9663519326d5" }}
           className="google-map"
         >
-          {Object.keys(busRoutes).map((routeKey) => {
-            const route = busRoutes[routeKey].route;
-            const isRouteVisible = visibleRoute === routeKey;
-            console.log('Rendering Polyline for route:', routeKey);
-
-            return (
-              <Polyline
-                key={routeKey}
-                path={route}
-                options={{
-                  strokeColor: "#FF0000",
-                  strokeOpacity: isRouteVisible ? 1 : 0, // Set opacity based on visibility
-                  strokeWeight: 5,
-                }}
-              />
-            );
-          })}
+          {selectedRoute && (
+            <Polyline
+              path={selectedRoute}
+              options={{
+                strokeColor: "#00FF00", // Change the color as needed
+                strokeOpacity: 1,
+                strokeWeight: 5,
+              }}
+            />
+          )}
 
           {/* Static markers */}
           {staticMarkers.map((marker) => (
@@ -200,11 +198,8 @@ function LocationTracker() {
 
       {/* Button Container */}
       <div className='buttonContainerStyle'>
-        {/* Static buttons for each route */}
-        {Object.keys(busRoutes).map((routeKey) => {
+        {routeKeys.slice(0, 8).map((routeKey) => {
           const isRouteVisible = visibleRoute === routeKey;
-
-          console.log('Route Coordinates for', routeKey, ':', busRoutes[routeKey].route);
 
           return (
             <button
