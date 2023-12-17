@@ -5,7 +5,7 @@ import styles from './UserMap.module.css';
 import CustomMarker from '../../../assets/currentLocation.png';
 import busStops from '../../../assets/bus-stop.png';
 import UserSideBar from './UserSideBar';
-import busRoutes from './busRoutes';
+import busRoutes from '..pages/busRoutes';
 
 const containerStyle = {
     width: '60%',
