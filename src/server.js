@@ -78,7 +78,7 @@ app.post('/submit-feedback', async (req, res) => {
             category: category,
             message: message,
             rating: rating,
-            timestamp: admin.database.ServerValue.TIMESTAMP, // Optional: Store timestamp
+            dateOfCreation: new Date().toLocaleDateString('en-GB'), // Optional: Store timestamp
         });
 
         console.log('Received feedback:', formData);
@@ -90,6 +90,7 @@ app.post('/submit-feedback', async (req, res) => {
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
+
 
 app.listen(port, () => {
     console.log('Server is running on port ' + port);

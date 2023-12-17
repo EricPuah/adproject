@@ -15,13 +15,13 @@
     margin-top: 28px;
 }
 
-h1 {
+.h1 {
     color: #3498db;
     display: flex;
     justify-content: center;
 }
 
-form {
+.form {
     display: inline-block;
     text-align: left;
     max-width: 400px;
@@ -31,14 +31,14 @@ form {
     margin-bottom: 15px;
 }
 
-label {
+.label {
     margin-bottom: 5px;
     font-weight: bold;
 }
 
-input,
-select,
-textarea {
+.input,
+.select,
+.textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -46,7 +46,7 @@ textarea {
     margin-top: 5px;
 }
 
-button {
+.button {
     background-color: #3498db;
     color: #fff;
     padding: 10px;
@@ -55,11 +55,11 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.button:hover {
     background-color: #2980b9;
 }
 
-p {
+.p {
     color: #27ae60;
 }
 

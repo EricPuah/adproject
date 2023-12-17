@@ -60,15 +60,15 @@ function UserFeedback() {
             <UserSideBar />
             <div className={styles.feedbackContainer}>
                 <div className={styles.feedbackContent}>
-                    <h1>User Feedback</h1>
+                    <h1 className={styles.h1}>User Feedback</h1>
 
                     {submitted ? (
-                        <p>Thank you for your feedback!</p>
+                        <p className={styles.p}>Thank you for your feedback!</p>
                     ) : (
-                        <form onSubmit={handleSubmit}>
-                            
+                        <form className={styles.form} onSubmit={handleSubmit}>
+
                             <div className={styles.ratingSection}>
-                                <label htmlFor="rating">Overall Satisfaction:</label>
+                                <label className={styles.label} htmlFor="rating">Overall Satisfaction:</label>
                                 <div className={styles.starContainer}>
                                     {[1, 2, 3, 4, 5].map((star) => (
                                         <label
@@ -92,8 +92,8 @@ function UserFeedback() {
                             </div>
 
                             <div className={styles.formGroup}>
-                                <label htmlFor="name">Name:</label>
-                                <input
+                                <label className={styles.label} htmlFor="name">Name:</label>
+                                <input className={styles.input}
                                     type="text"
                                     id="name"
                                     name="name"
@@ -104,8 +104,9 @@ function UserFeedback() {
                             </div>
 
                             <div className={styles.formGroup}>
-                                <label htmlFor="email">Email:</label>
+                                <label className={styles.label} htmlFor="email">Email:</label>
                                 <input
+                                    className={styles.input}
                                     type="email"
                                     id="email"
                                     name="email"
@@ -116,8 +117,9 @@ function UserFeedback() {
                             </div>
 
                             <div className={styles.formGroup}>
-                                <label htmlFor="category">Feedback Category:</label>
+                                <label className={styles.label} htmlFor="category">Feedback Category:</label>
                                 <select
+                                    className={styles.select}
                                     id="category"
                                     name="category"
                                     value={formData.category}
@@ -132,8 +134,9 @@ function UserFeedback() {
                             </div>
 
                             <div className={styles.formGroup}>
-                                <label htmlFor="message">Feedback Message:</label>
+                                <label className={styles.label} htmlFor="message">Feedback Message:</label>
                                 <textarea
+                                    className={styles.textarea}
                                     id="message"
                                     name="message"
                                     rows="4"
@@ -144,7 +147,7 @@ function UserFeedback() {
                                 />
                             </div>
 
-                            <button type="submit">Submit Feedback</button>
+                            <button className={styles.button} type="submit">Submit Feedback</button>
 
                         </form>
                     )}
