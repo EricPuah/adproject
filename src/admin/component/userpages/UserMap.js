@@ -6,6 +6,7 @@ import CustomMarker from '../../../assets/currentLocation.png';
 import busStops from '../../../assets/bus-stop.png';
 import UserSideBar from './UserSideBar';
 import busRoutes from '../pages/busRoutes';
+import '../pages/LocationTracker.css'
 
 const containerStyle = {
     width: '60%',
@@ -121,7 +122,7 @@ function UserMap() {
                     };
 
                     setUserLocation(location);
-
+                    sendUserLocationToServer(location);
                 },
                 (error) => {
                     console.error('Error getting user location:', error);
@@ -130,6 +131,29 @@ function UserMap() {
         } else {
             console.error('Geolocation is not supported by this browser or map is not available.');
         }
+    };
+
+    const sendUserLocationToServer = (location) => {
+        // Use fetch or Axios to send a POST request to your server
+        fetch('http://localhost:8081/location', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(location),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to send user location to server');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('User location sent successfully:', data);
+            })
+            .catch(error => {
+                console.error('Error sending user location to server:', error);
+            });
     };
 
     useEffect(() => {
@@ -144,9 +168,6 @@ function UserMap() {
                         };
 
                         setUserLocation(location);
-
-                        // Center the map to the user's location
-                        map.panTo(location);
                     },
                     (error) => {
                         console.error('Error getting user location:', error);
@@ -161,12 +182,12 @@ function UserMap() {
         requestUserLocation();
         updateUserLocation();
 
-        const updateLocationInterval = setInterval(updateUserLocation, 100);
+        const updateLocationInterval = setInterval(updateUserLocation, 400);
 
         // Set up an event listener to refresh the user's location when the map is loaded
         if (isLoaded) {
             onLoad(map);
-        }
+        } 
 
         // Clean up the event listener when the component is unmounted
         return () => {
