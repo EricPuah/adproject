@@ -97,6 +97,16 @@ const Login = () => {
                             >
                                 {errMsg}
                             </p>
+
+                            <a className={styles.a} href='/UserMap'>User Main Page</a>
+                            <p
+                                ref={errRef}
+                                className={errMsg ? styles.errMsg : styles.offscreen}
+                                aria-live='assertive'
+                            >
+                                {errMsg}
+                            </p>
+                            
                         </form>
                     </section>
                 )
