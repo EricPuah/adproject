@@ -6,6 +6,7 @@ import CustomMarker from '../../../assets/currentLocation.png';
 import busStops from '../../../assets/bus-stop.png';
 import UserSideBar from './UserSideBar';
 import busRoutes from '../pages/busRoutes';
+import '../pages/LocationTracker.css'
 
 const containerStyle = {
     width: '60%',
