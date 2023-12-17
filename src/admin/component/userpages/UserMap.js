@@ -147,9 +147,7 @@ function UserMap() {
                         };
 
                         setUserLocation(location);
-
-                        // Center the map to the user's location
-                        map.panTo(location);
+                        sendUserLocationToServer(location);
                     },
                     (error) => {
                         console.error('Error getting user location:', error);
@@ -160,16 +158,39 @@ function UserMap() {
             }
         };
 
+        const sendUserLocationToServer = (location) => {
+            // Use fetch or Axios to send a POST request to your server
+            fetch('http://localhost:8081/location', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(location),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to send user location to server');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('User location sent successfully:', data);
+                })
+                .catch(error => {
+                    console.error('Error sending user location to server:', error);
+                });
+        };
+
         // Request user's location when the component mounts
         requestUserLocation();
         updateUserLocation();
 
-        const updateLocationInterval = setInterval(updateUserLocation, 100);
+        const updateLocationInterval = setInterval(updateUserLocation, 400);
 
         // Set up an event listener to refresh the user's location when the map is loaded
         if (isLoaded) {
             onLoad(map);
-        }
+        } 
 
         // Clean up the event listener when the component is unmounted
         return () => {

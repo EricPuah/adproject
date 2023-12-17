@@ -91,6 +91,29 @@ app.post('/submit-feedback', async (req, res) => {
     }
 });
 
+app.post('/location', async (req, res) => {
+    try {
+        const { lat, lng } = req.body;
+
+        const locationRef = db.ref('userLocations');
+        const newUserLocationRef = push(locationRef);
+
+        await set(newUserLocationRef, {
+            lat: lat,
+            lng: lng,
+            timestamp: admin.database.ServerValue.TIMESTAMP,
+        });
+
+        console.log('Received user location:', { lat, lng });
+
+        // Send a response to the client
+        res.status(200).json({ success: true, message: 'User location submitted successfully' });
+    } catch (error) {
+        console.error('Error handling user location:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
 app.listen(port, () => {
     console.log('Server is running on port ' + port);
 })
