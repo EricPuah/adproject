@@ -164,7 +164,7 @@ function UserMap() {
         requestUserLocation();
         updateUserLocation();
 
-        const updateLocationInterval = setInterval(updateUserLocation, 1000);
+        const updateLocationInterval = setInterval(updateUserLocation, 100);
 
         // Set up an event listener to refresh the user's location when the map is loaded
         if (isLoaded) {
