@@ -14,6 +14,7 @@ import LocationTracker from './admin/component/pages/LocationTracker';
 import { RequireAuth } from 'react-auth-kit';
 import UserMap from './admin/component/userpages/UserMap';
 import UserFeedback from './admin/component/userpages/UserFeedback';
+import DriverBusSelect from './admin/component/pages/DriverBusSelect';
 
 const App = () => {
   return (
@@ -90,6 +91,12 @@ const App = () => {
 
         <Route path={'/UserFeedback'} element={
           <UserFeedback />
+        } />
+
+        <Route path={'/DriverBusSelect'} element={
+          <RequireAuth loginPath={'/login'}>
+          <DriverBusSelect />
+        </RequireAuth>
         } />
 
       </Routes>

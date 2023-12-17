@@ -27,7 +27,7 @@ const AdminNavbar = () => {
         <li className={styles.dashboard}>
           <AiOutlineDashboard className={styles.dashboardicon} />Dashboard
         </li>
-        
+
         <li className={styles.list}>
           <TbMapSearch className={styles.mapsicon} />
           <Link to='/AdminMaps' className={styles.hover}>
@@ -48,6 +48,15 @@ const AdminNavbar = () => {
           <li className={styles.list}>
             <CgProfile className={styles.profileicon} />
             <Link to='/AdminManageBus' className={styles.hover}>
+              Manage Bus Driver
+            </Link>
+          </li>
+        ) : null}
+
+        {userRole === "driver" ? (
+          <li className={styles.list}>
+            <CgProfile className={styles.profileicon} />
+            <Link to='/DriverBusSelect' className={styles.hover}>
               Manage Bus Driver
             </Link>
           </li>
