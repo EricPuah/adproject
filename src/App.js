@@ -14,11 +14,8 @@ import LocationTracker from './admin/component/pages/LocationTracker';
 import { RequireAuth } from 'react-auth-kit';
 import UserMap from './admin/component/userpages/UserMap';
 import UserFeedback from './admin/component/userpages/UserFeedback';
-<<<<<<< HEAD
 import DriverBusSelect from './admin/component/pages/DriverBusSelect';
-=======
 import AdminFeedback from './admin/component/pages/AdminFeedback';
->>>>>>> 63c3529aa366a4145e725867b2114777a7884a4e
 
 const App = () => {
   return (
