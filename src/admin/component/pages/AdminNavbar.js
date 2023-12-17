@@ -9,6 +9,7 @@ import { IoMdLogOut } from 'react-icons/io';
 import { useSignOut } from 'react-auth-kit';
 import { GrFormSchedule } from "react-icons/gr";
 import Cookies from 'js-cookie';
+import { MdOutlineFeedback } from "react-icons/md";
 
 const AdminNavbar = () => {
   const signOut = useSignOut();
@@ -67,6 +68,15 @@ const AdminNavbar = () => {
             <MdManageAccounts className={styles.manageicon} />Profile
           </Link>
         </li>
+
+        {userRole === "admin" ? (
+        <li className={styles.list}>
+          <Link to='/AdminFeedback' className={styles.hover}>
+            <MdOutlineFeedback className={styles.feedbackicon} />Feedback
+          </Link>
+        </li>
+        ): null}
+
         <li className={styles.list}>
           <Link to='/login' className={styles.logout} onClick={handleLogout}>
             <IoMdLogOut className={styles.logouticon} />Logout
