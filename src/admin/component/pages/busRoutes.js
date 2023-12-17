@@ -1,6 +1,10 @@
+function addLatLngToRoute(route) {
+    return route.map(([lat, lng]) => ({ lat, lng }));
+  }
+
 const busRoutes = {
     ['F1/F2/F3']: {
-        route: [
+        route: addLatLngToRoute([
             [1.55969, 103.63487], //Fabu Bus Stop
             [1.55999, 103.63485],
             [1.56047, 103.63487],
@@ -137,11 +141,11 @@ const busRoutes = {
             [1.55921, 103.63498],
             [1.55940, 103.63492],
             [1.55969, 103.63487],
-        ],
+        ]),
     },
 
     ['G1/G2/G3']:{
-        route: [
+        route: addLatLngToRoute([
             [1.55969, 103.63487], //Fabu Bus Stop
             [1.55999, 103.63485],
             [1.56047, 103.63487],
@@ -334,7 +338,7 @@ const busRoutes = {
             [1.55876, 103.63526],
             [1.55923, 103.63494],
             [1.55969, 103.63487],
-        ],
+        ]),
     }
 }
 
