@@ -69,8 +69,7 @@ const staticMarkers = [
   { position: { lat: 1.5644306398717538, lng: 103.63842002374014 }, name: 'FKT' },
   { position: { lat: 1.5665533254432862, lng: 103.64036316383651 }, name: 'N29' },
   { position: { lat: 1.5757059386867645, lng: 103.61964077715756 }, name: 'KDOJ 1' },
-  { position: { lat: 1.5751600074453354, lng: 103.6181358780248 }, name: 'KDOJ 2' },
-  vb
+  { position: { lat: 1.5751600074453354, lng: 103.6181358780248 }, name: 'KDOJ 2' }
 ];
 
 const busData = [
