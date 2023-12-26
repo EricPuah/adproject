@@ -134,16 +134,20 @@ function UserMap() {
     };
 
     const fetchDriverLocation = async () => {
-        try {
-            const response = await fetch('https://ad-server-js.vercel.app/location');
+        fetch('https://ad-server-js.vercel.app/driver-location')
+        .then((response) => {
             if (!response.ok) {
-                throw new Error('Failed to fetch driver location');
+                throw new Error('Failed to fetch driver location from server');
             }
-            const data = await response.json();
-            setDriverLocation(data);
-        } catch (error) {
-            console.error('Error fetching driver location:', error);
-        }
+            return response.json();
+        })
+        .then((data) => {
+            // Use the driver's location data as needed
+            console.log('Driver location fetched successfully:', data.location);
+        })
+        .catch((error) => {
+            console.error('Error fetching driver location from server:', error);
+        });
     };
 
     useEffect(() => {

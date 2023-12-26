@@ -4,6 +4,7 @@ import '../../component/pages/LocationTracker';
 import AdminNavbar from '../pages/AdminNavbar';
 import CustomMarker from '../../../assets/bus-stop.png';
 import busRoutes from '../pages/busRoutes';
+import CustomBus from '../../../assets/bus.png';
 
 const containerStyle = {
   width: '60%',
@@ -125,7 +126,7 @@ function DriverBusSelect() {
           };
 
           setDriverLocation(location);
-          // sendUserLocationToServer(location);
+          sendDriverLocationToServer(location);
         },
         (error) => {
           console.error('Error getting user location:', error);
@@ -285,7 +286,7 @@ function DriverBusSelect() {
               onClick={() => handleMarkerClick(driverLocation)}
               options={{
                 icon: {
-                  url: CustomMarker,
+                  url: CustomBus,
                   scaledSize: new window.google.maps.Size(60, 60),
                 },
               }}
