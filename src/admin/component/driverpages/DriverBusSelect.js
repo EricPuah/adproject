@@ -193,7 +193,7 @@ function DriverBusSelect() {
     requestDriverLocation();
     updateDriverLocation();
 
-    const updateLocationInterval = setInterval(updateDriverLocation, 400);
+    const updateLocationInterval = setInterval(updateDriverLocation(), 400);
 
     // Set up an event listener to refresh the user's location when the map is loaded
     if (isLoaded && map) {
