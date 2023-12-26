@@ -146,27 +146,26 @@ function UserMap() {
         }
     };
 
-    const requestUserLocation = () => {
-        if (navigator.geolocation && map) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const location = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude,
-                    };
-
-                    setUserLocation(location);
-                },
-                (error) => {
-                    console.error('Error getting user location:', error);
-                }
-            );
-        } else {
-            console.error('Geolocation is not supported by this browser or map is not available.');
-        }
-    };
-
     useEffect(() => {
+        const requestUserLocation = () => {
+            if (navigator.geolocation && map) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const location = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                        };
+    
+                        setUserLocation(location);
+                    },
+                    (error) => {
+                        console.error('Error getting user location:', error);
+                    }
+                );
+            } else {
+                console.error('Geolocation is not supported by this browser or map is not available.');
+            }
+        };
         // Function to request user's current location
         requestUserLocation();
         updateUserLocation();
