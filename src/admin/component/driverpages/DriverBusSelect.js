@@ -189,7 +189,6 @@ function DriverBusSelect() {
     };
 
   useEffect(() => {
-
     // Request user's location when the component mounts
     requestDriverLocation();
     updateDriverLocation();
@@ -197,7 +196,7 @@ function DriverBusSelect() {
     const updateLocationInterval = setInterval(updateDriverLocation, 400);
 
     // Set up an event listener to refresh the user's location when the map is loaded
-    if (isLoaded) {
+    if (isLoaded && map) {
       onLoad(map);
     }
 
