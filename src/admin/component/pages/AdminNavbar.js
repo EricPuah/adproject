@@ -45,11 +45,10 @@ const AdminNavbar = () => {
           </li>
         ) : null}
 
-        {userRole === "admin" ? (
+        {userRole === "admin"  ? (
           <li className={styles.list}>
-            <CgProfile className={styles.profileicon} />
             <Link to='/AdminManageBus' className={styles.hover}>
-              Manage Bus Driver
+              <CgProfile className={styles.profileicon} />Manage Bus Driver
             </Link>
           </li>
         ) : null}
@@ -58,7 +57,7 @@ const AdminNavbar = () => {
           <li className={styles.list}>
             <CgProfile className={styles.profileicon} />
             <Link to='/DriverBusSelect' className={styles.hover}>
-              Manage Bus Driver
+              Select Bus
             </Link>
           </li>
         ) : null}
@@ -70,12 +69,12 @@ const AdminNavbar = () => {
         </li>
 
         {userRole === "admin" ? (
-        <li className={styles.list}>
-          <Link to='/AdminFeedback' className={styles.hover}>
-            <MdOutlineFeedback className={styles.feedbackicon} />Feedback
-          </Link>
-        </li>
-        ): null}
+          <li className={styles.list}>
+            <Link to='/AdminFeedback' className={styles.hover}>
+              <MdOutlineFeedback className={styles.feedbackicon} />Feedback
+            </Link>
+          </li>
+        ) : null}
 
         <li className={styles.list}>
           <Link to='/login' className={styles.logout} onClick={handleLogout}>
