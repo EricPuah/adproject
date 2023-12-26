@@ -167,6 +167,10 @@ function DriverBusSelect() {
       });
   };
 
+  if (isLoaded && map) {
+    onLoad(map);
+  }
+
   useEffect(() => {
     const requestDriverLocation = () => {
       if (navigator.geolocation && map) {
@@ -195,9 +199,6 @@ function DriverBusSelect() {
     const updateLocationInterval = setInterval(updateDriverLocation(), 400);
 
     // Set up an event listener to refresh the user's location when the map is loaded
-    if (isLoaded && map) {
-      onLoad(map);
-    }
 
     // Clean up the event listener when the component is unmounted
     return () => {
