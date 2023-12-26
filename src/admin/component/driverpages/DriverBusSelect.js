@@ -192,12 +192,14 @@ function DriverBusSelect() {
         console.error('Geolocation is not supported by this browser or map is not available.');
       }
     };
-  
+    
+    requestDriverLocation();
+    updateDriverLocation();
+    
     const updateLocationInterval = setInterval(updateDriverLocation, 400);
   
     // Request user's location when the component mounts
-    requestDriverLocation();
-    updateDriverLocation();
+    
   
     // Set up an event listener to refresh the user's location when the map is loaded
     if (isLoaded && map) {
