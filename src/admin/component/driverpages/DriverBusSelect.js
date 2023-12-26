@@ -115,14 +115,6 @@ function DriverBusSelect() {
     }
   };
 
-  if (loadError) {
-    return <p>Error loading map: {loadError.message}</p>;
-  }
-
-  if (!isLoaded) {
-    return <p>Loading map...</p>;
-  }
-
   const updateDriverLocation = () => {
     if (navigator.geolocation && map) {
       navigator.geolocation.getCurrentPosition(
@@ -167,10 +159,6 @@ function DriverBusSelect() {
       });
   };
 
-  if (isLoaded && map) {
-    onLoad(map);
-  }
-
   useEffect(() => {
     const requestDriverLocation = () => {
       if (navigator.geolocation && map) {
@@ -195,14 +183,14 @@ function DriverBusSelect() {
     
     requestDriverLocation();
     updateDriverLocation();
-    
+
     const updateLocationInterval = setInterval(updateDriverLocation, 400);
   
     // Request user's location when the component mounts
     
   
     // Set up an event listener to refresh the user's location when the map is loaded
-    if (isLoaded && map) {
+    if (isLoaded) {
       onLoad(map);
     }
   
@@ -215,6 +203,13 @@ function DriverBusSelect() {
     };
   }, [map, isLoaded, onLoad, onUnmount]);
 
+  if (loadError) {
+    return <p>Error loading map: {loadError.message}</p>;
+  }
+
+  if (!isLoaded) {
+    return <p>Loading map...</p>;
+  }
 
   return (
     <div>
@@ -318,6 +313,5 @@ function DriverBusSelect() {
     </div>
   );
 }
-
 
 export default DriverBusSelect;
