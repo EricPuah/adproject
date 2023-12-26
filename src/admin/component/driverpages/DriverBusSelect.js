@@ -185,7 +185,7 @@ function DriverBusSelect() {
     requestDriverLocation();
     updateDriverLocation();
 
-    const updateLocationInterval = setInterval(updateDriverLocation, 400);
+    const updateLocationInterval = setInterval(updateDriverLocation, 300);
   
     // Request user's location when the component mounts
     
