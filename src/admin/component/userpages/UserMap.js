@@ -7,7 +7,7 @@ import busStops from '../../../assets/bus-stop.png';
 import UserSideBar from './UserSideBar';
 import busRoutes from '../pages/busRoutes';
 import '../pages/LocationTracker.css'
-import busStops from '../../component/pages/BusStopLocation'
+import busStopsLocation from '../../component/pages/BusStopLocation'
 
 const containerStyle = {
     width: '60%',
@@ -25,7 +25,7 @@ const defaultCenter = {
 
 const routeKeys = Object.keys(busRoutes);
 
-const staticMarkers = Object.keys(busStops);
+const staticMarkers = Object.keys(busStopsLocation);
 
 function UserMap() {
     const [searchQuery, setSearchQuery] = useState('');
