@@ -7,6 +7,7 @@ import busStops from '../../../assets/bus-stop.png';
 import UserSideBar from './UserSideBar';
 import busRoutes from '../pages/busRoutes';
 import '../pages/LocationTracker.css'
+import busD from '../../../assets/bus.png';
 
 const containerStyle = {
     width: '60%',
@@ -134,21 +135,18 @@ function UserMap() {
     };
 
     const fetchDriverLocation = async () => {
-        fetch('https://ad-server-js.vercel.app/driver-location')
-        .then((response) => {
+        try {
+            const response = await fetch('https://ad-server-js.vercel.app/driver-location');
             if (!response.ok) {
-                throw new Error('Failed to fetch driver location from server');
+              throw new Error('Failed to fetch driver location from server');
             }
-            return response.json();
-        })
-        .then((data) => {
-            // Use the driver's location data as needed
+            const data = await response.json();
+            setDriverLocation(data.location);
             console.log('Driver location fetched successfully:', data.location);
-        })
-        .catch((error) => {
+          } catch (error) {
             console.error('Error fetching driver location from server:', error);
-        });
-    };
+          }
+        };
 
     useEffect(() => {
         const requestUserLocation = () => {
@@ -175,16 +173,11 @@ function UserMap() {
         updateUserLocation();
         fetchDriverLocation();
 
-        // Request user's location when the component mounts
-        requestUserLocation();
-        updateUserLocation();
-
-        const updateLocationInterval = setInterval(updateUserLocation(), fetchDriverLocation(), 400);
-
-        // Set up an event listener to refresh the user's location when the map is loaded
         if (isLoaded) {
             onLoad(map);
         }
+
+        const updateLocationInterval = setInterval(updateUserLocation, fetchDriverLocation, 400);
 
         // Clean up the event listener when the component is unmounted
         return () => {
@@ -289,7 +282,7 @@ function UserMap() {
                         <Marker
                             position={driverLocation}
                             icon={{
-                                url: CustomMarker,
+                                url: busD,
                                 scaledSize: new window.google.maps.Size(60, 60),
                             }}
                         />
