@@ -84,6 +84,7 @@ function UserMap() {
     const [selectedMarker, setSelectedMarker] = useState(null); // Track the user's location
     const [visibleRoute, setVisibleRoute] = useState(null);
     const [selectedRoute, setSelectedRoute] = useState(null);
+    const [driverLocation, setDriverLocation] = useState(null);
 
     const { isLoaded, loadError } = useJsApiLoader({
         id: 'google-map-script',
@@ -122,7 +123,6 @@ function UserMap() {
                     };
 
                     setUserLocation(location);
-                   // sendUserLocationToServer(location);
                 },
                 (error) => {
                     console.error('Error getting user location:', error);
@@ -133,61 +133,55 @@ function UserMap() {
         }
     };
 
-    const sendUserLocationToServer = (location) => {
-        // Use fetch or Axios to send a POST request to your server
-        fetch('https://ad-server-js.vercel.app/location', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(location),
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to send user location to server');
+    const fetchDriverLocation = async () => {
+        try {
+            const response = await fetch('https://ad-server-js.vercel.app/location');
+            if (!response.ok) {
+                throw new Error('Failed to fetch driver location');
+            }
+            const data = await response.json();
+            setDriverLocation(data);
+        } catch (error) {
+            console.error('Error fetching driver location:', error);
+        }
+    };
+
+    const requestUserLocation = () => {
+        if (navigator.geolocation && map) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const location = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    };
+
+                    setUserLocation(location);
+                },
+                (error) => {
+                    console.error('Error getting user location:', error);
                 }
-                return response.json();
-            })
-            .then(data => {
-                console.log('User location sent successfully:', data);
-            })
-            .catch(error => {
-                console.error('Error sending user location to server:', error);
-            });
+            );
+        } else {
+            console.error('Geolocation is not supported by this browser or map is not available.');
+        }
     };
 
     useEffect(() => {
         // Function to request user's current location
-        const requestUserLocation = () => {
-            if (navigator.geolocation && map) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const location = {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude,
-                        };
-
-                        setUserLocation(location);
-                    },
-                    (error) => {
-                        console.error('Error getting user location:', error);
-                    }
-                );
-            } else {
-                console.error('Geolocation is not supported by this browser or map is not available.');
-            }
-        };
+        requestUserLocation();
+        updateUserLocation();
+        fetchDriverLocation();
 
         // Request user's location when the component mounts
         requestUserLocation();
         updateUserLocation();
 
-        const updateLocationInterval = setInterval(updateUserLocation, 400);
+        const updateLocationInterval = setInterval(updateUserLocation(), fetchDriverLocation(), 400);
 
         // Set up an event listener to refresh the user's location when the map is loaded
         if (isLoaded) {
             onLoad(map);
-        } 
+        }
 
         // Clean up the event listener when the component is unmounted
         return () => {
@@ -288,6 +282,15 @@ function UserMap() {
                         />
                     )}
                     {/* Your other markers and polylines go here */}
+                    {driverLocation && (
+                        <Marker
+                            position={driverLocation}
+                            icon={{
+                                url: CustomMarker,
+                                scaledSize: new window.google.maps.Size(60, 60),
+                            }}
+                        />
+                    )}
                 </GoogleMap>
             </div>
 

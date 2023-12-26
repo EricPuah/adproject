@@ -88,6 +88,7 @@ function DriverBusSelect() {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [visibleRoute, setVisibleRoute] = useState(null);
   const [selectedRoute, setSelectedRoute] = useState(null);
+  const [driverLocation, setDriverLocation] = useState(null);
 
   const onLoad = React.useCallback(function callback(map) {
     setMap(map);
@@ -121,6 +122,93 @@ function DriverBusSelect() {
   if (!isLoaded) {
     return <p>Loading map...</p>;
   }
+
+  const updateDriverLocation = () => {
+    if (navigator.geolocation && map) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const location = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+
+          setDriverLocation(location);
+          // sendUserLocationToServer(location);
+        },
+        (error) => {
+          console.error('Error getting user location:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser or map is not available.');
+    }
+  };
+
+  const sendDriverLocationToServer = (location) => {
+    // Use fetch or Axios to send a POST request to your server
+    fetch('https://ad-server-js.vercel.app/location', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(location),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to send user location to server');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('User location sent successfully:', data);
+      })
+      .catch(error => {
+        console.error('Error sending user location to server:', error);
+      });
+  };
+
+  useEffect(() => {
+    // Function to request user's current location
+    const requestDriverLocation = () => {
+      if (navigator.geolocation && map) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const location = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+
+            setDriverLocation(location);
+            sendDriverLocationToServer(location);
+          },
+          (error) => {
+            console.error('Error getting user location:', error);
+          }
+        );
+      } else {
+        console.error('Geolocation is not supported by this browser or map is not available.');
+      }
+    };
+
+    // Request user's location when the component mounts
+    requestDriverLocation();
+    updateDriverLocation();
+
+    const updateLocationInterval = setInterval(updateDriverLocation, 400);
+
+    // Set up an event listener to refresh the user's location when the map is loaded
+    if (isLoaded) {
+      onLoad(map);
+    }
+
+    // Clean up the event listener when the component is unmounted
+    return () => {
+      if (map) {
+        onUnmount();
+      }
+      clearInterval(updateLocationInterval);
+    };
+  }, [map, isLoaded, onLoad, onUnmount]);
 
 
   return (
@@ -191,6 +279,18 @@ function DriverBusSelect() {
               />
             </div>
           ))}
+          {userLocation && (
+            <Marker
+              position={driverLocation}
+              onClick={() => handleMarkerClick(driverLocation)}
+              options={{
+                icon: {
+                  url: CustomMarker,
+                  scaledSize: new window.google.maps.Size(60, 60),
+                },
+              }}
+            />
+          )}
         </GoogleMap>
       </div>
 
