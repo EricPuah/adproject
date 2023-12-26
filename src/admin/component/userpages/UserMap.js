@@ -122,7 +122,7 @@ function UserMap() {
                     };
 
                     setUserLocation(location);
-                    sendUserLocationToServer(location);
+                   // sendUserLocationToServer(location);
                 },
                 (error) => {
                     console.error('Error getting user location:', error);
