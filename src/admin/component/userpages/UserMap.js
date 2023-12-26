@@ -173,7 +173,7 @@ function UserMap() {
         // Function to request user's current location
         requestUserLocation();
         updateUserLocation();
-        fetchDriverLocation();
+        //fetchDriverLocation();
 
         // Request user's location when the component mounts
         requestUserLocation();
