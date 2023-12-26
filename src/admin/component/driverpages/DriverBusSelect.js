@@ -167,9 +167,7 @@ function DriverBusSelect() {
       });
   };
 
-  useEffect(() => {
-    // Function to request user's current location
-    const requestDriverLocation = () => {
+  const requestDriverLocation = () => {
       if (navigator.geolocation && map) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -189,6 +187,8 @@ function DriverBusSelect() {
         console.error('Geolocation is not supported by this browser or map is not available.');
       }
     };
+
+  useEffect(() => {
 
     // Request user's location when the component mounts
     requestDriverLocation();
@@ -279,7 +279,7 @@ function DriverBusSelect() {
               />
             </div>
           ))}
-          {userLocation && (
+          {driverLocation && (
             <Marker
               position={driverLocation}
               onClick={() => handleMarkerClick(driverLocation)}
