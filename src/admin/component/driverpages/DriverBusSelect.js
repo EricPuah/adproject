@@ -207,7 +207,7 @@ function DriverBusSelect() {
       }
       clearInterval(updateLocationInterval);
     };
-  }, [map, isLoaded, onLoad, onUnmount]);
+  }, [map, isLoaded, onUnmount]);
 
 
   return (
