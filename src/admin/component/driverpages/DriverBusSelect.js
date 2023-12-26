@@ -180,7 +180,7 @@ function DriverBusSelect() {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             };
-
+  
             setDriverLocation(location);
             sendDriverLocationToServer(location);
           },
@@ -192,14 +192,18 @@ function DriverBusSelect() {
         console.error('Geolocation is not supported by this browser or map is not available.');
       }
     };
+  
+    const updateLocationInterval = setInterval(updateDriverLocation, 400);
+  
     // Request user's location when the component mounts
     requestDriverLocation();
     updateDriverLocation();
-
-    const updateLocationInterval = setInterval(updateDriverLocation(), 400);
-
+  
     // Set up an event listener to refresh the user's location when the map is loaded
-
+    if (isLoaded && map) {
+      onLoad(map);
+    }
+  
     // Clean up the event listener when the component is unmounted
     return () => {
       if (map) {
@@ -207,7 +211,7 @@ function DriverBusSelect() {
       }
       clearInterval(updateLocationInterval);
     };
-  }, [map, isLoaded, onUnmount]);
+  }, [map, isLoaded, onLoad, onUnmount]);
 
 
   return (
