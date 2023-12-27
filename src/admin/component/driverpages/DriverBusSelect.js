@@ -4,6 +4,7 @@ import '../../component/pages/LocationTracker';
 import AdminNavbar from '../pages/AdminNavbar';
 import CustomMarker from '../../../assets/bus-stop.png';
 import busRoutes from '../pages/busRoutes';
+import styles from './DriverBusSelect.module.css';
 import CustomBus from '../../../assets/bus.png';
 
 const containerStyle = {
@@ -13,6 +14,7 @@ const containerStyle = {
   top: '40px',
   left: '250px',
   padding: '20px',
+  filter: 'blur(3px)',
 };
 
 const center = {
@@ -90,6 +92,8 @@ function DriverBusSelect() {
   const [visibleRoute, setVisibleRoute] = useState(null);
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [driverLocation, setDriverLocation] = useState(null);
+  const [isRouteSelected, setIsRouteSelected] = useState(false);
+  const [isMapBlurred, setIsMapBlurred] = useState(true); 
 
   const onLoad = React.useCallback(function callback(map) {
     setMap(map);
@@ -109,10 +113,14 @@ function DriverBusSelect() {
       // If yes, close the route
       setVisibleRoute(null);
       setSelectedRoute(null);
+      setIsRouteSelected(false);
+      setIsMapBlurred(true);
     } else {
       // If not, set the clicked route to be visible
       setVisibleRoute(routeKey);
       setSelectedRoute(busRoutes[routeKey].route);
+      setIsRouteSelected(true);
+      setIsMapBlurred(false);
     }
   };
 
@@ -169,7 +177,7 @@ function DriverBusSelect() {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             };
-  
+
             setDriverLocation(location);
             sendDriverLocationToServer(location);
           },
@@ -181,20 +189,20 @@ function DriverBusSelect() {
         console.error('Geolocation is not supported by this browser or map is not available.');
       }
     };
-    
+
     requestDriverLocation();
     updateDriverLocation();
 
     const updateLocationInterval = setInterval(updateDriverLocation, 300);
-  
+
     // Request user's location when the component mounts
-    
-  
+
+
     // Set up an event listener to refresh the user's location when the map is loaded
     if (isLoaded) {
       onLoad(map);
     }
-  
+
     // Clean up the event listener when the component is unmounted
     return () => {
       if (map) {
@@ -217,7 +225,7 @@ function DriverBusSelect() {
       <div>
         <AdminNavbar />
       </div>
-      <div style={containerStyle}>
+      <div style={{ ...containerStyle, filter: isMapBlurred ? 'blur(3px)' : 'none' }}>
         {/* Map Container */}
         <GoogleMap
           mapContainerStyle={{ width: '100%', height: '100%' }}
@@ -296,18 +304,26 @@ function DriverBusSelect() {
       </div>
 
       {/* Button Container */}
-      <div className='buttonContainerStyle'>
+      <div className={styles.buttonContainerStyle}>
+        {!isRouteSelected && (
+          <div className={styles.word}>
+            <p>Please Select a Bus Route</p>
+          </div>
+        )}
         {routeKeys.slice(0, 8).map((routeKey) => {
           const isRouteVisible = visibleRoute === routeKey;
 
           return (
-            <button
-              key={routeKey}
-              onClick={() => handleShowBusRoute(routeKey)}
-              style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
-            >
-              {`${routeKey}`}
-            </button>
+            !isRouteSelected && (
+              <button
+                className={styles.button}
+                key={routeKey}
+                onClick={() => handleShowBusRoute(routeKey)}
+                style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
+              >
+                {`${routeKey}`}
+              </button>
+            )
           );
         })}
       </div>
