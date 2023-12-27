@@ -93,7 +93,14 @@ function DriverBusSelect() {
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [driverLocation, setDriverLocation] = useState(null);
   const [isRouteSelected, setIsRouteSelected] = useState(false);
-  const [isMapBlurred, setIsMapBlurred] = useState(true); 
+  const [isMapBlurred, setIsMapBlurred] = useState(true);
+
+  const handleResetRoute = () => {
+    setVisibleRoute(null);
+    setSelectedRoute(null);
+    setIsRouteSelected(false);
+    setIsMapBlurred(true);
+  };
 
   const onLoad = React.useCallback(function callback(map) {
     setMap(map);
@@ -326,7 +333,17 @@ function DriverBusSelect() {
             )
           );
         })}
+
       </div>
+
+      <div className={styles.bottomRightButtonStyle}>
+        {isRouteSelected && (
+          <button className={styles.changeRouteButton} onClick={handleResetRoute}>
+            Change Route
+          </button>
+        )}
+      </div>
+
     </div>
   );
 }
