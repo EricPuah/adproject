@@ -96,6 +96,7 @@ function DriverBusSelect() {
   const [isMapBlurred, setIsMapBlurred] = useState(true);
   const [showDriverInfoWindow, setShowDriverInfoWindow] = useState(false);
 
+
   const handleResetRoute = () => {
     setVisibleRoute(null);
     setSelectedRoute(null);
@@ -306,7 +307,7 @@ function DriverBusSelect() {
             <div>
               <Marker
                 position={driverLocation}
-                onClick={() => handleDriverMarkerClick}
+                onClick={() => handleDriverMarkerClick()}
                 options={{
                   icon: {
                     url: CustomBus,
