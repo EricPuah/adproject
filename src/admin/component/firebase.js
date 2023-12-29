@@ -233,7 +233,7 @@ const submitReportToFirebase = async (dateTime, name, matricNumber, email, phone
   try {
     const reportsRef = ref(db, 'reports'); // Use a new node named "reports"
     const newReport = {
-      dateTime: dateTime,
+      dateOfCreation: serverTimestamp(),
       name: name,
       matricNumber: matricNumber,
       email: email,

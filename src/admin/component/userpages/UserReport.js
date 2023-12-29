@@ -8,7 +8,6 @@ import { serverTimestamp } from 'firebase/database';
 function UserReport() {
     console.log('UserReport component rendering...');
     const [formData, setFormData] = useState({
-        dateTime: serverTimestamp(), // Capture current date and time
         name: '',
         matricNumber: '',
         email: '',
@@ -77,18 +76,6 @@ function UserReport() {
                             <p className={styles.p}>Thank you for your report!</p>
                         ) : (
                             <form className={styles.form} onSubmit={handleSubmit}>
-                                <div className={styles.formGroup}>
-                                    <label className={styles.label} htmlFor="dateTime">Date & Time:</label>
-                                    <input
-                                        className={styles.input}
-                                        type="text"
-                                        id="dateTime"
-                                        name="dateTime"
-                                        value={formData.dateTime}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
 
                                 <div className={styles.formGroup}>
                                     <label className={styles.label} htmlFor="name">Name:</label>
