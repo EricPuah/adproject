@@ -3,19 +3,23 @@ import React, { useState } from 'react';
 import UserSideBar from './UserSideBar';
 import styles from './UserReport.module.css'; // Create a CSS module for styling
 import { submitReportToFirebase } from './../firebase.js';
+import { serverTimestamp } from 'firebase/database';
 
 function UserReport() {
     console.log('UserReport component rendering...');
     const [formData, setFormData] = useState({
+        dateTime: serverTimestamp(), // Capture current date and time
         name: '',
+        matricNumber: '',
         email: '',
         phone: '',
-        matricNumber: '',
+        busRoute: '',
         reportContents: '',
     });
 
     const [submitted, setSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [selectedBusRoute, setSelectedBusRoute] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -40,10 +44,11 @@ function UserReport() {
             // Make a function call to submit the report
             const success = await submitReportToFirebase(
                 formData.name,
+                formData.matricNumber,
                 formData.email,
                 formData.phone,
-                formData.matricNumber,
-                formData.reportContents
+                selectedBusRoute,
+                formData.reportContents,
             );
 
             if (success) {
@@ -73,6 +78,19 @@ function UserReport() {
                         ) : (
                             <form className={styles.form} onSubmit={handleSubmit}>
                                 <div className={styles.formGroup}>
+                                    <label className={styles.label} htmlFor="dateTime">Date & Time:</label>
+                                    <input
+                                        className={styles.input}
+                                        type="text"
+                                        id="dateTime"
+                                        name="dateTime"
+                                        value={formData.dateTime}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+
+                                <div className={styles.formGroup}>
                                     <label className={styles.label} htmlFor="name">Name:</label>
                                     <input
                                         className={styles.input}
@@ -80,6 +98,19 @@ function UserReport() {
                                         id="name"
                                         name="name"
                                         value={formData.name}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+
+                                <div className={styles.formGroup}>
+                                    <label className={styles.label} htmlFor="matricNumber">Matric Number:</label>
+                                    <input
+                                        className={styles.input}
+                                        type="text"
+                                        id="matricNumber"
+                                        name="matricNumber"
+                                        value={formData.matricNumber}
                                         onChange={handleChange}
                                         required
                                     />
@@ -112,16 +143,25 @@ function UserReport() {
                                 </div>
 
                                 <div className={styles.formGroup}>
-                                    <label className={styles.label} htmlFor="matricNumber">Matric Number:</label>
-                                    <input
-                                        className={styles.input}
-                                        type="text"
-                                        id="matricNumber"
-                                        name="matricNumber"
-                                        value={formData.matricNumber}
-                                        onChange={handleChange}
+                                    <label className={styles.label} htmlFor="busRoute">Bus Route:</label>
+                                    <select
+                                        className={styles.select}
+                                        id="busRoute"
+                                        name="busRoute"
+                                        value={selectedBusRoute}
+                                        onChange={(e) => setSelectedBusRoute(e.target.value)}
                                         required
-                                    />
+                                    >
+                                        <option value="" disabled>Select a route</option>
+                                        <option value="A">Route A</option>
+                                        <option value="B">Route B</option>
+                                        <option value="C">Route C</option>
+                                        <option value="D">Route D</option>
+                                        <option value="E">Route E</option>
+                                        <option value="F">Route F</option>
+                                        <option value="G">Route G</option>
+                                        <option value="H">Route H</option>
+                                    </select>
                                 </div>
 
                                 <div className={styles.formGroup}>

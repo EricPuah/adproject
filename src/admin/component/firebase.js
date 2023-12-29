@@ -229,23 +229,25 @@ const changePasswordInDB = async (userId, newPassword) => {
   }
 };
 
-const submitReportToFirebase = async (name, email, phone, matricNumber, reportContents) => {
+const submitReportToFirebase = async (dateTime, name, matricNumber, email, phone, busRoute, reportContents) => {
   try {
-      const reportsRef = ref(db, 'reports'); // Use a new node named "reports"
-      const newReport = {
-          name: name,
-          email: email,
-          phone: phone,
-          matricNumber: matricNumber,
-          reportContents: reportContents,
-          dateOfCreation: new Date().toLocaleDateString('en-GB'),
-      };
-      const newChildRef = push(reportsRef);
-      await set(newChildRef, newReport);
-      return true; // Success
+    const reportsRef = ref(db, 'reports'); // Use a new node named "reports"
+    const newReport = {
+      dateTime: dateTime,
+      name: name,
+      matricNumber: matricNumber,
+      email: email,
+      phone: phone,
+      busRoute: busRoute,
+      reportContents: reportContents,
+      dateOfCreation: new Date().toLocaleDateString('en-GB'),
+    };
+    const newChildRef = push(reportsRef);
+    await set(newChildRef, newReport);
+    return true; // Success
   } catch (error) {
-      console.error('Firebase Error:', error);
-      throw new Error('An error occurred: ' + error.message);
+    console.error('Firebase Error:', error);
+    throw new Error('An error occurred: ' + error.message);
   }
 };
 
