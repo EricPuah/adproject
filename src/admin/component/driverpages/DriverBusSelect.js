@@ -94,8 +94,7 @@ function DriverBusSelect() {
   const [driverLocation, setDriverLocation] = useState(null);
   const [isRouteSelected, setIsRouteSelected] = useState(false);
   const [isMapBlurred, setIsMapBlurred] = useState(true);
-  const [selectedBus, setSelectedBus] = useState(null);
-
+  const [showDriverInfoWindow, setShowDriverInfoWindow] = useState(false);
 
   const handleResetRoute = () => {
     setVisibleRoute(null);
@@ -113,15 +112,11 @@ function DriverBusSelect() {
   }, []);
 
   const handleMarkerClick = (marker) => {
-    if ('id' in marker) {
-      // Clicked on a bus marker
-      setSelectedMarker(null);
-      setSelectedBus(marker);
-    } else {
-      // Clicked on a regular marker
-      setSelectedMarker(marker);
-      setSelectedBus(null);
-    }
+    setSelectedMarker(marker);
+  };
+
+  const handleDriverMarkerClick = () => {
+    setShowDriverInfoWindow(!showDriverInfoWindow);
   };
 
   const handleShowBusRoute = (routeKey) => {
@@ -305,30 +300,32 @@ function DriverBusSelect() {
                   },
                 }}
               />
-              {selectedBus === bus && (
+            </div>
+          ))}
+          {driverLocation && (
+            <div>
+              <Marker
+                position={driverLocation}
+                onClick={() => handleDriverMarkerClick}
+                options={{
+                  icon: {
+                    url: CustomBus,
+                    scaledSize: new window.google.maps.Size(60, 60),
+                  },
+                }}
+              />
+              {showDriverInfoWindow && (
                 <InfoWindow
-                  position={bus.position}
-                  onCloseClick={() => setSelectedBus(null)}
+                  position={driverLocation}
+                  onCloseClick={() => setShowDriverInfoWindow(false)}
                 >
                   <div>
-                    <h3>Bus Details</h3>
-                    <p>ID: {bus.id}</p>
+                    <h3>Driver Details</h3>
+                    <p>Driver's Info...</p>
                   </div>
                 </InfoWindow>
               )}
             </div>
-          ))}
-          {driverLocation && (
-            <Marker
-              position={driverLocation}
-              onClick={() => handleMarkerClick(driverLocation)}
-              options={{
-                icon: {
-                  url: CustomBus,
-                  scaledSize: new window.google.maps.Size(60, 60),
-                },
-              }}
-            />
           )}
         </GoogleMap>
       </div>
@@ -356,6 +353,7 @@ function DriverBusSelect() {
             )
           );
         })}
+
       </div>
 
       <div className={styles.bottomRightButtonStyle}>
