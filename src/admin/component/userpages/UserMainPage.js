@@ -15,17 +15,19 @@ function UserMainPage() {
       <div className={styles.sidebar}>
         <UserSideBar />
       </div>
-      <div className={styles.searchContainer}>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={handleSearchChange}
-          className={styles.searchInput}
-        />
-        <button className={styles.adminLoginButton}>
-          Admin Login
-        </button>
+      <div className={styles.mainContentContainer}>
+        <div className={styles.searchContainer}>
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className={styles.searchInput}
+          />
+          <button className={styles.adminLoginButton}>
+            Admin Login
+          </button>
+        </div>
       </div>
     </div>
   )

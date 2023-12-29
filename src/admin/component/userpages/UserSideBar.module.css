@@ -48,3 +48,9 @@
   margin-right: 10px;
   margin-bottom: -3px;
 }
+
+.mainContentContainer {
+  margin-left: 250px;
+  padding: 20px;
+  transition: margin 0.3s;
+}

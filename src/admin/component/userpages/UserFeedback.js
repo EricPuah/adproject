@@ -91,6 +91,16 @@ function UserFeedback() {
             if (snapshot.exists()) {
                 // Convert the snapshot value to an array of feedback
                 const feedBackData = Object.values(snapshot.val());
+
+                // Exclude the email property
+                const filteredFeedbackData = feedBackData.map(({ dateOfCreation, name, category, message, rating }) => ({
+                    dateOfCreation,
+                    name,
+                    category,
+                    message,
+                    rating,
+                }));
+
                 setFeedbackData(feedBackData);
             } else {
                 console.error('No feedback found in Firebase');
@@ -98,6 +108,7 @@ function UserFeedback() {
         });
     }, [db]);
 
+    
     return (
         <div >
             <UserSideBar />
@@ -221,9 +232,7 @@ function UserFeedback() {
                                     <td className={styles.data}>
                                         <span className={styles.detaillabel}>{feedback.name}</span>
                                     </td>
-                                    <td hidden className={styles.data}>
-                                        <span className={styles.detaillabel}>{feedback.email}</span>
-                                    </td>
+
                                     <td className={styles.data}>
                                         <span className={styles.detaillabel}>{feedback.category}</span>
                                     </td>
