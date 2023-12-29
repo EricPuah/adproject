@@ -205,7 +205,7 @@ function UserFeedback() {
                                 <th className={styles.header}>No.</th>
                                 <th className={styles.header}>Date of Creation</th>
                                 <th className={styles.header}>Name</th>
-                                <th className={styles.header}>Email</th>
+
                                 <th className={styles.header}>Category</th>
                                 <th className={styles.header}>Message</th>
                                 <th className={styles.header}>Rating</th>
@@ -221,7 +221,7 @@ function UserFeedback() {
                                     <td className={styles.data}>
                                         <span className={styles.detaillabel}>{feedback.name}</span>
                                     </td>
-                                    <td className={styles.data}>
+                                    <td hidden className={styles.data}>
                                         <span className={styles.detaillabel}>{feedback.email}</span>
                                     </td>
                                     <td className={styles.data}>
