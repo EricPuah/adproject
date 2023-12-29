@@ -10,7 +10,7 @@ body {
 }
 
 .verticalnavbar {
-  width: 200px;
+  width: 250px;
   /* Set the desired width for your vertical navbar */
   height: 100%;
   /* Fill the entire height of the page */
@@ -88,6 +88,11 @@ body {
   margin-bottom: -3px;
 }
 
+.routesicon{
+  margin-right: 10px;
+  margin-bottom: -3px;
+}
+
 .logouticon{
   margin-right: 10px;
   margin-bottom: -3px;
@@ -109,4 +114,10 @@ body {
     width: 0;
     /* Hide the navbar by default on mobile */
   }
+}
+
+.mainContentContainer {
+  margin-left: 250px;
+  padding: 20px;
+  transition: margin 0.3s;
 }

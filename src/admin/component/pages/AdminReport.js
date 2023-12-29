@@ -1,24 +1,24 @@
+// AdminReport.js
 import React, { useState, useEffect } from 'react';
-import AdminNavbar from './AdminNavbar'
-import { FaRegStar, FaStar } from "react-icons/fa";
+import AdminNavbar from './AdminNavbar';
 import { ref, onValue } from 'firebase/database';
 import { db } from './../firebase';
-import styles from './AdminFeedback.module.css'; // Create a CSS module for styling
+import styles from './AdminReport.module.css'; // Create a CSS module for styling
 
-function AdminFeedback() {
-    const [feedbackData, setFeedbackData] = useState([]);
+function AdminReport() {
+    const [reportData, setReportData] = useState([]);
 
     useEffect(() => {
-        // Fetch feedback data from the server
-        const feedbackRef = ref(db, 'feedback');
+        // Fetch report data from the server
+        const reportsRef = ref(db, 'reports');
 
-        onValue(feedbackRef, (snapshot) => {
+        onValue(reportsRef, (snapshot) => {
             if (snapshot.exists()) {
-                // Convert the snapshot value to an array of admins
-                const feedBackData = Object.values(snapshot.val());
-                setFeedbackData(feedBackData);
+                // Convert the snapshot value to an array of reports
+                const reportData = Object.values(snapshot.val());
+                setReportData(reportData);
             } else {
-                console.error('No feedback found in Firebase');
+                console.error('No reports found in Firebase');
             }
         });
     }, []); // Empty dependency array ensures the effect runs once on mount
@@ -29,40 +29,44 @@ function AdminFeedback() {
             <div className={styles.mainContentContainer}>
                 <div className={styles.container}>
                     <div className={styles.listcontainer}>
-                        <h2 className={styles.listtitle}>User Feedback</h2>
+                        <h2 className={styles.listtitle}>User Reports</h2>
                         <table className={styles.listtable}>
                             <thead>
                                 <tr>
                                     <th className={styles.header}>No.</th>
                                     <th className={styles.header}>Date of Creation</th>
                                     <th className={styles.header}>Name</th>
+                                    <th className={styles.header}>Matric Number</th>
                                     <th className={styles.header}>Email</th>
-                                    <th className={styles.header}>Category</th>
-                                    <th className={styles.header}>Message</th>
-                                    <th className={styles.header}>Rating</th>
+                                    <th className={styles.header}>Phone</th>
+                                    <th className={styles.header}>Bus Route</th>
+                                    <th className={styles.header}>Report Contents</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {feedbackData.map((feedback, index) => (
+                                {reportData.map((report, index) => (
                                     <tr key={index} className={styles.listitem}>
                                         <td className={styles.data}>{index + 1}</td>
                                         <td className={styles.data}>
-                                            <span className={styles.detaillabel}>{feedback.dateOfCreation}</span>
+                                            <span className={styles.detaillabel}>{report.dateOfCreation}</span>
                                         </td>
                                         <td className={styles.data}>
-                                            <span className={styles.detaillabel}>{feedback.name}</span>
+                                            <span className={styles.detaillabel}>{report.name}</span>
                                         </td>
                                         <td className={styles.data}>
-                                            <span className={styles.detaillabel}>{feedback.email}</span>
+                                            <span className={styles.detaillabel}>{report.matricNumber}</span>
                                         </td>
                                         <td className={styles.data}>
-                                            <span className={styles.detaillabel}>{feedback.category}</span>
+                                            <span className={styles.detaillabel}>{report.email}</span>
+                                        </td>
+                                        <td className={styles.data}>
+                                            <span className={styles.detaillabel}>{report.phone}</span>
+                                        </td>
+                                        <td className={styles.data}>
+                                            <span className={styles.detaillabel}>{report.busRoute}</span>
                                         </td>
                                         <td className={`${styles.data} ${styles.messageColumn}`}>
-                                            <span className={styles.detaillabel}>{feedback.message}</span>
-                                        </td>
-                                        <td className={styles.data}>
-                                            <span className={styles.detaillabel}>{feedback.rating}</span>
+                                            <span className={styles.detaillabel}>{report.reportContents}</span>
                                         </td>
                                     </tr>
                                 ))}
@@ -75,4 +79,4 @@ function AdminFeedback() {
     );
 }
 
-export default AdminFeedback;
+export default AdminReport;
