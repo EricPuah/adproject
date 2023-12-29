@@ -229,7 +229,7 @@ const changePasswordInDB = async (userId, newPassword) => {
   }
 };
 
-const submitReportToFirebase = async (dateTime, name, matricNumber, email, phone, busRoute, reportContents) => {
+const submitReportToFirebase = async (name, matricNumber, email, phone, busRoute, reportContents) => {
   try {
     const reportsRef = ref(db, 'reports'); // Use a new node named "reports"
     const newReport = {
@@ -240,7 +240,6 @@ const submitReportToFirebase = async (dateTime, name, matricNumber, email, phone
       phone: phone,
       busRoute: busRoute,
       reportContents: reportContents,
-      dateOfCreation: new Date().toLocaleDateString('en-GB'),
     };
     const newChildRef = push(reportsRef);
     await set(newChildRef, newReport);
