@@ -94,6 +94,8 @@ function DriverBusSelect() {
   const [driverLocation, setDriverLocation] = useState(null);
   const [isRouteSelected, setIsRouteSelected] = useState(false);
   const [isMapBlurred, setIsMapBlurred] = useState(true);
+  const [selectedBus, setSelectedBus] = useState(null);
+
 
   const handleResetRoute = () => {
     setVisibleRoute(null);
@@ -111,7 +113,15 @@ function DriverBusSelect() {
   }, []);
 
   const handleMarkerClick = (marker) => {
-    setSelectedMarker(marker);
+    if ('id' in marker) {
+      // Clicked on a bus marker
+      setSelectedMarker(null);
+      setSelectedBus(marker);
+    } else {
+      // Clicked on a regular marker
+      setSelectedMarker(marker);
+      setSelectedBus(null);
+    }
   };
 
   const handleShowBusRoute = (routeKey) => {
@@ -128,7 +138,9 @@ function DriverBusSelect() {
       setSelectedRoute(busRoutes[routeKey].route);
       setIsRouteSelected(true);
       setIsMapBlurred(false);
+
     }
+
   };
 
   const updateDriverLocation = () => {
@@ -293,6 +305,17 @@ function DriverBusSelect() {
                   },
                 }}
               />
+              {selectedBus === bus && (
+                <InfoWindow
+                  position={bus.position}
+                  onCloseClick={() => setSelectedBus(null)}
+                >
+                  <div>
+                    <h3>Bus Details</h3>
+                    <p>ID: {bus.id}</p>
+                  </div>
+                </InfoWindow>
+              )}
             </div>
           ))}
           {driverLocation && (
@@ -333,13 +356,12 @@ function DriverBusSelect() {
             )
           );
         })}
-
       </div>
 
       <div className={styles.bottomRightButtonStyle}>
         {isRouteSelected && (
           <button className={styles.changeRouteButton} onClick={handleResetRoute}>
-            Change Route
+            Change Bus
           </button>
         )}
       </div>
