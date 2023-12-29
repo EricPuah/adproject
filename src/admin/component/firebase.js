@@ -229,5 +229,24 @@ const changePasswordInDB = async (userId, newPassword) => {
   }
 };
 
+const submitReportToFirebase = async (name, email, phone, matricNumber, reportContents) => {
+  try {
+      const reportsRef = ref(db, 'reports'); // Use a new node named "reports"
+      const newReport = {
+          name: name,
+          email: email,
+          phone: phone,
+          matricNumber: matricNumber,
+          reportContents: reportContents,
+          dateOfCreation: new Date().toLocaleDateString('en-GB'),
+      };
+      const newChildRef = push(reportsRef);
+      await set(newChildRef, newReport);
+      return true; // Success
+  } catch (error) {
+      console.error('Firebase Error:', error);
+      throw new Error('An error occurred: ' + error.message);
+  }
+};
 
-export { auth, db, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB };
+export { auth, db, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB, submitReportToFirebase };

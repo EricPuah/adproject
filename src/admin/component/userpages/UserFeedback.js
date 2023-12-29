@@ -92,14 +92,14 @@ function UserFeedback() {
                 // Convert the snapshot value to an array of feedback
                 const feedBackData = Object.values(snapshot.val());
 
-                // Exclude the email property
-                const filteredFeedbackData = feedBackData.map(({ dateOfCreation, name, category, message, rating }) => ({
-                    dateOfCreation,
-                    name,
-                    category,
-                    message,
-                    rating,
-                }));
+                // // Exclude the email property
+                // const filteredFeedbackData = feedBackData.map(({ dateOfCreation, name, category, message, rating }) => ({
+                //     dateOfCreation,
+                //     name,
+                //     category,
+                //     message,
+                //     rating,
+                // }));
 
                 setFeedbackData(feedBackData);
             } else {

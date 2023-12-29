@@ -5,6 +5,8 @@ import { AiOutlineDashboard } from 'react-icons/ai';
 import { FaLocationDot } from "react-icons/fa6";
 import { TbRouteSquare } from "react-icons/tb";
 import { MdOutlineFeedback } from "react-icons/md";
+import { MdOutlineReportProblem } from "react-icons/md";
+
 
 function UserSideBar() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -35,6 +37,12 @@ function UserSideBar() {
         <li className={styles.list}>
           <Link to='/UserFeedback' className={styles.hover}>
             <MdOutlineFeedback className={styles.routesicon} />Feedback
+          </Link>
+        </li>
+
+        <li className={styles.list}>
+          <Link to='/UserReport' className={styles.hover}>
+            <MdOutlineReportProblem className={styles.routesicon} />Report
           </Link>
         </li>
 
