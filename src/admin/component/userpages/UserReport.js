@@ -5,6 +5,7 @@ import styles from './UserReport.module.css'; // Create a CSS module for styling
 import { submitReportToFirebase } from './../firebase.js';
 
 function UserReport() {
+    console.log('UserReport component rendering...');
     const [formData, setFormData] = useState({
         name: '',
         email: '',
