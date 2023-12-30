@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
-import UserSideBar from './UserSideBar'
+import React, { useState } from 'react';
+import UserSideBar from './UserSideBar';
 import style from './UserSideBar.module.css'; // Create a CSS module for styling
 import styles from './UserMainPage.module.css';
-
 
 function UserMainPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -11,9 +10,17 @@ function UserMainPage() {
     setSearchQuery(e.target.value);
   };
 
+  const responsiveStyles = {
+    '@media (max-width: 768px)': {
+      '.listtable': {
+        overflowX: 'auto',
+      },
+    },
+  };
+
   return (
     <div>
-      <div className={style.mainContentContainer}>
+      <div style={responsiveStyles} className={style.mainContentContainer}>
         <div className={styles.sidebar}>
           <UserSideBar />
         </div>
@@ -33,7 +40,7 @@ function UserMainPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default UserMainPage
+export default UserMainPage;
