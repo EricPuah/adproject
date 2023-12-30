@@ -4,7 +4,6 @@ import AdminNavbar from './AdminNavbar';
 import style from './AdminNavBar.module.css';
 import { ref, onValue, update, get } from 'firebase/database';
 import { db, addCommentToReport } from './../firebase';
-import style from './AdminNavBar.module.css';
 import styles from './AdminReport.module.css';
 
 function AdminReport() {
