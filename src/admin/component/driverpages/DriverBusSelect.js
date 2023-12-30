@@ -294,21 +294,21 @@ function DriverBusSelect() {
         </GoogleMap>
       </div>
 
-      <div className='selectBusDropdown'>
-        <label htmlFor="busSelection">Select Bus: </label>
-        <select
-          id="busSelection"
-          value={selectedBus}
-          onChange={(e) => handleBusSelection(e.target.value)}
-        >
-          <option value="" disabled>Select a bus</option>
-          {busList.map((bus) => (
-            <option key={bus} value={bus}>
-              {bus}
+      {selectedBus ? (
+        <div className="selectBusDropdown">
+          <label>Select Bus:</label>
+          <select onChange={(e) => handleBusSelection(e.target.value)} value={selectedBus}>
+            <option value="" disabled>
+              Select a bus
             </option>
-          ))}
-        </select>
-      </div>
+            {busList.map((bus) => (
+              <option key={bus} value={bus}>
+                {bus}
+              </option>
+            ))}
+          </select>
+        </div>
+      ) : null}
 
       {/* Button Container */}
       <div className='buttonContainerStyle'>
