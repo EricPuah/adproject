@@ -18,11 +18,9 @@ import DriverBusSelect from './admin/component/driverpages/DriverBusSelect';
 import AdminFeedback from './admin/component/pages/AdminFeedback';
 import UserReport from './admin/component/userpages/UserReport';
 import AdminReport from './admin/component/pages/AdminReport';
-import { BusProvider } from './admin/component/driverpages/BusContext'
 
 const App = () => {
   return (
-    <BusProvider>
       <Router>
         <Routes>
           <Route path="/" element={<UserMap />} />
@@ -122,7 +120,6 @@ const App = () => {
           } />
         </Routes>
       </Router>
-    </BusProvider>
   );
 };
 
