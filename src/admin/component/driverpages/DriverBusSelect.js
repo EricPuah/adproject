@@ -95,7 +95,7 @@ function DriverBusSelect() {
   const [isRouteSelected, setIsRouteSelected] = useState(false);
   const [isMapBlurred, setIsMapBlurred] = useState(true);
   const [showDriverInfoWindow, setShowDriverInfoWindow] = useState(false);
-
+  const [clickedBusRouteKey, setClickedBusRouteKey] = useState(null);
 
   const handleResetRoute = () => {
     setVisibleRoute(null);
@@ -116,7 +116,12 @@ function DriverBusSelect() {
     setSelectedMarker(marker);
   };
 
-  const handleDriverMarkerClick = () => {
+  const determineClickedBusRoute = (routeKeyArray) => {
+    return routeKeyArray && routeKeyArray.length > 0 ? routeKeyArray[0] : null;
+  };
+
+  const handleDriverMarkerClick = (routeKey) => {
+    setClickedBusRouteKey(determineClickedBusRoute(routeKey));
     setShowDriverInfoWindow(!showDriverInfoWindow);
   };
 
@@ -240,7 +245,7 @@ function DriverBusSelect() {
       <div>
         <AdminNavbar />
       </div>
-      <div style={{ ...containerStyle, filter: isMapBlurred ? 'blur(3px)' : 'none' }}>
+      <div style={{ ...containerStyle, filter: isMapBlurred ? 'blur(0px)' : 'none' }}>
         {/* Map Container */}
         <GoogleMap
           mapContainerStyle={{ width: '100%', height: '100%' }}
@@ -251,7 +256,7 @@ function DriverBusSelect() {
           options={{ mapId: "556e9663519326d5" }}
           className="google-map"
         >
-          {selectedRoute && (
+          {/* {selectedRoute && (
             <Polyline
               path={selectedRoute}
               options={{
@@ -260,7 +265,7 @@ function DriverBusSelect() {
                 strokeWeight: 5,
               }}
             />
-          )}
+          )} */}
 
           {/* Static markers */}
           {staticMarkers.map((marker) => (
@@ -307,7 +312,7 @@ function DriverBusSelect() {
             <div>
               <Marker
                 position={driverLocation}
-                onClick={() => handleDriverMarkerClick()}
+                onClick={() => handleDriverMarkerClick(routeKeys)}
                 options={{
                   icon: {
                     url: CustomBus,
@@ -322,7 +327,7 @@ function DriverBusSelect() {
                 >
                   <div>
                     <h3>Driver Details</h3>
-                    <p>Driver's Info...</p>
+                    <p>Route: {clickedBusRouteKey}</p>
                   </div>
                 </InfoWindow>
               )}
@@ -332,7 +337,7 @@ function DriverBusSelect() {
       </div>
 
       {/* Button Container */}
-      <div className={styles.buttonContainerStyle}>
+      {/* <div className={styles.buttonContainerStyle}>
         {!isRouteSelected && (
           <div className={styles.word}>
             <p>Please Select a Bus Route</p>
@@ -355,15 +360,15 @@ function DriverBusSelect() {
           );
         })}
 
-      </div>
+      </div> */}
 
-      <div className={styles.bottomRightButtonStyle}>
+      {/* <div className={styles.bottomRightButtonStyle}>
         {isRouteSelected && (
           <button className={styles.changeRouteButton} onClick={handleResetRoute}>
             Change Bus
           </button>
         )}
-      </div>
+      </div> */}
 
     </div>
   );
