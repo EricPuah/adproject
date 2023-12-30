@@ -136,36 +136,25 @@ function UserMap() {
 
     const fetchDriverLocations = async () => {
         try {
-            const busList = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'D1', 'D2', 'E1', 'E2', 'F1', 'F2', 'G1', 'G2', 'H1', 'H2'];
-            const locations = {};
+            const response = await fetch('https://ad-server-js.vercel.app/active-buses');
+            if (!response.ok) {
+                throw new Error('Failed to fetch active buses from the server');
+            }
+            const data = await response.json();
     
-            // Fetch the location for each bus in the busList
-            await Promise.all(busList.map(async (bus) => {
-                const response = await fetch(`https://ad-server-js.vercel.app/driver-location/${bus}`);
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch location for bus ${bus}`);
-                }
-                const data = await response.json();
-    
-                if (data.success && data.location && isRecent(data.location.timestamp)) {
-                    locations[bus] = data.location;
-                    console.log(`Location for active bus ${bus} fetched successfully:`, data.location);
-                } else {
-                    console.error(`Error fetching location for bus ${bus}:`, data.message);
-                }
-            }));
-    
-            setDriverLocations(locations);
+            if (data.success) {
+                const activeBusesLocations = {};
+                data.activeBuses.forEach(({ bus, location }) => {
+                    activeBusesLocations[bus] = location;
+                });
+                setDriverLocations(activeBusesLocations);
+                console.log('Active buses locations fetched successfully:', activeBusesLocations);
+            } else {
+                console.error('Error fetching active buses from the server:', data.message);
+            }
         } catch (error) {
-            console.error('Error fetching driver locations from server:', error);
+            console.error('Error fetching active buses from the server:', error);
         }
-    };
-    
-    const isRecent = (timestamp) => {
-        const currentTimestamp = Date.now();
-        const maxTimeDifference = 60 * 1000; // 5 minutes in milliseconds
-    
-        return currentTimestamp - timestamp < maxTimeDifference;
     };
 
     useEffect(() => {
