@@ -114,6 +114,21 @@ function UserMap() {
         }
     };
 
+    const handleBusButtonClick = (busId) => {
+        // Check if the bus is active
+        if (driverLocations[busId]) {
+            // Center the map to the selected bus
+            const busLocation = driverLocations[busId];
+            if (map) {
+                map.panTo(busLocation);
+            }
+        } else {
+            // Bus is inactive, handle accordingly (e.g., display a message)
+            console.log(`Bus ${busId} is inactive. Cannot center the map.`);
+        }
+    };
+
+
     const updateUserLocation = () => {
         if (navigator.geolocation && map) {
             navigator.geolocation.getCurrentPosition(
@@ -141,7 +156,7 @@ function UserMap() {
                 throw new Error('Failed to fetch active buses from the server');
             }
             const data = await response.json();
-    
+
             if (data.success) {
                 const activeBusesLocations = {};
                 data.activeBuses.forEach(({ bus, location }) => {
@@ -301,7 +316,24 @@ function UserMap() {
                     ))}
                 </GoogleMap>
             </div>
-
+            <div className='buttonContainerStyle' style={{ position: 'absolute', top: '40px', right: '20px', textAlign: 'center' }}>
+                {/* Button to show bus activity */}
+                {Object.keys(driverLocations).map((busId) => (
+                    <button
+                        key={busId}
+                        onClick={() => handleBusButtonClick(busId)}
+                        style={{
+                            margin: '5px',
+                            backgroundColor: driverLocations[busId] ? 'inherit' : '#e0e0e0', // Grey out if inactive
+                            cursor: driverLocations[busId] ? 'pointer' : 'not-allowed', // Show different cursor if inactive
+                            pointerEvents: driverLocations[busId] ? 'auto' : 'none', // Disable pointer events if inactive
+                        }}
+                    >
+                        <span style={{ marginRight: '5px' }}>{busId}</span>
+                        {driverLocations[busId] ? 'Active' : 'Inactive'}
+                    </button>
+                ))}
+            </div>
             <div className='buttonContainerStyle'>
                 {routeKeys.slice(0, 8).map((routeKey) => {
                     const isRouteVisible = visibleRoute === routeKey;
