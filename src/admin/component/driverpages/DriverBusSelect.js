@@ -88,6 +88,7 @@ function DriverBusSelect() {
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [driverLocation, setDriverLocation] = useState(null);
   const [selectedBus, setSelectedBus] = useState(null);
+  const [isRouteSelected, setIsRouteSelected] = useState(false);
 
   const onLoad = React.useCallback(function callback(map) {
     setMap(map);
@@ -115,6 +116,29 @@ function DriverBusSelect() {
   };
 
   const handleBusSelection = async (bus) => {
+    try {
+      // Make a POST request to the backend to select the bus
+      const response = await fetch('https://ad-server-js.vercel.app/location/check-bus', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ bus }),
+      });
+
+      if (!response.ok) {
+        const { error } = await response.json();
+        alert(error);
+      } else {
+        // If successful, update the local state
+        setSelectedBus(bus);
+      }
+    } catch (error) {
+      console.error('Error selecting bus:', error);
+    }
+  };
+
+  const selectBus = async (bus) => {
     try {
       // Make a POST request to the backend to select the bus
       const response = await fetch('https://ad-server-js.vercel.app/location/select-bus', {
