@@ -54,11 +54,3 @@
   padding: 20px;
   transition: margin 0.3s;
 }
-
-@media (max-width: 768px) {
-  .mainContentContainer {
-    margin-left: 500px;
-    padding: 20px;
-    transition: margin 0.3s;
-  }
-}
