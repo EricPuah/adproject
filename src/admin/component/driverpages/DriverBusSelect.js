@@ -295,7 +295,7 @@ function DriverBusSelect() {
       </div>
 
       {selectedBus ? (
-        <div className="selectBusDropdown">
+        <div className="selectBusDropdown" style={{ border: '1px solid red' }}>
           <label>Select Bus:</label>
           <select onChange={(e) => handleBusSelection(e.target.value)} value={selectedBus}>
             <option value="" disabled>

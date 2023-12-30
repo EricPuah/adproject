@@ -52,19 +52,16 @@
 }
 
 .selectBusDropdown {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    position: absolute;
+    top: 20px; /* Adjust the top position as needed */
+    left: 20px; /* Adjust the left position as needed */
+    z-index: 1000; /* Ensure it's above other elements */
   }
   
-  /* Label styles */
   .selectBusDropdown label {
-    margin-right: 8px;
-    font-weight: bold;
+    margin-right: 5px;
   }
   
-  /* Dropdown styles */
   .selectBusDropdown select {
-    padding: 8px;
-    font-size: 16px;
+    width: 150px; /* Adjust the width as needed */
   }
-  
