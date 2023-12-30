@@ -136,18 +136,26 @@ function UserMap() {
 
     const fetchDriverLocations = async () => {
         try {
-            const response = await fetch('https://ad-server-js.vercel.app/driver-location');
-            if (!response.ok) {
-                throw new Error('Failed to fetch driver locations from server');
-            }
-            const data = await response.json();
-
-            if (data.success) {
-                setDriverLocations(data.locations);
-                console.log('Driver locations fetched successfully:', data.locations);
-            } else {
-                console.error('Error fetching driver locations from server:', data.message);
-            }
+            const busList = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'D1', 'D2', 'E1', 'E2', 'F1', 'F2', 'G1', 'G2', 'H1', 'H2'];
+            const locations = {};
+    
+            // Fetch the location for each bus in the busList
+            await Promise.all(busList.map(async (bus) => {
+                const response = await fetch(`https://ad-server-js.vercel.app/driver-location/${bus}`);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch location for bus ${bus}`);
+                }
+                const data = await response.json();
+    
+                if (data.success) {
+                    locations[bus] = data.location;
+                    console.log(`Location for bus ${bus} fetched successfully:`, data.location);
+                } else {
+                    console.error(`Error fetching location for bus ${bus}:`, data.message);
+                }
+            }));
+    
+            setDriverLocations(locations);
         } catch (error) {
             console.error('Error fetching driver locations from server:', error);
         }
