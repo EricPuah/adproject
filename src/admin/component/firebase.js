@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getDatabase(app);
 const storage = getStorage();
-const pdfRef = storageRef(storage, 'bus_schedule/bus_A.pdf');
+const pdfRef = storageRef(storage, 'bus_schedule.pdf');
 
 //RootRegister.js query (OLD)
 const registerUserInFirebase = async (username, password) => {
