@@ -256,20 +256,22 @@ const submitReportToFirebase = async (name, matricNumber, email, phone, busRoute
 
 const addCommentToReport = async (reportId, adminUsername, commentText) => {
   try {
-    const commentsRef = ref(db, `reports/${reportId}/comments`);
+    const commentsRef = ref(db, `reports/${reportId}/comments`); // Create a new "comments" node under the specific report
     const newComment = {
+      date: serverTimestamp(),
       adminUsername,
       commentText,
-      timestamp: serverTimestamp(),
     };
-    const newCommentRef = push(commentsRef);
-    await set(newCommentRef, newComment);
+    const newChildRef = push(commentsRef);
+    await set(newChildRef, newComment);
     return true; // Success
   } catch (error) {
     console.error('Firebase Error:', error);
     throw new Error('An error occurred: ' + error.message);
   }
 };
+
+
 
 
 const getPdfUrl = async () => {

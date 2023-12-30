@@ -2,16 +2,18 @@
 import React, { useState, useEffect } from 'react';
 import AdminNavbar from './AdminNavbar';
 import style from './AdminNavBar.module.css';
-import { ref, onValue, update } from 'firebase/database';
-import { db, addCommentToReport } from './../firebase'; // Import the addCommentToReport function
-import styles from './AdminReport.module.css'; // Create a CSS module for styling
+import { ref, onValue, update, get } from 'firebase/database';
+import { db, addCommentToReport } from './../firebase';
+import styles from './AdminReport.module.css';
 
 function AdminReport() {
     const [reportData, setReportData] = useState([]);
     const [selectedReportId, setSelectedReportId] = useState('');
+    const [commentText, setCommentText] = useState('');
+    const [showCommentInput, setShowCommentInput] = useState(false);
+    const [expandedReportId, setExpandedReportId] = useState(null);
 
     useEffect(() => {
-        // Fetch report data from the server
         const reportsRef = ref(db, 'reports');
 
         onValue(reportsRef, (snapshot) => {
@@ -28,20 +30,92 @@ function AdminReport() {
     }, []);
 
     const handleUpdateStatus = async (reportId, newStatus) => {
-        // Update the status in Firebase
         const reportRef = ref(db, `reports/${reportId}`);
         await update(reportRef, { status: newStatus });
     };
 
     const handleAddComment = async (reportId, adminUsername, commentText) => {
-        // Add a comment to the report in Firebase
-        await addCommentToReport(reportId, adminUsername, commentText);
+        try {
+            await handleUpdateStatus(reportId, 'in progress');
+            await addCommentToReport(reportId, adminUsername, commentText);
+
+            const updatedReportData = await fetchUpdatedReportData();
+            setReportData(updatedReportData);
+
+            setCommentText('');
+        } catch (error) {
+            console.error('Error adding comment:', error);
+        }
     };
+
+    const fetchUpdatedReportData = async () => {
+        try {
+            const reportsRef = ref(db, 'reports');
+            const snapshot = await get(reportsRef);
+
+            if (snapshot.exists()) {
+                const reportData = Object.entries(snapshot.val()).map(([reportId, report]) => ({
+                    id: reportId,
+                    ...report
+                }));
+                return reportData;
+            } else {
+                console.error('No reports found in Firebase');
+                return [];
+            }
+        } catch (error) {
+            console.error('Firebase Error:', error);
+            throw new Error('An error occurred: ' + error.message);
+        }
+    };
+
+    const renderCommentInput = (report) => {
+        const isCommentInputActive = showCommentInput && selectedReportId === report.id;
+
+        if (isCommentInputActive) {
+            return (
+                <div>
+                    <textarea
+                        placeholder="Enter your comment"
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                    />
+                    {commentText.trim() !== '' ? (
+                        <button
+                            onClick={() => {
+                                handleAddComment(report.id, 'AdminUser1', commentText);
+                                setShowCommentInput(false);
+                                setCommentText('');
+                            }}
+                        >
+                            Submit Comment
+                        </button>
+                    ) : (
+                        <button onClick={() => setShowCommentInput(false)}>Cancel</button>
+                    )}
+                </div>
+            );
+        } else if (report.status === 'new' || report.status === 'in progress') {
+            return (
+                <button
+                    onClick={() => {
+                        setSelectedReportId(report.id);
+                        setShowCommentInput(true);
+                    }}
+                >
+                    Add Comment
+                </button>
+            );
+        } else {
+            return null; // Return null for other cases
+        }
+    };
+
 
     return (
         <div>
             <AdminNavbar />
-            <div className={styles.mainContentContainer}>
+            <div className={style.mainContentContainer}>
                 <div className={styles.container}>
                     <div className={styles.listcontainer}>
                         <h2 className={styles.listtitle}>User Reports</h2>
@@ -62,47 +136,71 @@ function AdminReport() {
                             </thead>
                             <tbody>
                                 {reportData.map((report, index) => (
-                                    <tr key={report.id} className={styles.listitem}>
-                                        <td className={styles.data}>{index + 1}</td>
-                                        <td className={styles.data}>
-                                            <span className={styles.detaillabel}>{report.dateOfCreation}</span>
-                                        </td>
-                                        <td className={styles.data}>
-                                            <span className={styles.detaillabel}>{report.name}</span>
-                                        </td>
-                                        <td className={styles.data}>
-                                            <span className={styles.detaillabel}>{report.matricNumber}</span>
-                                        </td>
-                                        <td className={styles.data}>
-                                            <span className={styles.detaillabel}>{report.email}</span>
-                                        </td>
-                                        <td className={styles.data}>
-                                            <span className={styles.detaillabel}>{report.phone}</span>
-                                        </td>
-                                        <td className={styles.data}>
-                                            <span className={styles.detaillabel}>{report.busRoute}</span>
-                                        </td>
-                                        <td className={`${styles.data} ${styles.messageColumn}`}>
-                                            <span className={styles.detaillabel}>{report.reportContents}</span>
-                                        </td>
-                                        <td className={styles.data}>
-                                            <span className={styles.detaillabel}>{report.status}</span>
-                                        </td>
-                                        <td className={styles.data}>
-                                            {report.status === 'new' && (
-                                                <>
-                                                    <button onClick={() => handleUpdateStatus(report.id, 'in progress')}>Mark In Progress</button>
-                                                    <button onClick={() => handleAddComment(report.id, 'AdminUser1', 'Initial comment')}>Add Comment</button>
-                                                </>
-                                            )}
-                                            {report.status === 'in progress' && (
-                                                <>
-                                                    <button onClick={() => handleUpdateStatus(report.id, 'solved')}>Mark Solved</button>
-                                                    <button onClick={() => handleAddComment(report.id, 'AdminUser1', 'Follow-up comment')}>Add Comment</button>
-                                                </>
-                                            )}
-                                        </td>
-                                    </tr>
+                                    <React.Fragment key={report.id}>
+                                        {/* Main row for report details */}
+                                        <tr className={styles.listitem}>
+                                            <td className={styles.data}>{index + 1}</td>
+                                            <td className={styles.data}>
+                                                <span className={styles.detaillabel}>{report.dateOfCreation}</span>
+                                            </td>
+                                            <td className={styles.data}>
+                                                <span className={styles.detaillabel}>{report.name}</span>
+                                            </td>
+                                            <td className={styles.data}>
+                                                <span className={styles.detaillabel}>{report.matricNumber}</span>
+                                            </td>
+                                            <td className={styles.data}>
+                                                <span className={styles.detaillabel}>{report.email}</span>
+                                            </td>
+                                            <td className={styles.data}>
+                                                <span className={styles.detaillabel}>{report.phone}</span>
+                                            </td>
+                                            <td className={styles.data}>
+                                                <span className={styles.detaillabel}>{report.busRoute}</span>
+                                            </td>
+                                            <td className={`${styles.data} ${styles.messageColumn}`} style={{ whiteSpace: 'pre-line' }}>
+                                                <span className={styles.detaillabel}>{report.reportContents}</span>
+                                            </td>
+                                            <td className={styles.data}>
+                                                <span className={styles.detaillabel}>{report.status}</span>
+                                            </td>
+                                            <td className={styles.data}>
+                                                {renderCommentInput(report)}
+                                                {report.status === 'in progress' && (
+                                                    <>
+                                                        <button onClick={() => handleUpdateStatus(report.id, 'solved')}>Mark Solved</button>
+
+                                                        {/* Include the button for expanding comments */}
+                                                        {report.status !== 'new' && (
+                                                            <button
+                                                                onClick={() => {
+                                                                    setExpandedReportId((prevId) => (prevId === report.id ? null : report.id));
+                                                                }}
+                                                            >
+                                                                {expandedReportId === report.id ? 'Hide Comments' : 'View Comments'}
+                                                            </button>
+                                                        )}
+                                                    </>
+                                                )}
+                                            </td>
+                                        </tr>
+
+                                        {/* Comments row (displayed conditionally based on expandedReportId) */}
+                                        {expandedReportId === report.id && (
+                                            <tr className={styles.commentRow}>
+                                                <td colSpan="10" className={styles.commentCell}>
+                                                    {report.comments &&
+                                                        Object.values(report.comments).map((comment, commentIndex) => (
+                                                            <div key={commentIndex} className={styles.comment}>
+                                                                <span>{comment.adminUsername}:</span>
+                                                                <p>{comment.commentText}</p>
+                                                                <p>{new Date(comment.date).toLocaleString()}</p>
+                                                            </div>
+                                                        ))}
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </React.Fragment>
                                 ))}
                             </tbody>
                         </table>

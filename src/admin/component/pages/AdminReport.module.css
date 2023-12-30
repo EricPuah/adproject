@@ -1,58 +1,101 @@
 /* AdminReport.module.css */
 
+/* Additional styles for the container */
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .listcontainer {
-    max-width: auto;
-    overflow: auto; /* Allow horizontal scrolling if needed */
-    margin: 20px auto; /* Center the list */
-  }
-  
-  .listtitle {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .listtable {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .header {
-    background-color: #007BFF;
-    color: #fff;
-    padding: 10px;
-    text-align: left;
-  }
-  
-  .listitem {
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .data {
-    padding: 10px;
-  }
-  
-  .detaillabel {
-    display: block;
-    font-weight: bold;
-  }
-  
-  .messageColumn {
-    max-width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .mainContentContainer {
-    margin-left: 250px;
-    padding: 20px;
-    transition: margin 0.3s;
+/* Additional styles for the list container */
+.listcontainer {
+  max-width: auto;
+  overflow: auto; /* Allow horizontal scrolling if needed */
+  margin: 20px auto; /* Center the list */
+  padding: 20px; /* Added padding for a nicer look */
+  border-radius: 5px; /* Added border-radius for rounded corners */
+  background-color: #fff; /* Background color for a clean look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle lift */
+}
+
+/* Additional styles for the heading */
+.listtitle {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Additional styles for the table */
+.listtable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.header {
+  background-color: #007BFF;
+  color: #fff;
+  padding: 10px;
+  text-align: left;
+}
+
+.listitem {
+  border-bottom: 1px solid #ddd;
+}
+
+.data {
+  padding: 10px;
+}
+
+.detaillabel {
+  display: block;
+  font-weight: bold;
+}
+
+.messageColumn {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.commentRow {
+  background-color: #f9f9f9; /* Background color for comment row */
+}
+
+.commentCell {
+  padding: 10px;
+}
+
+.comment {
+  margin-bottom: 10px;
+}
+
+/* Additional styles for the main content container */
+.mainContentContainer {
+  margin-left: 250px;
+  padding: 20px;
+  transition: margin 0.3s;
+}
+
+/* Additional styles for the buttons */
+.addCommentButton {
+  background-color: #28a745; /* Green color for success */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Add a smooth transition effect */
+}
+
+.addCommentButton:hover {
+  background-color: #218838; /* Darker green color on hover */
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  .listtable {
+      overflow-x: auto;
   }
-  
+}
