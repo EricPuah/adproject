@@ -66,13 +66,20 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  z-index: 1; /* Add z-index to make sure it appears on top of other elements */
 }
 
 .buttonBusContainerStyle button {
   margin: 5px;
-  background-color: inherit;
-  cursor: pointer;
-  pointer-events: auto;
+  background-color: #e0e0e0; /* Set a background color for inactive buttons */
+  cursor: not-allowed; /* Show not-allowed cursor for inactive buttons */
+  pointer-events: none; /* Disable pointer events for inactive buttons */
   text-align: right;
   white-space: nowrap;
+}
+
+.buttonBusContainerStyle button.active {
+  background-color: inherit; /* Set background color for active buttons */
+  cursor: pointer; /* Show pointer cursor for active buttons */
+  pointer-events: auto; /* Enable pointer events for active buttons */
 }
