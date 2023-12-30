@@ -272,7 +272,6 @@ const addCommentToReport = async (reportId, adminUsername, commentText) => {
 };
 
 
-export { auth, db, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB, submitReportToFirebase, addCommentToReport };
 const getPdfUrl = async () => {
   try {
     const url = await getDownloadURL(pdfRef);
@@ -283,4 +282,4 @@ const getPdfUrl = async () => {
   }
 };
 
-export { auth, db, getPdfUrl, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB, submitReportToFirebase };
+export { auth, db, getPdfUrl, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB, submitReportToFirebase,  addCommentToReport };
