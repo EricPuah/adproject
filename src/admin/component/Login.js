@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { authenticateUser } from './firebase';
 import styles from './Login.module.css'
 import { useSignIn } from 'react-auth-kit'
+import Cookies from 'js-cookie';
 
 const Login = () => {
     const signIn = useSignIn();
@@ -14,6 +15,10 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
+
+    const cookieData = JSON.parse(Cookies.get('_auth_state'));
+    const user_isRootAdmin = cookieData.isRootAdmin;
+    const userRole = cookieData.role;
 
     useEffect(() => {
         userRef.current.focus();
@@ -63,9 +68,15 @@ const Login = () => {
         <>
             {
                 success ? (
+                    userRole === 'driver' ? (
+                        <section className={styles.section} >
+                        <Navigate to="/DriverBusSelect" />
+                        </section>
+                    ) : (
                     <section className={styles.section} >
                         <Navigate to="/AdminMaps" />
                     </section>
+                    )
                 ) : (
                     <section className={styles.section}>
                         <form className={styles.form} onSubmit={handleSubmit}>

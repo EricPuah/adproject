@@ -29,13 +29,14 @@ const AdminNavbar = () => {
         <li className={styles.dashboard}>
           <AiOutlineDashboard className={styles.dashboardicon} />Dashboard
         </li>
-
+        {userRole != 'driver' ? (
         <li className={styles.list}>
           <TbMapSearch className={styles.mapsicon} />
           <Link to='/AdminMaps' className={styles.hover}>
             Maps
           </Link>
         </li>
+        ) : null }
 
         {user_isRootAdmin ? (
           <li className={styles.list}>
