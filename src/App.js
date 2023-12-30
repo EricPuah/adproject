@@ -19,7 +19,6 @@ import AdminFeedback from './admin/component/pages/AdminFeedback';
 import UserReport from './admin/component/userpages/UserReport';
 import AdminReport from './admin/component/pages/AdminReport';
 
-
 const App = () => {
   return (
     <Router>
@@ -119,6 +118,7 @@ const App = () => {
         <Route path={'/UserReport'} element={
           <UserReport />
         } />
+
 
       </Routes>
     </Router>

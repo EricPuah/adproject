@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
-import { Link, Navigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './UserSideBar.module.css';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { FaLocationDot } from "react-icons/fa6";
-import { TbRouteSquare } from "react-icons/tb";
 import { MdOutlineFeedback } from "react-icons/md";
 import { MdOutlineReportProblem } from "react-icons/md";
-
+import { CiLogin } from "react-icons/ci";
 
 function UserSideBar() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -46,9 +45,14 @@ function UserSideBar() {
           </Link>
         </li>
 
+        <li className={styles.list}>
+          <Link to='/login' className={styles.hover}>
+            <CiLogin className={styles.routesicon} />Admin Login
+          </Link>
+        </li>
       </ul>
     </div>
-  )
+  );
 }
 
-export default UserSideBar
+export default UserSideBar;

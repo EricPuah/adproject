@@ -3,6 +3,7 @@ import { getAuth } from 'firebase/auth';
 import { serverTimestamp, getDatabase, ref, push, set, query, orderByChild, equalTo, onValue, get, child, update } from 'firebase/database';
 import { hash, compare } from 'bcryptjs'
 import emailjs from 'emailjs-com';
+import { getStorage, ref as storageRef, getDownloadURL } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAUv4mDaTr3XY5qnLT08hx8eECGtsP3beE",
@@ -17,7 +18,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getDatabase(app);
-
+const storage = getStorage();
+const pdfRef = storageRef(storage, 'bus_schedule/bus_A.pdf');
 
 //RootRegister.js query (OLD)
 const registerUserInFirebase = async (username, password) => {
@@ -250,4 +252,14 @@ const submitReportToFirebase = async (name, matricNumber, email, phone, busRoute
   }
 };
 
-export { auth, db, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB, submitReportToFirebase };
+const getPdfUrl = async () => {
+  try {
+    const url = await getDownloadURL(pdfRef);
+    return url;
+  } catch (error) {
+    console.error('Error getting PDF download URL:', error);
+    throw new Error('An error occurred: ' + error.message);
+  }
+};
+
+export { auth, db, getPdfUrl, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB, submitReportToFirebase };
