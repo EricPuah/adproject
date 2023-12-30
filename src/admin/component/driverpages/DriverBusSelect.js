@@ -168,14 +168,19 @@ function DriverBusSelect() {
     }
   };
 
-  const sendDriverLocationToServer = (location) => {
+  const sendDriverLocationToServer = (location, routeIndex) => {
     // Use fetch or Axios to send a POST request to your server
+    const requestData = {
+      location: location,
+      routeIndex: routeIndex,
+    };
+
     fetch('https://ad-server-js.vercel.app/location', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(location),
+      body: JSON.stringify(requestData),
     })
       .then(response => {
         if (!response.ok) {
@@ -201,9 +206,12 @@ function DriverBusSelect() {
               lng: position.coords.longitude,
             };
 
-
             setDriverLocation(location);
-            sendDriverLocationToServer(location);
+            if (isRouteSelected) {
+              sendDriverLocationToServer(location, buttonIndex);
+            } else {
+              sendDriverLocationToServer(location, null); // or undefined
+            }
           },
           (error) => {
             console.error('Error getting user location:', error);
