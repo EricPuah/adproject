@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { authenticateUser } from './firebase';
 import styles from './Login.module.css'
 import { useSignIn } from 'react-auth-kit'
+import Cookies from 'js-cookie';
 
 const Login = () => {
     const signIn = useSignIn();
@@ -14,6 +15,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
+    const [role, setRole] = useState('');
 
     useEffect(() => {
         userRef.current.focus();
@@ -50,6 +52,7 @@ const Login = () => {
                     tokenType: "Bearer",
                     authState: { username: user, isRootAdmin: data.isRootAdmin, role: data.role},
                 })
+                setRole(data.role);
                 setSuccess(true);
             } else {
                 setErrMsg(`Incorrect Username or Password.`);
@@ -63,9 +66,15 @@ const Login = () => {
         <>
             {
                 success ? (
+                    role === 'driver' ? (
+                        <section className={styles.section} >
+                        <Navigate to="/DriverBusSelect" />
+                        </section>
+                    ) : (
                     <section className={styles.section} >
                         <Navigate to="/AdminMaps" />
                     </section>
+                    )
                 ) : (
                     <section className={styles.section}>
                         <form className={styles.form} onSubmit={handleSubmit}>
