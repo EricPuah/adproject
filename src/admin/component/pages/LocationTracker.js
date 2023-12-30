@@ -4,6 +4,7 @@ import './LocationTracker.css';
 import AdminNavbar from './AdminNavbar';
 import CustomMarker from '../../../assets/bus-stop.png';
 import busRoutes from './busRoutes';
+import busD from '../../../assets/bus.png';
 
 const containerStyle = {
   width: '60%',
@@ -141,7 +142,6 @@ function LocationTracker() {
     }
 
     const updateLocationInterval = setInterval(() => {
-      // updateUserLocation();
       fetchDriverLocations();
     }, 300);
 
