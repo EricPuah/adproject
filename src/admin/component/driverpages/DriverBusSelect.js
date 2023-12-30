@@ -122,27 +122,44 @@ function DriverBusSelect() {
 
   const handleBusSelection = async (bus) => {
     try {
-      // Make a POST request to the backend to select the bus
-      const response = await fetch('https://ad-server-js.vercel.app/location/select-bus', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ bus }),
+      // Make a GET request to the backend to check if the bus is already selected
+      const response = await fetch(`https://ad-server-js.vercel.app/location/selected-buses`, {
+        method: 'GET',
       });
-
+  
       if (!response.ok) {
         const { error } = await response.json();
         alert(error);
       } else {
-        // If successful, update the local state
-        setSelectedBus(bus);
+        const { selectedBuses } = await response.json();
+  
+        // Check if the selected bus is already taken by another driver
+        if (selectedBuses.includes(bus)) {
+          alert('This bus is already taken by another driver. Please choose another bus.');
+        } else {
+          // If not taken, make a POST request to select the bus
+          const postResponse = await fetch('https://ad-server-js.vercel.app/location/select-bus', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ bus }),
+          });
+  
+          if (!postResponse.ok) {
+            const { error } = await postResponse.json();
+            alert(error);
+          } else {
+            // If successful, update the local state
+            setSelectedBus(bus);
+          }
+        }
       }
     } catch (error) {
       console.error('Error selecting bus:', error);
     }
   };
-
+  
   const updateDriverLocation = () => {
     if (navigator.geolocation && map && selectedBus) {
       navigator.geolocation.getCurrentPosition(
