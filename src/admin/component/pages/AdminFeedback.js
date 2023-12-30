@@ -1,35 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import AdminNavbar from './AdminNavbar'
-import { FaRegStar, FaStar } from "react-icons/fa";
+import AdminNavbar from './AdminNavbar';
+import style from './AdminNavBar.module.css';
+import styles from './AdminFeedback.module.css';
 import { ref, onValue } from 'firebase/database';
 import { db } from './../firebase';
-import styles from './AdminFeedback.module.css'; // Create a CSS module for styling
 
 function AdminFeedback() {
     const [feedbackData, setFeedbackData] = useState([]);
 
     useEffect(() => {
-        // Fetch feedback data from the server
         const feedbackRef = ref(db, 'feedback');
 
         onValue(feedbackRef, (snapshot) => {
             if (snapshot.exists()) {
-                // Convert the snapshot value to an array of admins
                 const feedBackData = Object.values(snapshot.val());
                 setFeedbackData(feedBackData);
             } else {
                 console.error('No feedback found in Firebase');
             }
         });
-    }, []); // Empty dependency array ensures the effect runs once on mount
+    }, []);
+
+    console.log('feedbackData:', feedbackData);
 
     return (
         <div>
             <AdminNavbar />
-            <div className={styles.mainContentContainer}>
+            <div className={style.mainContentContainer}>
                 <div className={styles.container}>
                     <div className={styles.listcontainer}>
                         <h2 className={styles.listtitle}>User Feedback</h2>
+
                         <table className={styles.listtable}>
                             <thead>
                                 <tr>
