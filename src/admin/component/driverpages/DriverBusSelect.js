@@ -4,7 +4,6 @@ import '../../component/pages/LocationTracker';
 import AdminNavbar from '../pages/AdminNavbar';
 import CustomMarker from '../../../assets/bus-stop.png';
 import busRoutes from '../pages/busRoutes';
-import styles from './DriverBusSelect.module.css';
 import CustomBus from '../../../assets/bus.png';
 
 const containerStyle = {
@@ -14,7 +13,6 @@ const containerStyle = {
   top: '40px',
   left: '250px',
   padding: '20px',
-  filter: 'blur(3px)',
 };
 
 const center = {
@@ -74,10 +72,7 @@ const staticMarkers = [
   { position: { lat: 1.5751600074453354, lng: 103.6181358780248 }, name: 'KDOJ 2' }
 ];
 
-const busData = [
-  { id: 1, position: { lat: 1.5586928453191957, lng: 103.63528569782638 }, route: [{ lat: 1.5586928453191957, lng: 103.63528569782638 }, { lat: 1.5603304157190552, lng: 103.63485874559022 }] },
-  // Add more buses with their routes as needed
-];
+const busList = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'D1', 'D2', 'E1', 'E2', 'F1', 'F2', 'G1', 'G2', 'H1', 'H2'];
 
 const routeKeys = Object.keys(busRoutes);
 
@@ -92,17 +87,9 @@ function DriverBusSelect() {
   const [visibleRoute, setVisibleRoute] = useState(null);
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [driverLocation, setDriverLocation] = useState(null);
+  const [selectedBus, setSelectedBus] = useState(null);
   const [isRouteSelected, setIsRouteSelected] = useState(false);
-  const [isMapBlurred, setIsMapBlurred] = useState(true);
-  const [showDriverInfoWindow, setShowDriverInfoWindow] = useState(false);
-
-
-  const handleResetRoute = () => {
-    setVisibleRoute(null);
-    setSelectedRoute(null);
-    setIsRouteSelected(false);
-    setIsMapBlurred(true);
-  };
+  const [buttonIndex, setButtonIndex] = useState(null);
 
   const onLoad = React.useCallback(function callback(map) {
     setMap(map);
@@ -116,31 +103,44 @@ function DriverBusSelect() {
     setSelectedMarker(marker);
   };
 
-  const handleDriverMarkerClick = () => {
-    setShowDriverInfoWindow(!showDriverInfoWindow);
-  };
-
   const handleShowBusRoute = (routeKey) => {
     // Check if the clicked route is already visible
     if (visibleRoute === routeKey) {
       // If yes, close the route
       setVisibleRoute(null);
       setSelectedRoute(null);
-      setIsRouteSelected(false);
-      setIsMapBlurred(true);
     } else {
       // If not, set the clicked route to be visible
       setVisibleRoute(routeKey);
       setSelectedRoute(busRoutes[routeKey].route);
-      setIsRouteSelected(true);
-      setIsMapBlurred(false);
-
     }
+  };
 
+  const handleBusSelection = async (bus) => {
+    try {
+      // Make a POST request to the backend to select the bus
+      const response = await fetch('https://ad-server-js.vercel.app/location/select-bus', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ bus }),
+      });
+
+      if (!response.ok) {
+        const { error } = await response.json();
+        alert(error);
+      } else {
+        // If successful, update the local state
+        setSelectedBus(bus);
+      }
+    } catch (error) {
+      console.error('Error selecting bus:', error);
+    }
   };
 
   const updateDriverLocation = () => {
-    if (navigator.geolocation && map) {
+    if (navigator.geolocation && map && selectedBus) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const location = {
@@ -160,14 +160,19 @@ function DriverBusSelect() {
     }
   };
 
-  const sendDriverLocationToServer = (location) => {
+  const sendDriverLocationToServer = (location, routeIndex) => {
     // Use fetch or Axios to send a POST request to your server
+    const requestData = {
+      location: location,
+      routeIndex: routeIndex,
+    };
+
     fetch('https://ad-server-js.vercel.app/location', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(location),
+      body: JSON.stringify(requestData),
     })
       .then(response => {
         if (!response.ok) {
@@ -185,7 +190,7 @@ function DriverBusSelect() {
 
   useEffect(() => {
     const requestDriverLocation = () => {
-      if (navigator.geolocation && map) {
+      if (navigator.geolocation && map && selectedBus) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             const location = {
@@ -194,7 +199,11 @@ function DriverBusSelect() {
             };
 
             setDriverLocation(location);
-            sendDriverLocationToServer(location);
+            if (isRouteSelected) {
+              sendDriverLocationToServer(location, buttonIndex);
+            } else {
+              sendDriverLocationToServer(location, null); // or undefined
+            }
           },
           (error) => {
             console.error('Error getting user location:', error);
@@ -208,24 +217,19 @@ function DriverBusSelect() {
     requestDriverLocation();
     updateDriverLocation();
 
-    const updateLocationInterval = setInterval(updateDriverLocation, 300);
+    const updateLocationInterval = setInterval(updateDriverLocation, 400);
 
-    // Request user's location when the component mounts
-
-
-    // Set up an event listener to refresh the user's location when the map is loaded
     if (isLoaded) {
       onLoad(map);
     }
 
-    // Clean up the event listener when the component is unmounted
     return () => {
       if (map) {
         onUnmount();
       }
       clearInterval(updateLocationInterval);
     };
-  }, [map, isLoaded, onLoad, onUnmount]);
+  }, [map, isLoaded, onLoad, onUnmount, selectedBus]);
 
   if (loadError) {
     return <p>Error loading map: {loadError.message}</p>;
@@ -240,7 +244,7 @@ function DriverBusSelect() {
       <div>
         <AdminNavbar />
       </div>
-      <div style={{ ...containerStyle, filter: isMapBlurred ? 'blur(3px)' : 'none' }}>
+      <div style={containerStyle}>
         {/* Map Container */}
         <GoogleMap
           mapContainerStyle={{ width: '100%', height: '100%' }}
@@ -255,14 +259,13 @@ function DriverBusSelect() {
             <Polyline
               path={selectedRoute}
               options={{
-                strokeColor: "#00FF00", // Change the color as needed
+                strokeColor: "#00FF00",
                 strokeOpacity: 1,
                 strokeWeight: 5,
               }}
             />
           )}
 
-          {/* Static markers */}
           {staticMarkers.map((marker) => (
             <div key={marker.name}>
               <Marker
@@ -287,84 +290,49 @@ function DriverBusSelect() {
               )}
             </div>
           ))}
-
-          {/* Bus markers */}
-          {busData.map((bus) => (
-            <div key={bus.id}>
-              <Marker
-                position={bus.position}
-                onClick={() => handleMarkerClick(bus)}
-                options={{
-                  icon: {
-                    url: CustomMarker,
-                    scaledSize: new window.google.maps.Size(18, 18),
-                  },
-                }}
-              />
-            </div>
-          ))}
           {driverLocation && (
-            <div>
-              <Marker
-                position={driverLocation}
-                onClick={() => handleDriverMarkerClick()}
-                options={{
-                  icon: {
-                    url: CustomBus,
-                    scaledSize: new window.google.maps.Size(60, 60),
-                  },
-                }}
-              />
-              {showDriverInfoWindow && (
-                <InfoWindow
-                  position={driverLocation}
-                  onCloseClick={() => setShowDriverInfoWindow(false)}
-                >
-                  <div>
-                    <h3>Driver Details</h3>
-                    <p>Driver's Info...</p>
-                  </div>
-                </InfoWindow>
-              )}
-            </div>
+            <Marker
+              position={driverLocation}
+              onClick={() => handleMarkerClick(driverLocation)}
+              options={{
+                icon: {
+                  url: CustomBus,
+                  scaledSize: new window.google.maps.Size(60, 60),
+                },
+              }}
+            />
           )}
         </GoogleMap>
       </div>
 
+      <div className='selectBusButton'>
+        {busList.map((bus) => (
+          <button
+            key={bus}
+            onClick={() => handleBusSelection(bus)}
+            style={{ margin: '5px', color: selectedBus === bus ? '#FF0000' : 'inherit' }}
+          >
+            {bus}
+          </button>
+        ))}
+      </div>
+
       {/* Button Container */}
-      <div className={styles.buttonContainerStyle}>
-        {!isRouteSelected && (
-          <div className={styles.word}>
-            <p>Please Select a Bus Route</p>
-          </div>
-        )}
+      <div className='buttonContainerStyle'>
         {routeKeys.slice(0, 8).map((routeKey) => {
           const isRouteVisible = visibleRoute === routeKey;
 
           return (
-            !isRouteSelected && (
-              <button
-                className={styles.button}
-                key={routeKey}
-                onClick={() => handleShowBusRoute(routeKey)}
-                style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
-              >
-                {`${routeKey}`}
-              </button>
-            )
+            <button
+              key={routeKey}
+              onClick={() => handleShowBusRoute(routeKey)}
+              style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
+            >
+              {`${routeKey}`}
+            </button>
           );
         })}
-
       </div>
-
-      <div className={styles.bottomRightButtonStyle}>
-        {isRouteSelected && (
-          <button className={styles.changeRouteButton} onClick={handleResetRoute}>
-            Change Bus
-          </button>
-        )}
-      </div>
-
     </div>
   );
 }

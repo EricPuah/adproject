@@ -4,6 +4,7 @@ import './LocationTracker.css';
 import AdminNavbar from './AdminNavbar';
 import CustomMarker from '../../../assets/bus-stop.png';
 import busRoutes from './busRoutes';
+import busD from '../../../assets/bus.png';
 
 const containerStyle = {
   width: '60%',
@@ -71,11 +72,6 @@ const staticMarkers = [
   { position: { lat: 1.5751600074453354, lng: 103.6181358780248 }, name: 'KDOJ 2' }
 ];
 
-const busData = [
-  { id: 1, position: { lat: 1.5586928453191957, lng: 103.63528569782638 }, route: [{ lat: 1.5586928453191957, lng: 103.63528569782638 }, { lat: 1.5603304157190552, lng: 103.63485874559022 }] },
-  // Add more buses with their routes as needed
-];
-
 const routeKeys = Object.keys(busRoutes);
 
 function LocationTracker() {
@@ -88,6 +84,7 @@ function LocationTracker() {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [visibleRoute, setVisibleRoute] = useState(null);
   const [selectedRoute, setSelectedRoute] = useState(null);
+  const [driverLocations, setDriverLocations] = useState({});
 
   const onLoad = React.useCallback(function callback(map) {
     setMap(map);
@@ -113,6 +110,49 @@ function LocationTracker() {
       setSelectedRoute(busRoutes[routeKey].route);
     }
   };
+
+  const fetchDriverLocations = async () => {
+    try {
+      const response = await fetch('https://ad-server-js.vercel.app/active-buses');
+      if (!response.ok) {
+        throw new Error('Failed to fetch active buses from the server');
+      }
+      const data = await response.json();
+
+      if (data.success) {
+        const activeBusesLocations = {};
+        data.activeBuses.forEach(({ bus, location }) => {
+          activeBusesLocations[bus] = location;
+        });
+        setDriverLocations(activeBusesLocations);
+        console.log('Active buses locations fetched successfully:', activeBusesLocations);
+      } else {
+        console.error('Error fetching active buses from the server:', data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching active buses from the server:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDriverLocations();
+
+    if (isLoaded) {
+      onLoad(map);
+    }
+
+    const updateLocationInterval = setInterval(() => {
+      fetchDriverLocations();
+    }, 300);
+
+    // Clean up the event listener when the component is unmounted
+    return () => {
+      if (map) {
+        onUnmount();
+      }
+      clearInterval(updateLocationInterval);
+    };
+  }, [map, isLoaded, onLoad, onUnmount]);
 
   if (loadError) {
     return <p>Error loading map: {loadError.message}</p>;
@@ -143,7 +183,7 @@ function LocationTracker() {
             <Polyline
               path={selectedRoute}
               options={{
-                strokeColor: "#00FF00", // Change the color as needed
+                strokeColor: "#FF0000", // Change the color as needed
                 strokeOpacity: 1,
                 strokeWeight: 5,
               }}
@@ -175,22 +215,16 @@ function LocationTracker() {
               )}
             </div>
           ))}
-
-          {/* Bus markers */}
-          {busData.map((bus) => (
-            <div key={bus.id}>
-              <Marker
-                position={bus.position}
-                onClick={() => handleMarkerClick(bus)}
-                options={{
-                  icon: {
-                    url: CustomMarker,
-                    scaledSize: new window.google.maps.Size(18, 18),
-                  },
-                }}
-              />
-            </div>
-          ))}
+          {Object.keys(driverLocations).map((busId) => (
+                <Marker
+                  key={busId}
+                  position={driverLocations[busId]}
+                  icon={{
+                    url: busD,
+                    scaledSize: new window.google.maps.Size(60, 60),
+                  }}
+                />
+              ))}
         </GoogleMap>
       </div>
 
