@@ -15,10 +15,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
-
-    const cookieData = JSON.parse(Cookies.get('_auth_state'));
-    const user_isRootAdmin = cookieData.isRootAdmin;
-    const userRole = cookieData.role;
+    const [role, setRole] = useState('');
 
     useEffect(() => {
         userRef.current.focus();
@@ -55,6 +52,7 @@ const Login = () => {
                     tokenType: "Bearer",
                     authState: { username: user, isRootAdmin: data.isRootAdmin, role: data.role},
                 })
+                setRole(data.role);
                 setSuccess(true);
             } else {
                 setErrMsg(`Incorrect Username or Password.`);
@@ -68,7 +66,7 @@ const Login = () => {
         <>
             {
                 success ? (
-                    userRole === 'driver' ? (
+                    role === 'driver' ? (
                         <section className={styles.section} >
                         <Navigate to="/DriverBusSelect" />
                         </section>
