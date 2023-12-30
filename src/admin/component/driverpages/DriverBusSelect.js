@@ -201,6 +201,7 @@ function DriverBusSelect() {
               lng: position.coords.longitude,
             };
 
+
             setDriverLocation(location);
             sendDriverLocationToServer(location);
           },
@@ -212,6 +213,7 @@ function DriverBusSelect() {
         console.error('Geolocation is not supported by this browser or map is not available.');
       }
     };
+
 
     requestDriverLocation();
     updateDriverLocation();

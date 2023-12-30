@@ -85,7 +85,7 @@ function UserMap() {
     const [selectedMarker, setSelectedMarker] = useState(null); // Track the user's location
     const [visibleRoute, setVisibleRoute] = useState(null);
     const [selectedRoute, setSelectedRoute] = useState(null);
-    const [driverLocation, setDriverLocation] = useState(null);
+    const [driverLocations, setDriverLocations] = useState({});
 
     const { isLoaded, loadError } = useJsApiLoader({
         id: 'google-map-script',
@@ -134,19 +134,28 @@ function UserMap() {
         }
     };
 
-    const fetchDriverLocation = async () => {
+    const fetchDriverLocations = async () => {
         try {
-            const response = await fetch('https://ad-server-js.vercel.app/driver-location');
+            const response = await fetch('https://ad-server-js.vercel.app/active-buses');
             if (!response.ok) {
-              throw new Error('Failed to fetch driver location from server');
+                throw new Error('Failed to fetch active buses from the server');
             }
             const data = await response.json();
-            setDriverLocation(data.location);
-            console.log('Driver location fetched successfully:', data.location);
-          } catch (error) {
-            console.error('Error fetching driver location from server:', error);
-          }
-        };
+    
+            if (data.success) {
+                const activeBusesLocations = {};
+                data.activeBuses.forEach(({ bus, location }) => {
+                    activeBusesLocations[bus] = location;
+                });
+                setDriverLocations(activeBusesLocations);
+                console.log('Active buses locations fetched successfully:', activeBusesLocations);
+            } else {
+                console.error('Error fetching active buses from the server:', data.message);
+            }
+        } catch (error) {
+            console.error('Error fetching active buses from the server:', error);
+        }
+    };
 
     useEffect(() => {
         const requestUserLocation = () => {
@@ -157,7 +166,7 @@ function UserMap() {
                             lat: position.coords.latitude,
                             lng: position.coords.longitude,
                         };
-    
+
                         setUserLocation(location);
                     },
                     (error) => {
@@ -171,7 +180,7 @@ function UserMap() {
         // Function to request user's current location
         requestUserLocation();
         updateUserLocation();
-        fetchDriverLocation();
+        fetchDriverLocations();
 
         if (isLoaded) {
             onLoad(map);
@@ -179,7 +188,7 @@ function UserMap() {
 
         const updateLocationInterval = setInterval(() => {
             updateUserLocation();
-            fetchDriverLocation();
+            fetchDriverLocations();
         }, 300);
 
         // Clean up the event listener when the component is unmounted
@@ -237,7 +246,7 @@ function UserMap() {
                         <Polyline
                             path={selectedRoute}
                             options={{
-                                strokeColor: "#FF0000", // Change the color as needed
+                                strokeColor: "#FF0000",
                                 strokeOpacity: 1,
                                 strokeWeight: 5,
                             }}
@@ -280,16 +289,16 @@ function UserMap() {
                             }}
                         />
                     )}
-                    {/* Your other markers and polylines go here */}
-                    {driverLocation && (
+                    {Object.keys(driverLocations).map((busId) => (
                         <Marker
-                            position={driverLocation}
+                            key={busId}
+                            position={driverLocations[busId]}
                             icon={{
                                 url: busD,
                                 scaledSize: new window.google.maps.Size(60, 60),
                             }}
                         />
-                    )}
+                    ))}
                 </GoogleMap>
             </div>
 
