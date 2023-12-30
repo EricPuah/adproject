@@ -5,6 +5,7 @@ import AdminNavbar from '../pages/AdminNavbar';
 import CustomMarker from '../../../assets/bus-stop.png';
 import busRoutes from '../pages/busRoutes';
 import CustomBus from '../../../assets/bus.png';
+import { useBusContext } from './BusContext';
 
 const containerStyle = {
   width: '60%',
@@ -87,8 +88,7 @@ function DriverBusSelect() {
   const [visibleRoute, setVisibleRoute] = useState(null);
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [driverLocation, setDriverLocation] = useState(null);
-  const [selectedBus, setSelectedBus] = useState(null);
-  const [isRouteSelected, setIsRouteSelected] = useState(false);
+  const { selectedBus, setSelectedBus } = useBusContext(); const [isRouteSelected, setIsRouteSelected] = useState(false);
   const [buttonIndex, setButtonIndex] = useState(null);
 
   const onLoad = React.useCallback(function callback(map) {
