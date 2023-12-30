@@ -7,9 +7,11 @@ import CustomMarker from '../../../assets/bus-stop.png';
 import busRoutes from '../pages/busRoutes';
 import CustomBus from '../../../assets/bus.png';
 import styles from './DriverBusSelect.module.css';
+import { getPdfUrl } from '../firebase'; // Update the path accordingly
+
 
 const containerStyle = {
-  width: '60%',
+  width: '50%',
   height: '600px',
   position: 'absolute',
   top: '40px',
@@ -90,6 +92,8 @@ function DriverBusSelect() {
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [driverLocation, setDriverLocation] = useState(null);
   const [selectedBus, setSelectedBus] = useState(null);
+
+  const [pdfUrl, setPdfUrl] = useState(null);
 
   const onLoad = React.useCallback(function callback(map) {
     setMap(map);
@@ -222,6 +226,19 @@ function DriverBusSelect() {
     };
   }, [map, isLoaded, onLoad, onUnmount, selectedBus]);
 
+  useEffect(() => {
+    const fetchPdfUrl = async () => {
+      try {
+        const url = await getPdfUrl();
+        setPdfUrl(url);
+      } catch (error) {
+        console.error('Error fetching PDF URL:', error);
+      }
+    };
+
+    fetchPdfUrl();
+  }, []);
+
   if (loadError) {
     return <p>Error loading map: {loadError.message}</p>;
   }
@@ -325,6 +342,12 @@ function DriverBusSelect() {
             );
           })}
         </div>
+      </div>
+
+      <div className={styles.iframeContainer}>
+        {pdfUrl && (
+          <iframe title="PDF Viewer" src={pdfUrl} width="100%" height="780px" />
+        )}
       </div>
     </div>
   );
