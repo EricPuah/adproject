@@ -139,6 +139,29 @@ function DriverBusSelect() {
     }
   };
 
+  const deselectBus = async (bus) => {
+    try {
+      // Make a POST request to the backend to deselect the bus
+      const response = await fetch('https://ad-server-js.vercel.app/location/deselect-bus', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ bus }),
+      });
+
+      if (!response.ok) {
+        const { error } = await response.json();
+        alert(error);
+      } else {
+        // If successful, update the local state or perform any other actions
+        console.log('Bus deselected successfully');
+      }
+    } catch (error) {
+      console.error('Error deselecting bus:', error);
+    }
+  };
+
   const updateDriverLocation = () => {
     if (navigator.geolocation && map && selectedBus) {
       navigator.geolocation.getCurrentPosition(
