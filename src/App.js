@@ -16,6 +16,9 @@ import UserMap from './admin/component/userpages/UserMap';
 import UserFeedback from './admin/component/userpages/UserFeedback';
 import DriverBusSelect from './admin/component/driverpages/DriverBusSelect';
 import AdminFeedback from './admin/component/pages/AdminFeedback';
+import UserReport from './admin/component/userpages/UserReport';
+import AdminReport from './admin/component/pages/AdminReport';
+
 
 const App = () => {
   return (
@@ -25,6 +28,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/changepassword" element={<ChangePassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
+
 
         <Route path={'/'} element={
           <RequireAuth loginPath={'/login'}>
@@ -102,8 +106,18 @@ const App = () => {
 
         <Route path={'/DriverBusSelect'} element={
           <RequireAuth loginPath={'/login'}>
-          <DriverBusSelect />
-        </RequireAuth>
+            <DriverBusSelect />
+          </RequireAuth>
+        } />
+
+        <Route path={'/AdminReport'} element={
+          <RequireAuth loginPath={'/login'}>
+            <AdminReport />
+          </RequireAuth>
+        } />
+
+        <Route path={'/UserReport'} element={
+          <UserReport />
         } />
 
       </Routes>

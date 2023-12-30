@@ -10,6 +10,7 @@ import { useSignOut } from 'react-auth-kit';
 import { GrFormSchedule } from "react-icons/gr";
 import Cookies from 'js-cookie';
 import { MdOutlineFeedback } from "react-icons/md";
+import { MdOutlineReportProblem } from "react-icons/md";
 
 const AdminNavbar = () => {
   const signOut = useSignOut();
@@ -45,7 +46,7 @@ const AdminNavbar = () => {
           </li>
         ) : null}
 
-        {userRole === "admin"  ? (
+        {userRole === "admin" ? (
           <li className={styles.list}>
             <Link to='/AdminManageBus' className={styles.hover}>
               <CgProfile className={styles.profileicon} />Manage Bus Driver
@@ -72,6 +73,14 @@ const AdminNavbar = () => {
           <li className={styles.list}>
             <Link to='/AdminFeedback' className={styles.hover}>
               <MdOutlineFeedback className={styles.feedbackicon} />Feedback
+            </Link>
+          </li>
+        ) : null}
+
+        {userRole === "admin" ? (
+          <li className={styles.list}>
+            <Link to='/AdminReport' className={styles.hover}>
+              <MdOutlineReportProblem className={styles.routesicon} />Report
             </Link>
           </li>
         ) : null}
