@@ -120,6 +120,21 @@ function UserMap() {
         }
     };
 
+    const handleBusButtonClick = (busId) => {
+        // Check if the bus is active
+        if (driverLocations[busId]) {
+            // Center the map to the selected bus
+            const busLocation = driverLocations[busId];
+            if (map) {
+                map.panTo(busLocation);
+            }
+        } else {
+            // Bus is inactive, handle accordingly (e.g., display a message)
+            console.log(`Bus ${busId} is inactive. Cannot center the map.`);
+        }
+    };
+
+
     const updateUserLocation = () => {
         if (navigator.geolocation && map) {
             navigator.geolocation.getCurrentPosition(
@@ -147,6 +162,7 @@ function UserMap() {
                 throw new Error('Failed to fetch active buses from the server');
             }
             const data = await response.json();
+
 
             if (data.success) {
                 const activeBusesLocations = {};
