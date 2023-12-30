@@ -176,7 +176,7 @@ function UserMap() {
         // Function to request user's current location
         requestUserLocation();
         updateUserLocation();
-        fetchDriverLocation();
+        fetchDriverLocations();
 
         if (isLoaded) {
             onLoad(map);
@@ -184,7 +184,7 @@ function UserMap() {
 
         const updateLocationInterval = setInterval(() => {
             updateUserLocation();
-            fetchDriverLocation();
+            fetchDriverLocations();
         }, 300);
 
         // Clean up the event listener when the component is unmounted
