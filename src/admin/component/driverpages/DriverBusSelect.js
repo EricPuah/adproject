@@ -4,6 +4,7 @@ import '../../component/pages/LocationTracker';
 import AdminNavbar from '../pages/AdminNavbar';
 import CustomMarker from '../../../assets/bus-stop.png';
 import busRoutes from '../pages/busRoutes';
+import styles from './DriverBusSelect.module.css';
 import CustomBus from '../../../assets/bus.png';
 
 const containerStyle = {
@@ -13,6 +14,7 @@ const containerStyle = {
   top: '40px',
   left: '250px',
   padding: '20px',
+  filter: 'blur(3px)',
 };
 
 const center = {
@@ -90,6 +92,18 @@ function DriverBusSelect() {
   const [visibleRoute, setVisibleRoute] = useState(null);
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [driverLocation, setDriverLocation] = useState(null);
+  const [isRouteSelected, setIsRouteSelected] = useState(false);
+  const [isMapBlurred, setIsMapBlurred] = useState(true);
+  const [showDriverInfoWindow, setShowDriverInfoWindow] = useState(false);
+  const [clickedBusRouteKey, setClickedBusRouteKey] = useState(null);
+  const [buttonIndex, setButtonIndex] = useState(null);
+
+  const handleResetRoute = () => {
+    setVisibleRoute(null);
+    setSelectedRoute(null);
+    setIsRouteSelected(false);
+    setIsMapBlurred(true);
+  };
 
   const onLoad = React.useCallback(function callback(map) {
     setMap(map);
@@ -103,17 +117,34 @@ function DriverBusSelect() {
     setSelectedMarker(marker);
   };
 
-  const handleShowBusRoute = (routeKey) => {
+  const determineClickedBusRoute = (routeKeyArray, index) => {
+    return routeKeyArray && routeKeyArray.length > index ? routeKeyArray[index] : null;
+  };
+
+  const handleDriverMarkerClick = (routeKey, index) => {
+    setClickedBusRouteKey(determineClickedBusRoute(routeKey, index));
+    setShowDriverInfoWindow(!showDriverInfoWindow);
+  };
+
+  const handleShowBusRoute = (routeKey, index) => {
     // Check if the clicked route is already visible
     if (visibleRoute === routeKey) {
       // If yes, close the route
       setVisibleRoute(null);
       setSelectedRoute(null);
+      setIsRouteSelected(false);
+      setIsMapBlurred(true);
     } else {
       // If not, set the clicked route to be visible
       setVisibleRoute(routeKey);
       setSelectedRoute(busRoutes[routeKey].route);
+      setIsRouteSelected(true);
+      setIsMapBlurred(false);
+      setButtonIndex(index);
+
+      console.log('Selected Index:', index);
     }
+
   };
 
   const updateDriverLocation = () => {
@@ -169,7 +200,7 @@ function DriverBusSelect() {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             };
-  
+
             setDriverLocation(location);
             sendDriverLocationToServer(location);
           },
@@ -181,20 +212,20 @@ function DriverBusSelect() {
         console.error('Geolocation is not supported by this browser or map is not available.');
       }
     };
-    
+
     requestDriverLocation();
     updateDriverLocation();
 
     const updateLocationInterval = setInterval(updateDriverLocation, 300);
-  
+
     // Request user's location when the component mounts
-    
-  
+
+
     // Set up an event listener to refresh the user's location when the map is loaded
     if (isLoaded) {
       onLoad(map);
     }
-  
+
     // Clean up the event listener when the component is unmounted
     return () => {
       if (map) {
@@ -217,7 +248,7 @@ function DriverBusSelect() {
       <div>
         <AdminNavbar />
       </div>
-      <div style={containerStyle}>
+      <div style={{ ...containerStyle, filter: isMapBlurred ? 'blur(3px)' : 'none' }}>
         {/* Map Container */}
         <GoogleMap
           mapContainerStyle={{ width: '100%', height: '100%' }}
@@ -228,7 +259,7 @@ function DriverBusSelect() {
           options={{ mapId: "556e9663519326d5" }}
           className="google-map"
         >
-          {selectedRoute && (
+          {/* {selectedRoute && (
             <Polyline
               path={selectedRoute}
               options={{
@@ -237,7 +268,7 @@ function DriverBusSelect() {
                 strokeWeight: 5,
               }}
             />
-          )}
+          )} */}
 
           {/* Static markers */}
           {staticMarkers.map((marker) => (
@@ -281,36 +312,66 @@ function DriverBusSelect() {
             </div>
           ))}
           {driverLocation && (
-            <Marker
-              position={driverLocation}
-              onClick={() => handleMarkerClick(driverLocation)}
-              options={{
-                icon: {
-                  url: CustomBus,
-                  scaledSize: new window.google.maps.Size(60, 60),
-                },
-              }}
-            />
+            <div>
+              <Marker
+                position={driverLocation}
+                onClick={() => handleDriverMarkerClick(routeKeys, buttonIndex)}
+                options={{
+                  icon: {
+                    url: CustomBus,
+                    scaledSize: new window.google.maps.Size(60, 60),
+                  },
+                }}
+              />
+              {showDriverInfoWindow && (
+                <InfoWindow
+                  position={driverLocation}
+                  onCloseClick={() => setShowDriverInfoWindow(false)}
+                >
+                  <div>
+                    <h3>{clickedBusRouteKey}</h3>
+                  </div>
+                </InfoWindow>
+              )}
+            </div>
           )}
         </GoogleMap>
       </div>
 
       {/* Button Container */}
-      <div className='buttonContainerStyle'>
-        {routeKeys.slice(0, 8).map((routeKey) => {
+      <div className={styles.buttonContainerStyle}>
+        {!isRouteSelected && (
+          <div className={styles.word}>
+            <p>Please Select a Bus Route</p>
+          </div>
+        )}
+        {routeKeys.slice(0, 8).map((routeKey, index) => {
           const isRouteVisible = visibleRoute === routeKey;
 
           return (
-            <button
-              key={routeKey}
-              onClick={() => handleShowBusRoute(routeKey)}
-              style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
-            >
-              {`${routeKey}`}
-            </button>
+            !isRouteSelected && (
+              <button
+                className={styles.button}
+                key={routeKey}
+                onClick={() => handleShowBusRoute(routeKey, index)}
+                style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
+              >
+                {`${routeKey}`}
+              </button>
+            )
           );
         })}
+
       </div>
+
+      {/* <div className={styles.bottomRightButtonStyle}>
+        {isRouteSelected && (
+          <button className={styles.changeRouteButton} onClick={handleResetRoute}>
+            Change Bus
+          </button>
+        )}
+      </div> */}
+
     </div>
   );
 }
