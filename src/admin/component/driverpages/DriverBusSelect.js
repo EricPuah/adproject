@@ -117,7 +117,7 @@ function DriverBusSelect() {
   const handleBusSelection = async (bus) => {
     try {
       // Make a POST request to the backend to select the bus
-      const response = await fetch('https://ad-server-js.vercel.app/select-bus', {
+      const response = await fetch('https://ad-server-js.vercel.app/location/select-bus', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -294,21 +294,17 @@ function DriverBusSelect() {
         </GoogleMap>
       </div>
 
-      {selectedBus ? (
-        <div className="selectBusDropdown" style={{ border: '1px solid red' }}>
-          <label>Select Bus:</label>
-          <select onChange={(e) => handleBusSelection(e.target.value)} value={selectedBus}>
-            <option value="" disabled>
-              Select a bus
-            </option>
-            {busList.map((bus) => (
-              <option key={bus} value={bus}>
-                {bus}
-              </option>
-            ))}
-          </select>
-        </div>
-      ) : null}
+      <div className='selectBusButton'>
+        {busList.map((bus) => (
+          <button
+            key={bus}
+            onClick={() => handleBusSelection(bus)}
+            style={{ margin: '5px', color: selectedBus === bus ? '#FF0000' : 'inherit' }}
+          >
+            {bus}
+          </button>
+        ))}
+      </div>
 
       {/* Button Container */}
       <div className='buttonContainerStyle'>
