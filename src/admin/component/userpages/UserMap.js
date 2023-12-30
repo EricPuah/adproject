@@ -316,9 +316,9 @@ function UserMap() {
                     ))}
                 </GoogleMap>
             </div>
-            <div className={styles.buttonBusContainerStyle} >
+            <div className={styles.buttonBusContainerStyle}>
                 {/* Button to show bus activity */}
-                {Object.keys(driverLocations).map((busId) => (
+                {['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'D1', 'D2', 'E1', 'E2', 'F1', 'F2', 'G1', 'G2', 'H1', 'H2'].map((busId) => (
                     <button
                         key={busId}
                         onClick={() => handleBusButtonClick(busId)}
@@ -334,7 +334,7 @@ function UserMap() {
                     </button>
                 ))}
             </div>
-            <div className='buttonContainerStyle'>
+            <div className={styles.buttonContainerStyle}>
                 {routeKeys.slice(0, 8).map((routeKey) => {
                     const isRouteVisible = visibleRoute === routeKey;
 

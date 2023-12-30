@@ -61,12 +61,10 @@
 
 .buttonBusContainerStyle {
   position: fixed;
-  top: 40px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  z-index: 1; /* Add z-index to make sure it appears on top of other elements */
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    gap: 10px;
 }
 
 .buttonBusContainerStyle button {
@@ -83,3 +81,13 @@
   cursor: pointer; /* Show pointer cursor for active buttons */
   pointer-events: auto; /* Enable pointer events for active buttons */
 }
+
+.buttonContainerStyle {
+  position: fixed;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    gap: 10px;
+  z-index: 2; /* Add z-index to make sure it appears on top of other elements */
+}
+
