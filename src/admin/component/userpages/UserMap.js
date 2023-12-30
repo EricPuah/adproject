@@ -8,9 +8,11 @@ import UserSideBar from './UserSideBar';
 import busRoutes from '../pages/busRoutes';
 import '../pages/LocationTracker.css'
 import busD from '../../../assets/bus.png';
+import { getPdfUrl } from '../firebase'; // Update the path accordingly
+
 
 const containerStyle = {
-    width: '60%',
+    width: '50%',
     height: '600px',
     position: 'absolute',
     top: '40px',
@@ -22,6 +24,7 @@ const defaultCenter = {
     lat: 1.559803,
     lng: 103.637998,
 };
+
 
 const routeKeys = Object.keys(busRoutes);
 
@@ -87,6 +90,9 @@ function UserMap() {
     const [selectedRoute, setSelectedRoute] = useState(null);
     const [driverLocations, setDriverLocations] = useState({});
 
+    const [pdfUrl, setPdfUrl] = useState(null);
+
+
     const { isLoaded, loadError } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: 'AIzaSyCJ6a-xeKOWK4JWSifzJJfSUNWvlGaLfzU',
@@ -113,6 +119,21 @@ function UserMap() {
             setSelectedRoute(busRoutes[routeKey].route);
         }
     };
+
+    const handleBusButtonClick = (busId) => {
+        // Check if the bus is active
+        if (driverLocations[busId]) {
+            // Center the map to the selected bus
+            const busLocation = driverLocations[busId];
+            if (map) {
+                map.panTo(busLocation);
+            }
+        } else {
+            // Bus is inactive, handle accordingly (e.g., display a message)
+            console.log(`Bus ${busId} is inactive. Cannot center the map.`);
+        }
+    };
+
 
     const updateUserLocation = () => {
         if (navigator.geolocation && map) {
@@ -141,7 +162,8 @@ function UserMap() {
                 throw new Error('Failed to fetch active buses from the server');
             }
             const data = await response.json();
-    
+
+
             if (data.success) {
                 const activeBusesLocations = {};
                 data.activeBuses.forEach(({ bus, location }) => {
@@ -156,6 +178,19 @@ function UserMap() {
             console.error('Error fetching active buses from the server:', error);
         }
     };
+
+    useEffect(() => {
+        const fetchPdfUrl = async () => {
+            try {
+                const url = await getPdfUrl();
+                setPdfUrl(url);
+            } catch (error) {
+                console.error('Error fetching PDF URL:', error);
+            }
+        };
+
+        fetchPdfUrl();
+    }, []);
 
     useEffect(() => {
         const requestUserLocation = () => {
@@ -217,18 +252,6 @@ function UserMap() {
             <div>
                 <div className={styles.sidebar}>
                     <UserSideBar />
-                </div>
-                <div className={styles.searchContainer}>
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className={styles.searchInput}
-                    />
-                    <button className={styles.adminLoginButton}>
-                        <Link to='/login' className={styles.hover}>Admin Login</Link>
-                    </button>
                 </div>
             </div>
 
@@ -301,8 +324,27 @@ function UserMap() {
                     ))}
                 </GoogleMap>
             </div>
+            
+            <div className={styles.rightBottomButton2}>
+                {/* Button to show bus activity */}
+                {['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'D1', 'D2', 'E1', 'E2', 'F1', 'F2', 'G1', 'G2', 'H1', 'H2'].map((busId) => (
+                    <button
+                        key={busId}
+                        onClick={() => handleBusButtonClick(busId)}
+                        style={{
+                            margin: '5px',
+                            backgroundColor: driverLocations[busId] ? 'inherit' : '#e0e0e0', // Grey out if inactive
+                            cursor: driverLocations[busId] ? 'pointer' : 'not-allowed', // Show different cursor if inactive
+                            pointerEvents: driverLocations[busId] ? 'auto' : 'none', // Disable pointer events if inactive
+                        }}
+                    >
+                        <span style={{ marginRight: '5px' }}>{busId}</span>
+                        {driverLocations[busId] ? 'Active' : 'Inactive'}
+                    </button>
+                ))}
+            </div>
 
-            <div className='buttonContainerStyle'>
+            <div className={styles.rightBottomButton}>
                 {routeKeys.slice(0, 8).map((routeKey) => {
                     const isRouteVisible = visibleRoute === routeKey;
 
@@ -317,6 +359,13 @@ function UserMap() {
                     );
                 })}
             </div>
+
+            <div className={styles.iframeContainer}>
+                {pdfUrl && (
+                    <iframe title="PDF Viewer" src={pdfUrl} width="100%" height="800px" />
+                )}
+            </div>
+
         </div>
     );
 }

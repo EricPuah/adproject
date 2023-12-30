@@ -58,3 +58,68 @@
   text-decoration: none;
   display: inline-block;
 }
+
+.mapAndIframeContainer {
+    display: flex;
+}
+
+.mapContainer {
+    width: 60%;
+    height: 600px;
+    position: absolute;
+    top: 40px;
+    left: 250px;
+    padding: 20px;
+}
+
+.iframeContainer {
+    flex: 1;
+    padding-left: 65%;
+    padding-right: 1%;
+    padding-top: 1%
+}
+
+.rightBottomButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.rightBottomButton2 {
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+}
+
+.buttonBusContainerStyle {
+  position: fixed;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.buttonBusContainerStyle button {
+  margin: 5px;
+  background-color: #e0e0e0; /* Set a background color for inactive buttons */
+  cursor: not-allowed; /* Show not-allowed cursor for inactive buttons */
+  pointer-events: none; /* Disable pointer events for inactive buttons */
+  text-align: right;
+  white-space: nowrap;
+}
+
+.buttonBusContainerStyle button.active {
+  background-color: inherit; /* Set background color for active buttons */
+  cursor: pointer; /* Show pointer cursor for active buttons */
+  pointer-events: auto; /* Enable pointer events for active buttons */
+}
+
+.buttonContainerStyle {
+  position: fixed;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    gap: 10px;
+  z-index: 2; /* Add z-index to make sure it appears on top of other elements */
+}
+

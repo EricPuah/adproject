@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styles from './AdminProfile.module.css';
+import style from './AdminNavBar.module.css';
 import { Link } from 'react-router-dom';
 import AdminProfileEdit from './AdminProfileEdit';
 import AdminNavbar from './AdminNavbar';
@@ -37,27 +38,29 @@ class AdminProfile extends Component {
     return (
       <div>
         <AdminNavbar />
-        <div className={styles.box}>
-          <div className={styles.container}>
-            <h1 className={styles.heading}>Your Profile Information</h1>
-            <ul className={styles.list}>
-              <div>
-                <label className={styles.label}>Username: </label>
-                <li className={styles.listItem}>{data.username}</li>
-                <label className={styles.label}>UTM StaffID: </label>
-                <li className={styles.listItem}>{data.staffId}</li>
-                <label className={styles.label}>Email: </label>
-                <li className={styles.listItem}>{data.email}</li>
-                <label className={styles.label}>Phone Number: </label>
-                <li className={styles.listItem}>{data.phone}</li>
-                <Link to={'/ProfileInformationEdit'}>
-                  <button className={styles.button}>Edit Profile</button>
-                </Link>
-                <Link to={`/changepassword?email=${data.email}&code=${data.userKey}`}>
-                  <button className={styles.buttonch}>Change Password</button>
-                </Link>
-              </div>
-            </ul>
+        <div className={style.mainContentContainer}>
+          <div className={styles.box}>
+            <div className={styles.container}>
+              <h1 className={styles.heading}>Your Profile Information</h1>
+              <ul className={styles.list}>
+                <div>
+                  <label className={styles.label}>Username: </label>
+                  <li className={styles.listItem}>{data.username}</li>
+                  <label className={styles.label}>UTM StaffID: </label>
+                  <li className={styles.listItem}>{data.staffId}</li>
+                  <label className={styles.label}>Email: </label>
+                  <li className={styles.listItem}>{data.email}</li>
+                  <label className={styles.label}>Phone Number: </label>
+                  <li className={styles.listItem}>{data.phone}</li>
+                  <Link to={'/ProfileInformationEdit'}>
+                    <button className={styles.button}>Edit Profile</button>
+                  </Link>
+                  <Link to={`/changepassword?email=${data.email}&code=${data.userKey}`}>
+                    <button className={styles.buttonch}>Change Password</button>
+                  </Link>
+                </div>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
