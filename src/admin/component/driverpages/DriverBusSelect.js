@@ -5,6 +5,7 @@ import AdminNavbar from '../pages/AdminNavbar';
 import CustomMarker from '../../../assets/bus-stop.png';
 import busRoutes from '../pages/busRoutes';
 import CustomBus from '../../../assets/bus.png';
+import styles from './DriverBusSelect.module.css'
 
 const containerStyle = {
   width: '60%',
@@ -307,7 +308,7 @@ function DriverBusSelect() {
       </div>
 
       {/* Button Container */}
-      <div className='buttonContainerStyle'>
+      <div className={styles.buttonContainerStyle}>
         {routeKeys.slice(0, 8).map((routeKey) => {
           const isRouteVisible = visibleRoute === routeKey;
 
