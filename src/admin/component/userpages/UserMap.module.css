@@ -73,4 +73,6 @@
   background-color: inherit;
   cursor: pointer;
   pointer-events: auto;
+  text-align: right;
+  white-space: nowrap;
 }
