@@ -316,7 +316,7 @@ function UserMap() {
                     ))}
                 </GoogleMap>
             </div>
-            <div className="buttonBusContainerStyle" style={buttonBusContainerStyle}>
+            <div className="buttonBusContainerStyle">
                 {/* Button to show bus activity */}
                 {Object.keys(driverLocations).map((busId) => (
                     <button
