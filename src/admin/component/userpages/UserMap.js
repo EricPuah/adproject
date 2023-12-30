@@ -147,9 +147,9 @@ function UserMap() {
                 }
                 const data = await response.json();
     
-                if (data.success) {
+                if (data.success && data.location && isRecent(data.location.timestamp)) {
                     locations[bus] = data.location;
-                    console.log(`Location for bus ${bus} fetched successfully:`, data.location);
+                    console.log(`Location for active bus ${bus} fetched successfully:`, data.location);
                 } else {
                     console.error(`Error fetching location for bus ${bus}:`, data.message);
                 }
@@ -159,6 +159,13 @@ function UserMap() {
         } catch (error) {
             console.error('Error fetching driver locations from server:', error);
         }
+    };
+    
+    const isRecent = (timestamp) => {
+        const currentTimestamp = Date.now();
+        const maxTimeDifference = 60 * 1000; // 5 minutes in milliseconds
+    
+        return currentTimestamp - timestamp < maxTimeDifference;
     };
 
     useEffect(() => {
