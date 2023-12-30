@@ -1,6 +1,7 @@
 // UserReport.js
 import React, { useState } from 'react';
 import UserSideBar from './UserSideBar';
+import style from './UserSideBar.module.css'; // Create a CSS module for styling
 import styles from './UserReport.module.css'; // Create a CSS module for styling
 import { submitReportToFirebase } from './../firebase.js';
 import { serverTimestamp } from 'firebase/database';
@@ -67,7 +68,7 @@ function UserReport() {
     return (
         <div>
             <UserSideBar />
-            <div className={styles.mainContentContainer}>
+            <div className={style.mainContentContainer}>
                 <div className={styles.reportContainer}>
                     <div className={styles.reportContent}>
                         <h1 className={styles.h1}>User Report</h1>
