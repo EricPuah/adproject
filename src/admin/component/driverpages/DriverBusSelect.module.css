@@ -7,31 +7,31 @@
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-  }
-  
-  .buttonContainerStyle button {
+}
+
+.buttonContainerStyle button {
     padding: 10px;
     margin: 5px;
-    background-color: #3498db; 
+    background-color: #3498db;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-  }
-  
-  .buttonContainerStyle button:hover {
+}
+
+.buttonContainerStyle button:hover {
     background-color: #2980b9;
-  }
-  
-  .selectBusButton {
+}
+
+.selectBusButton {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 0px;
-  }
-  
-  .selectBusButton button {
+}
+
+.selectBusButton button {
     padding: 10px;
     margin: 5px;
     background-color: #e74c3c;
@@ -40,8 +40,8 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-  }
-  
-  .selectBusButton button:hover {
+}
+
+.selectBusButton button:hover {
     background-color: #c0392b;
-  }
+}

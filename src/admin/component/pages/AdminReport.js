@@ -1,6 +1,7 @@
 // AdminReport.js
 import React, { useState, useEffect } from 'react';
 import AdminNavbar from './AdminNavbar';
+import style from './AdminNavBar.module.css';
 import { ref, onValue, update } from 'firebase/database';
 import { db, addCommentToReport } from './../firebase'; // Import the addCommentToReport function
 import styles from './AdminReport.module.css'; // Create a CSS module for styling

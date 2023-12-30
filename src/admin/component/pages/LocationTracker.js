@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow, Polyline, mapId } from '@react-google-maps/api';
 import './LocationTracker.css';
+import style from './AdminNavBar.module.css';
 import AdminNavbar from './AdminNavbar';
 import CustomMarker from '../../../assets/bus-stop.png';
 import busRoutes from './busRoutes';
@@ -168,81 +169,83 @@ function LocationTracker() {
       <div>
         <AdminNavbar />
       </div>
-      <div style={containerStyle}>
-        {/* Map Container */}
-        <GoogleMap
-          mapContainerStyle={{ width: '100%', height: '100%' }}
-          center={center}
-          zoom={16}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-          options={{ mapId: "556e9663519326d5" }}
-          className="google-map"
-        >
-          {selectedRoute && (
-            <Polyline
-              path={selectedRoute}
-              options={{
-                strokeColor: "#FF0000", // Change the color as needed
-                strokeOpacity: 1,
-                strokeWeight: 5,
-              }}
-            />
-          )}
-
-          {/* Static markers */}
-          {staticMarkers.map((marker) => (
-            <div key={marker.name}>
-              <Marker
-                position={marker.position}
-                onClick={() => handleMarkerClick(marker)}
+      <div className={style.mainContentContainer}>
+        <div style={containerStyle}>
+          {/* Map Container */}
+          <GoogleMap
+            mapContainerStyle={{ width: '100%', height: '100%' }}
+            center={center}
+            zoom={16}
+            onLoad={onLoad}
+            onUnmount={onUnmount}
+            options={{ mapId: "556e9663519326d5" }}
+            className="google-map"
+          >
+            {selectedRoute && (
+              <Polyline
+                path={selectedRoute}
                 options={{
-                  icon: {
-                    url: CustomMarker,
-                    scaledSize: new window.google.maps.Size(18, 18),
-                  },
+                  strokeColor: "#FF0000", // Change the color as needed
+                  strokeOpacity: 1,
+                  strokeWeight: 5,
                 }}
               />
-              {selectedMarker === marker && (
-                <InfoWindow
-                  position={marker.position}
-                  onCloseClick={() => setSelectedMarker(null)}
-                >
-                  <div>
-                    <h3>{marker.name}</h3>
-                  </div>
-                </InfoWindow>
-              )}
-            </div>
-          ))}
-          {Object.keys(driverLocations).map((busId) => (
+            )}
+
+            {/* Static markers */}
+            {staticMarkers.map((marker) => (
+              <div key={marker.name}>
                 <Marker
-                  key={busId}
-                  position={driverLocations[busId]}
-                  icon={{
-                    url: busD,
-                    scaledSize: new window.google.maps.Size(60, 60),
+                  position={marker.position}
+                  onClick={() => handleMarkerClick(marker)}
+                  options={{
+                    icon: {
+                      url: CustomMarker,
+                      scaledSize: new window.google.maps.Size(18, 18),
+                    },
                   }}
                 />
-              ))}
-        </GoogleMap>
-      </div>
+                {selectedMarker === marker && (
+                  <InfoWindow
+                    position={marker.position}
+                    onCloseClick={() => setSelectedMarker(null)}
+                  >
+                    <div>
+                      <h3>{marker.name}</h3>
+                    </div>
+                  </InfoWindow>
+                )}
+              </div>
+            ))}
+            {Object.keys(driverLocations).map((busId) => (
+              <Marker
+                key={busId}
+                position={driverLocations[busId]}
+                icon={{
+                  url: busD,
+                  scaledSize: new window.google.maps.Size(60, 60),
+                }}
+              />
+            ))}
+          </GoogleMap>
+        </div>
 
-      {/* Button Container */}
-      <div className='buttonContainerStyle'>
-        {routeKeys.slice(0, 8).map((routeKey) => {
-          const isRouteVisible = visibleRoute === routeKey;
+        {/* Button Container */}
+        <div className='buttonContainerStyle'>
+          {routeKeys.slice(0, 8).map((routeKey) => {
+            const isRouteVisible = visibleRoute === routeKey;
 
-          return (
-            <button
-              key={routeKey}
-              onClick={() => handleShowBusRoute(routeKey)}
-              style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
-            >
-              {`${routeKey}`}
-            </button>
-          );
-        })}
+            return (
+              <button
+                key={routeKey}
+                onClick={() => handleShowBusRoute(routeKey)}
+                style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
+              >
+                {`${routeKey}`}
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

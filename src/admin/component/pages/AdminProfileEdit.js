@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './AdminProfileEdit.module.css';
+import style from './AdminNavBar.module.css';
 import AdminNavbar from './AdminNavbar';
 import { ref, get, update, query, orderByChild, equalTo, onValue, set } from 'firebase/database';
 import { db } from './../firebase';
@@ -21,13 +22,13 @@ function AdminProfileEdit() {
             if (cookieData) {
                 const adminData = JSON.parse(cookieData);
                 const userProfileData = await searchUserProfile(adminData.username);
-                
+
                 // Set the username, email, and phone in the state
                 setUsername(userProfileData.username);
                 setEmail(userProfileData.email);
                 setPhone(userProfileData.phone);
                 setStaffID(userProfileData.staffId);
-    
+
                 // Fetch additional data from Firebase based on the username
                 // const username = adminData.username; // Replace with the actual username
                 // fetchUserData(username);
@@ -35,11 +36,11 @@ function AdminProfileEdit() {
                 console.error('Admin data not found in localStorage');
             }
         };
-    
+
         fetchData(); // Call the async function
-    
+
     }, []); // The dependency array is empty since we only want to run this effect once
-    
+
 
     const fetchUserData = async (username) => {
         try {
@@ -78,8 +79,8 @@ function AdminProfileEdit() {
     };
 
     const updateProfile = async () => {
-            await fetchUserData(username);
-            window.location.reload(true);
+        await fetchUserData(username);
+        window.location.reload(true);
     };
 
     const isValidEmail = (email) => {
@@ -91,33 +92,35 @@ function AdminProfileEdit() {
     return (
         <div>
             <AdminNavbar />
-            <div className={styles.box}>
-                <form>
-                    <div className={styles.adminprofile}>
-                    <h1 className={styles.heading}>Edit Profile Information</h1>
-                        <label className={styles.label}>Username: </label>
-                        <label className={styles.username}>{username}</label>
-                        <label className={styles.label}>UTM StaffID: </label>
-                        <label className={styles.username}>{staffID}</label>
-                        <label className={styles.label}>Email: </label>
-                        <input className={styles.input} type='text' name='email' value={email} onChange={(e) => setEmail(e.target.value)}></input>
-                        <label className={styles.label}>Phone Number: </label>
-                        <input className={styles.input} type='text' name='phone' value={phone} onChange={(e) => setPhone(e.target.value)}></input>
-                        {!email || !isValidEmail(email) ? (
-                            <Link to="/AdminProfileEdit">
-                                <button className={styles.button} type="button" onClick={() => alert('Please enter a valid email address.')}>Save</button>
-                            </Link>
-                        ) : (
-                            <Link to="/AdminProfile">
-                                <button className={styles.button} type="button" onClick={updateProfile}>Save</button>
-                            </Link>
-                        )}
-                    </div>
-                </form>
+            <div className={style.mainContentContainer}>
+                <div className={styles.box}>
+                    <form>
+                        <div className={styles.adminprofile}>
+                            <h1 className={styles.heading}>Edit Profile Information</h1>
+                            <label className={styles.label}>Username: </label>
+                            <label className={styles.username}>{username}</label>
+                            <label className={styles.label}>UTM StaffID: </label>
+                            <label className={styles.username}>{staffID}</label>
+                            <label className={styles.label}>Email: </label>
+                            <input className={styles.input} type='text' name='email' value={email} onChange={(e) => setEmail(e.target.value)}></input>
+                            <label className={styles.label}>Phone Number: </label>
+                            <input className={styles.input} type='text' name='phone' value={phone} onChange={(e) => setPhone(e.target.value)}></input>
+                            {!email || !isValidEmail(email) ? (
+                                <Link to="/AdminProfileEdit">
+                                    <button className={styles.button} type="button" onClick={() => alert('Please enter a valid email address.')}>Save</button>
+                                </Link>
+                            ) : (
+                                <Link to="/AdminProfile">
+                                    <button className={styles.button} type="button" onClick={updateProfile}>Save</button>
+                                </Link>
+                            )}
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );
 }
 
 export default AdminProfileEdit;
-                    {/* Conditional rendering based on email validation */}
+{/* Conditional rendering based on email validation */ }

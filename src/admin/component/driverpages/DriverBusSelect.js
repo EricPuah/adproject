@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow, Polyline, mapId } from '@react-google-maps/api';
 import '../../component/pages/LocationTracker';
 import AdminNavbar from '../pages/AdminNavbar';
+import style from '../pages/AdminNavBar.module.css';
 import CustomMarker from '../../../assets/bus-stop.png';
 import busRoutes from '../pages/busRoutes';
 import CustomBus from '../../../assets/bus.png';
@@ -234,94 +235,96 @@ function DriverBusSelect() {
       <div>
         <AdminNavbar />
       </div>
-      <div style={containerStyle}>
-        {/* Map Container */}
-        <GoogleMap
-          mapContainerStyle={{ width: '100%', height: '100%' }}
-          center={center}
-          zoom={16}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-          options={{ mapId: "556e9663519326d5" }}
-          className="google-map"
-        >
-          {selectedRoute && (
-            <Polyline
-              path={selectedRoute}
-              options={{
-                strokeColor: "#00FF00",
-                strokeOpacity: 1,
-                strokeWeight: 5,
-              }}
-            />
-          )}
+      <div className={style.mainContentContainer}>
+        <div style={containerStyle}>
+          {/* Map Container */}
+          <GoogleMap
+            mapContainerStyle={{ width: '100%', height: '100%' }}
+            center={center}
+            zoom={16}
+            onLoad={onLoad}
+            onUnmount={onUnmount}
+            options={{ mapId: "556e9663519326d5" }}
+            className="google-map"
+          >
+            {selectedRoute && (
+              <Polyline
+                path={selectedRoute}
+                options={{
+                  strokeColor: "#00FF00",
+                  strokeOpacity: 1,
+                  strokeWeight: 5,
+                }}
+              />
+            )}
 
-          {staticMarkers.map((marker) => (
-            <div key={marker.name}>
+            {staticMarkers.map((marker) => (
+              <div key={marker.name}>
+                <Marker
+                  position={marker.position}
+                  onClick={() => handleMarkerClick(marker)}
+                  options={{
+                    icon: {
+                      url: CustomMarker,
+                      scaledSize: new window.google.maps.Size(18, 18),
+                    },
+                  }}
+                />
+                {selectedMarker === marker && (
+                  <InfoWindow
+                    position={marker.position}
+                    onCloseClick={() => setSelectedMarker(null)}
+                  >
+                    <div>
+                      <h3>{marker.name}</h3>
+                    </div>
+                  </InfoWindow>
+                )}
+              </div>
+            ))}
+            {driverLocation && (
               <Marker
-                position={marker.position}
-                onClick={() => handleMarkerClick(marker)}
+                position={driverLocation}
+                onClick={() => handleMarkerClick(driverLocation)}
                 options={{
                   icon: {
-                    url: CustomMarker,
-                    scaledSize: new window.google.maps.Size(18, 18),
+                    url: CustomBus,
+                    scaledSize: new window.google.maps.Size(60, 60),
                   },
                 }}
               />
-              {selectedMarker === marker && (
-                <InfoWindow
-                  position={marker.position}
-                  onCloseClick={() => setSelectedMarker(null)}
-                >
-                  <div>
-                    <h3>{marker.name}</h3>
-                  </div>
-                </InfoWindow>
-              )}
-            </div>
-          ))}
-          {driverLocation && (
-            <Marker
-              position={driverLocation}
-              onClick={() => handleMarkerClick(driverLocation)}
-              options={{
-                icon: {
-                  url: CustomBus,
-                  scaledSize: new window.google.maps.Size(60, 60),
-                },
-              }}
-            />
-          )}
-        </GoogleMap>
-      </div>
+            )}
+          </GoogleMap>
+        </div>
 
-      <div className={styles.selectBusButton}>
-        {busList.map((bus) => (
-          <button
-            key={bus}
-            onClick={() => handleBusSelection(bus)}
-            style={{ margin: '5px', color: selectedBus === bus ? '#FF0000' : 'inherit' }}
-          >
-            {bus}
-          </button>
-        ))}
-      </div>
-
-      {/* Button Container */}
-      <div className={styles.buttonContainerStyle}>
-        {routeKeys.slice(0, 8).map((routeKey) => {
-          const isRouteVisible = visibleRoute === routeKey;
-
-          return (
+        <div className={styles.selectBusButton}>
+          {busList.map((bus) => (
             <button
-              key={routeKey}
-              onClick={() => handleShowBusRoute(routeKey)}
-              style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
+              key={bus}
+              onClick={() => handleBusSelection(bus)}
+              style={{ margin: '5px', color: selectedBus === bus ? '#FF0000' : 'inherit' }}
             >
-              {`${routeKey}`}
+              {bus}
             </button>
-          );
-        })}
+          ))}
+        </div>
+
+        {/* Button Container */}
+        <div className={styles.buttonContainerStyle}>
+          {routeKeys.slice(0, 8).map((routeKey) => {
+            const isRouteVisible = visibleRoute === routeKey;
+
+            return (
+              <button
+                key={routeKey}
+                onClick={() => handleShowBusRoute(routeKey)}
+                style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
+              >
+                {`${routeKey}`}
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
