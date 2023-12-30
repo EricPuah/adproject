@@ -231,7 +231,7 @@ const changePasswordInDB = async (userId, newPassword) => {
 
 const submitReportToFirebase = async (name, matricNumber, email, phone, busRoute, reportContents) => {
   try {
-    const reportsRef = ref(db, 'reports'); // Use a new node named "reports"
+    const reportsRef = ref(db, 'reports');
     const newReport = {
       dateOfCreation: serverTimestamp(),
       name: name,
@@ -240,6 +240,8 @@ const submitReportToFirebase = async (name, matricNumber, email, phone, busRoute
       phone: phone,
       busRoute: busRoute,
       reportContents: reportContents,
+      status: 'new', // Set the default status to 'new'
+      comments: []
     };
     const newChildRef = push(reportsRef);
     await set(newChildRef, newReport);
@@ -250,4 +252,22 @@ const submitReportToFirebase = async (name, matricNumber, email, phone, busRoute
   }
 };
 
-export { auth, db, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB, submitReportToFirebase };
+const addCommentToReport = async (reportId, adminUsername, commentText) => {
+  try {
+    const commentsRef = ref(db, `reports/${reportId}/comments`);
+    const newComment = {
+      adminUsername,
+      commentText,
+      timestamp: serverTimestamp(),
+    };
+    const newCommentRef = push(commentsRef);
+    await set(newCommentRef, newComment);
+    return true; // Success
+  } catch (error) {
+    console.error('Firebase Error:', error);
+    throw new Error('An error occurred: ' + error.message);
+  }
+};
+
+
+export { auth, db, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB, submitReportToFirebase, addCommentToReport };
