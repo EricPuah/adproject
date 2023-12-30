@@ -72,10 +72,7 @@ const staticMarkers = [
   { position: { lat: 1.5751600074453354, lng: 103.6181358780248 }, name: 'KDOJ 2' }
 ];
 
-const busData = [
-  { id: 1, position: { lat: 1.5586928453191957, lng: 103.63528569782638 }, route: [{ lat: 1.5586928453191957, lng: 103.63528569782638 }, { lat: 1.5603304157190552, lng: 103.63485874559022 }] },
-  // Add more buses with their routes as needed
-];
+const busList = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'D1', 'D2', 'E1', 'E2', 'F1', 'F2', 'G1', 'G2', 'H1', 'H2'];
 
 const routeKeys = Object.keys(busRoutes);
 
@@ -90,6 +87,7 @@ function DriverBusSelect() {
   const [visibleRoute, setVisibleRoute] = useState(null);
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [driverLocation, setDriverLocation] = useState(null);
+  const [selectedBus, setSelectedBus] = useState(null);
 
   const onLoad = React.useCallback(function callback(map) {
     setMap(map);
@@ -116,8 +114,12 @@ function DriverBusSelect() {
     }
   };
 
+  const handleBusSelection = (bus) => {
+    setSelectedBus(bus);
+  };
+
   const updateDriverLocation = () => {
-    if (navigator.geolocation && map) {
+    if (navigator.geolocation && map && selectedBus) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const location = {
@@ -139,7 +141,7 @@ function DriverBusSelect() {
 
   const sendDriverLocationToServer = (location) => {
     // Use fetch or Axios to send a POST request to your server
-    fetch('https://ad-server-js.vercel.app/location', {
+    fetch(`https://ad-server-js.vercel.app/location/${selectedBus}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -162,14 +164,14 @@ function DriverBusSelect() {
 
   useEffect(() => {
     const requestDriverLocation = () => {
-      if (navigator.geolocation && map) {
+      if (navigator.geolocation && map && selectedBus) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             const location = {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             };
-  
+
             setDriverLocation(location);
             sendDriverLocationToServer(location);
           },
@@ -181,28 +183,23 @@ function DriverBusSelect() {
         console.error('Geolocation is not supported by this browser or map is not available.');
       }
     };
-    
+
     requestDriverLocation();
     updateDriverLocation();
 
-    const updateLocationInterval = setInterval(updateDriverLocation, 300);
-  
-    // Request user's location when the component mounts
-    
-  
-    // Set up an event listener to refresh the user's location when the map is loaded
+    const updateLocationInterval = setInterval(updateDriverLocation, 400);
+
     if (isLoaded) {
       onLoad(map);
     }
-  
-    // Clean up the event listener when the component is unmounted
+
     return () => {
       if (map) {
         onUnmount();
       }
       clearInterval(updateLocationInterval);
     };
-  }, [map, isLoaded, onLoad, onUnmount]);
+  }, [map, isLoaded, onLoad, onUnmount, selectedBus]);
 
   if (loadError) {
     return <p>Error loading map: {loadError.message}</p>;
@@ -232,14 +229,13 @@ function DriverBusSelect() {
             <Polyline
               path={selectedRoute}
               options={{
-                strokeColor: "#00FF00", // Change the color as needed
+                strokeColor: "#00FF00",
                 strokeOpacity: 1,
                 strokeWeight: 5,
               }}
             />
           )}
 
-          {/* Static markers */}
           {staticMarkers.map((marker) => (
             <div key={marker.name}>
               <Marker
@@ -264,22 +260,6 @@ function DriverBusSelect() {
               )}
             </div>
           ))}
-
-          {/* Bus markers */}
-          {busData.map((bus) => (
-            <div key={bus.id}>
-              <Marker
-                position={bus.position}
-                onClick={() => handleMarkerClick(bus)}
-                options={{
-                  icon: {
-                    url: CustomMarker,
-                    scaledSize: new window.google.maps.Size(18, 18),
-                  },
-                }}
-              />
-            </div>
-          ))}
           {driverLocation && (
             <Marker
               position={driverLocation}
@@ -293,6 +273,18 @@ function DriverBusSelect() {
             />
           )}
         </GoogleMap>
+      </div>
+
+      <div className='selectBusButton'>
+        {busList.map((bus) => (
+          <button
+            key={bus}
+            onClick={() => handleBusSelection(bus)}
+            style={{ margin: '5px', color: selectedBus === bus ? '#FF0000' : 'inherit' }}
+          >
+            {bus}
+          </button>
+        ))}
       </div>
 
       {/* Button Container */}

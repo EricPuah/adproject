@@ -85,7 +85,7 @@ function UserMap() {
     const [selectedMarker, setSelectedMarker] = useState(null); // Track the user's location
     const [visibleRoute, setVisibleRoute] = useState(null);
     const [selectedRoute, setSelectedRoute] = useState(null);
-    const [driverLocation, setDriverLocation] = useState(null);
+    const [driverLocations, setDriverLocations] = useState({});
 
     const { isLoaded, loadError } = useJsApiLoader({
         id: 'google-map-script',
@@ -134,19 +134,24 @@ function UserMap() {
         }
     };
 
-    const fetchDriverLocation = async () => {
+    const fetchDriverLocations = async () => {
         try {
             const response = await fetch('https://ad-server-js.vercel.app/driver-location');
             if (!response.ok) {
-              throw new Error('Failed to fetch driver location from server');
+                throw new Error('Failed to fetch driver locations from server');
             }
             const data = await response.json();
-            setDriverLocation(data.location);
-            console.log('Driver location fetched successfully:', data.location);
-          } catch (error) {
-            console.error('Error fetching driver location from server:', error);
-          }
-        };
+
+            if (data.success) {
+                setDriverLocations(data.locations);
+                console.log('Driver locations fetched successfully:', data.locations);
+            } else {
+                console.error('Error fetching driver locations from server:', data.message);
+            }
+        } catch (error) {
+            console.error('Error fetching driver locations from server:', error);
+        }
+    };
 
     useEffect(() => {
         const requestUserLocation = () => {
@@ -157,7 +162,7 @@ function UserMap() {
                             lat: position.coords.latitude,
                             lng: position.coords.longitude,
                         };
-    
+
                         setUserLocation(location);
                     },
                     (error) => {
@@ -237,7 +242,7 @@ function UserMap() {
                         <Polyline
                             path={selectedRoute}
                             options={{
-                                strokeColor: "#FF0000", // Change the color as needed
+                                strokeColor: "#FF0000",
                                 strokeOpacity: 1,
                                 strokeWeight: 5,
                             }}
@@ -280,16 +285,16 @@ function UserMap() {
                             }}
                         />
                     )}
-                    {/* Your other markers and polylines go here */}
-                    {driverLocation && (
+                    {Object.keys(driverLocations).map((busId) => (
                         <Marker
-                            position={driverLocation}
+                            key={busId}
+                            position={driverLocations[busId]}
                             icon={{
                                 url: busD,
                                 scaledSize: new window.google.maps.Size(60, 60),
                             }}
                         />
-                    )}
+                    ))}
                 </GoogleMap>
             </div>
 
