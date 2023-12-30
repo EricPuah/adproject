@@ -89,6 +89,7 @@ function DriverBusSelect() {
   const [driverLocation, setDriverLocation] = useState(null);
   const [selectedBus, setSelectedBus] = useState(null);
   const [isRouteSelected, setIsRouteSelected] = useState(false);
+  const [buttonIndex, setButtonIndex] = useState(null);
 
   const onLoad = React.useCallback(function callback(map) {
     setMap(map);
