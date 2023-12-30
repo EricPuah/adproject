@@ -88,8 +88,6 @@ function DriverBusSelect() {
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [driverLocation, setDriverLocation] = useState(null);
   const [selectedBus, setSelectedBus] = useState(null);
-  const [isRouteSelected, setIsRouteSelected] = useState(false);
-  const [buttonIndex, setButtonIndex] = useState(null);
 
   const onLoad = React.useCallback(function callback(map) {
     setMap(map);
@@ -160,19 +158,14 @@ function DriverBusSelect() {
     }
   };
 
-  const sendDriverLocationToServer = (location, routeIndex) => {
+  const sendDriverLocationToServer = (location) => {
     // Use fetch or Axios to send a POST request to your server
-    const requestData = {
-      location: location,
-      routeIndex: routeIndex,
-    };
-
-    fetch('https://ad-server-js.vercel.app/location', {
+    fetch(`https://ad-server-js.vercel.app/location/${selectedBus}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(requestData),
+      body: JSON.stringify(location),
     })
       .then(response => {
         if (!response.ok) {
@@ -199,11 +192,7 @@ function DriverBusSelect() {
             };
 
             setDriverLocation(location);
-            if (isRouteSelected) {
-              sendDriverLocationToServer(location, buttonIndex);
-            } else {
-              sendDriverLocationToServer(location, null); // or undefined
-            }
+            sendDriverLocationToServer(location);
           },
           (error) => {
             console.error('Error getting user location:', error);
