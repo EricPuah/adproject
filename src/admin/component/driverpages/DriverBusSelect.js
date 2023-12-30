@@ -114,8 +114,27 @@ function DriverBusSelect() {
     }
   };
 
-  const handleBusSelection = (bus) => {
-    setSelectedBus(bus);
+  const handleBusSelection = async (bus) => {
+    try {
+      // Make a POST request to the backend to select the bus
+      const response = await fetch('https://ad-server-js.vercel.app/location/select-bus', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ bus }),
+      });
+
+      if (!response.ok) {
+        const { error } = await response.json();
+        alert(error);
+      } else {
+        // If successful, update the local state
+        setSelectedBus(bus);
+      }
+    } catch (error) {
+      console.error('Error selecting bus:', error);
+    }
   };
 
   const updateDriverLocation = () => {
