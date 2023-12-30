@@ -27,3 +27,22 @@
     gap: 5px;
   }
 }
+
+.iframeContainer {
+  flex: 1;
+  padding-left: 65%;
+  padding-right: 1%;
+  padding-top: 1%
+}
+
+.rightBottomButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.rightBottomButton2 {
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+}
