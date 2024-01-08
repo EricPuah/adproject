@@ -8,7 +8,6 @@ import busRoutes from '../pages/busRoutes';
 import CustomBus from '../../../assets/bus.png';
 import styles from './DriverBusSelect.module.css';
 import staticMarkers from '../pages/BusStopsLocation';
-import GeolocationWorker from './geolocationWorker';
 import { getPdfUrl } from '../firebase'; // Update the path accordingly
 
 
@@ -43,35 +42,6 @@ function DriverBusSelect() {
   const [driverLocation, setDriverLocation] = useState(null);
   const [selectedBus, setSelectedBus] = useState(null);
   const [pdfUrl, setPdfUrl] = useState(null);
-
-  useEffect(() => {
-    const geolocationWorker = new GeolocationWorker();
-
-    const startLocationUpdates = () => {
-      geolocationWorker.postMessage('start');
-    };
-
-    const handleLocationUpdate = (location) => {
-      setDriverLocation(location);
-      sendDriverLocationToServer(location);
-    };
-
-    geolocationWorker.onmessage = (event) => {
-      handleLocationUpdate(event.data);
-    };
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') {
-        startLocationUpdates();
-      } else {
-        geolocationWorker.postMessage('stop');
-      }
-    });
-
-    return () => {
-      geolocationWorker.terminate();
-    };
-  }, [selectedBus]);
 
   const onLoad = React.useCallback(function callback(map) {
     setMap(map);
