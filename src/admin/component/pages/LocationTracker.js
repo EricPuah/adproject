@@ -246,7 +246,7 @@ function LocationTracker() {
               position={driverLocations[busId]}
               icon={{
                 url: busD,
-                scaledSize: new window.google.maps.Size(20, 20),
+                scaledSize: new window.google.maps.Size(30, 30),
               }}
             />
           ))}

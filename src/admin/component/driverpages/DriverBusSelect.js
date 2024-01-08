@@ -271,7 +271,7 @@ function DriverBusSelect() {
                 options={{
                   icon: {
                     url: CustomBus,
-                    scaledSize: new window.google.maps.Size(20, 20),
+                    scaledSize: new window.google.maps.Size(30, 30),
                   },
                 }}
               />
