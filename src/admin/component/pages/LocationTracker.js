@@ -255,7 +255,7 @@ function LocationTracker() {
 
       <div className={styles.rightBottomButton2}>
         {/* Button to show bus activity */}
-        {['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'D1', 'D2', 'E1', 'E2', 'F1', 'F2', 'G1', 'G2', 'H1', 'H2'].map((busId) => (
+        {['A1', 'A2', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3', 'D1', 'D2', 'E1', 'E2', 'E3', 'F1', 'F2', 'G1', 'G2', 'G3', 'H'].map((busId) => (
           <button
             key={busId}
             onClick={() => handleBusButtonClick(busId)}
