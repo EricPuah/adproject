@@ -256,18 +256,30 @@ function UserMap() {
                         />
                     )}
                     {Object.keys(driverLocations).map((busId) => (
-                        <Marker
-                            key={busId}
-                            position={driverLocations[busId]}
-                            icon={{
-                                url: busD,
-                                scaledSize: new window.google.maps.Size(30, 30),
-                            }}
-                        />
+                        <div key={busId}>
+                            <Marker
+                                position={driverLocations[busId]}
+                                icon={{
+                                    url: busD,
+                                    scaledSize: new window.google.maps.Size(45, 45),
+                                }}
+                                onClick={() => handleMarkerClick(driverLocations[busId])}
+                            >
+                                {selectedMarker === driverLocations[busId] && (
+                                    <InfoWindow onCloseClick={() => setSelectedMarker(null)}>
+                                        <div>
+                                            <h3>Bus {busId}</h3>
+                                            {/* Additional information about the bus or any custom content */}
+                                            <p>Additional Information Goes Here</p>
+                                        </div>
+                                    </InfoWindow>
+                                )}
+                            </Marker>
+                        </div>
                     ))}
                 </GoogleMap>
             </div>
-            
+
             <div className={styles.rightBottomButton2}>
                 {/* Button to show bus activity */}
                 {['A1', 'A2', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3', 'D1', 'D2', 'E1', 'E2', 'E3', 'F1', 'F2', 'G1', 'G2', 'G3', 'H'].map((busId) => (
