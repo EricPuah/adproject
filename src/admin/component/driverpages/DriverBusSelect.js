@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { GoogleMap, useJsApiLoader, Marker, InfoWindow, Polyline, mapId } from '@react-google-maps/api';
-import '../../component/pages/LocationTracker';
-// import { usePageVisibility } from 'react-page-visibility';
+import { GoogleMap, useJsApiLoader, Marker, InfoWindow, Polyline } from '@react-google-maps/api';
+import { usePageVisibility } from 'react-page-visibility';
 import AdminNavbar from '../pages/AdminNavbar';
-import style from '../pages/AdminNavBar.module.css';
 import CustomMarker from '../../../assets/bus-stop.png';
 import busRoutes from '../pages/busRoutes';
 import CustomBus from '../../../assets/bus.png';
 import styles from './DriverBusSelect.module.css';
 import staticMarkers from '../pages/BusStopsLocation';
-import { getPdfUrl } from '../firebase'; // Update the path accordingly
-
+import { getPdfUrl } from '../firebase';
 
 const containerStyle = {
   width: '50%',
@@ -59,13 +56,10 @@ function DriverBusSelect() {
   };
 
   const handleShowBusRoute = (routeKey) => {
-    // Check if the clicked route is already visible
     if (visibleRoute === routeKey) {
-      // If yes, close the route
       setVisibleRoute(null);
       setSelectedRoute(null);
     } else {
-      // If not, set the clicked route to be visible
       setVisibleRoute(routeKey);
       setSelectedRoute(busRoutes[routeKey].route);
     }
@@ -73,7 +67,6 @@ function DriverBusSelect() {
 
   const handleBusSelection = async (bus) => {
     try {
-      // Make a GET request to the backend to check if the bus is already selected
       const response = await fetch(`https://ad-server-js.vercel.app/location/selected-buses`, {
         method: 'GET',
       });
@@ -84,11 +77,9 @@ function DriverBusSelect() {
       } else {
         const { selectedBuses } = await response.json();
 
-        // Check if the selected bus is already taken by another driver
         if (selectedBuses.includes(bus)) {
           alert('This bus is already taken by another driver. Please choose another bus.');
         } else {
-          // If not taken, make a POST request to select the bus
           const postResponse = await fetch('https://ad-server-js.vercel.app/location/select-bus', {
             method: 'POST',
             headers: {
@@ -101,7 +92,6 @@ function DriverBusSelect() {
             const { error } = await postResponse.json();
             alert(error);
           } else {
-            // If successful, update the local state
             setSelectedBus(bus);
           }
         }
@@ -112,28 +102,35 @@ function DriverBusSelect() {
   };
 
   const updateDriverLocation = () => {
-    if (navigator.geolocation && map && selectedBus && isPageVisible) {
+    if (navigator.geolocation && map && selectedBus) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        async (position) => {
           const location = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           };
 
           setDriverLocation(location);
-          sendDriverLocationToServer(location);
+
+          if (isPageVisible) {
+            sendDriverLocationToServer(location);
+          } else {
+            // Use the Background Sync API to register a sync event
+            navigator.serviceWorker.ready
+              .then(registration => registration.sync.register('updateDriverLocation'))
+              .catch(err => console.error('Error registering sync event:', err));
+          }
         },
         (error) => {
           console.error('Error getting user location:', error);
         }
       );
     } else {
-      console.error('Geolocation is not supported by this browser or map is not available.');
+      console.error('Geolocation is not supported by this browser, map is not available, or the page is not visible.');
     }
   };
 
   const sendDriverLocationToServer = (location) => {
-    // Use fetch or Axios to send a POST request to your server
     fetch(`https://ad-server-js.vercel.app/location/${selectedBus}`, {
       method: 'POST',
       headers: {
@@ -157,23 +154,31 @@ function DriverBusSelect() {
 
   useEffect(() => {
     const requestDriverLocation = () => {
-      if (navigator.geolocation && map && selectedBus && isPageVisible) {
+      if (navigator.geolocation && map && selectedBus) {
         navigator.geolocation.getCurrentPosition(
-          (position) => {
+          async (position) => {
             const location = {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             };
 
             setDriverLocation(location);
-            sendDriverLocationToServer(location);
+
+            if (isPageVisible) {
+              sendDriverLocationToServer(location);
+            } else {
+              // Use the Background Sync API to register a sync event
+              navigator.serviceWorker.ready
+                .then(registration => registration.sync.register('updateDriverLocation'))
+                .catch(err => console.error('Error registering sync event:', err));
+            }
           },
           (error) => {
             console.error('Error getting user location:', error);
           }
         );
       } else {
-        console.error('Geolocation is not supported by this browser or map is not available.');
+        console.error('Geolocation is not supported by this browser, map is not available, or the page is not visible.');
       }
     };
 
@@ -220,9 +225,8 @@ function DriverBusSelect() {
       <div>
         <AdminNavbar />
       </div>
-      <div className={style.mainContentContainer}>
+      <div className={styles.mainContentContainer}>
         <div style={containerStyle}>
-          {/* Map Container */}
           <GoogleMap
             mapContainerStyle={{ width: '100%', height: '100%' }}
             center={center}
@@ -294,7 +298,6 @@ function DriverBusSelect() {
           ))}
         </div>
 
-        {/* Button Container */}
         <div className={styles.buttonContainerStyle}>
           {routeKeys.slice(0, 8).map((routeKey) => {
             const isRouteVisible = visibleRoute === routeKey;

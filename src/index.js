@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from 'react-auth-kit'; //npm install react-auth-kit@^2.0.0
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <React.StrictMode>
     <AuthProvider
