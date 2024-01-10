@@ -6,7 +6,7 @@ const FILES_TO_CACHE = [
   '/manifest.json',
   // Add other files you want to cache
 ];
-
+/* eslint-disable no-restricted-globals */
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -80,3 +80,4 @@ self.addEventListener('message', (event) => {
     );
   }
 });
+/* eslint-disable no-restricted-globals */
