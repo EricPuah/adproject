@@ -115,9 +115,10 @@ function DriverBusSelect() {
           if (isPageVisible) {
             sendDriverLocationToServer(location);
           } else {
-            if ('serviceWorker' in navigator) {
-              navigator.serviceWorker.controller.postMessage({ action: 'getDriverLocation' });
-            }
+            // Use the Background Sync API to register a sync event
+            navigator.serviceWorker.ready
+              .then(registration => registration.sync.register('updateDriverLocation'))
+              .catch(err => console.error('Error registering sync event:', err));
           }
         },
         (error) => {
@@ -166,9 +167,10 @@ function DriverBusSelect() {
             if (isPageVisible) {
               sendDriverLocationToServer(location);
             } else {
-              if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.controller.postMessage({ action: 'getDriverLocation' });
-              }
+              // Use the Background Sync API to register a sync event
+              navigator.serviceWorker.ready
+                .then(registration => registration.sync.register('updateDriverLocation'))
+                .catch(err => console.error('Error registering sync event:', err));
             }
           },
           (error) => {
