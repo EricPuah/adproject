@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow, Polyline, mapId } from '@react-google-maps/api';
 import '../../component/pages/LocationTracker';
+import { usePageVisibility } from 'react-page-visibility';
 import AdminNavbar from '../pages/AdminNavbar';
 import style from '../pages/AdminNavBar.module.css';
 import CustomMarker from '../../../assets/bus-stop.png';
@@ -30,6 +31,8 @@ const busList = ['A1', 'A2', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3', 'D1', 'D2', 'E1
 const routeKeys = Object.keys(busRoutes);
 
 function DriverBusSelect() {
+  const isPageVisible = usePageVisibility();
+
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyCJ6a-xeKOWK4JWSifzJJfSUNWvlGaLfzU',
@@ -74,13 +77,13 @@ function DriverBusSelect() {
       const response = await fetch(`https://ad-server-js.vercel.app/location/selected-buses`, {
         method: 'GET',
       });
-  
+
       if (!response.ok) {
         const { error } = await response.json();
         alert(error);
       } else {
         const { selectedBuses } = await response.json();
-  
+
         // Check if the selected bus is already taken by another driver
         if (selectedBuses.includes(bus)) {
           alert('This bus is already taken by another driver. Please choose another bus.');
@@ -93,7 +96,7 @@ function DriverBusSelect() {
             },
             body: JSON.stringify({ bus }),
           });
-  
+
           if (!postResponse.ok) {
             const { error } = await postResponse.json();
             alert(error);
@@ -107,9 +110,9 @@ function DriverBusSelect() {
       console.error('Error selecting bus:', error);
     }
   };
-  
+
   const updateDriverLocation = () => {
-    if (navigator.geolocation && map && selectedBus) {
+    if (navigator.geolocation && map && selectedBus && isPageVisible) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const location = {
@@ -189,7 +192,7 @@ function DriverBusSelect() {
       }
       clearInterval(updateLocationInterval);
     };
-  }, [map, isLoaded, onLoad, onUnmount, selectedBus]);
+  }, [map, isLoaded, onLoad, onUnmount, selectedBus, isPageVisible]);
 
   useEffect(() => {
     const fetchPdfUrl = async () => {
