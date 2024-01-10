@@ -269,8 +269,6 @@ function UserMap() {
                                     <InfoWindow onCloseClick={() => setSelectedMarker(null)}>
                                         <div>
                                             <h3>Bus {busId}</h3>
-                                            {/* Additional information about the bus or any custom content */}
-                                            <p>Additional Information Goes Here</p>
                                         </div>
                                     </InfoWindow>
                                 )}
