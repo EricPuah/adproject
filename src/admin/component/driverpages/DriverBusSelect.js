@@ -157,7 +157,7 @@ function DriverBusSelect() {
 
   useEffect(() => {
     const requestDriverLocation = () => {
-      if (navigator.geolocation && map && selectedBus) {
+      if (navigator.geolocation && map && selectedBus && isPageVisible) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             const location = {
