@@ -30,18 +30,27 @@ const AdminNavbar = () => {
           <AiOutlineDashboard className={styles.dashboardicon} />Dashboard
         </li>
         {userRole != 'driver' ? (
-        <li className={styles.list}>
-          <TbMapSearch className={styles.mapsicon} />
-          <Link to='/AdminMaps' className={styles.hover}>
-            Maps
-          </Link>
-        </li>
-        ) : null }
+          <li className={styles.list}>
+            <TbMapSearch className={styles.mapsicon} />
+            <Link to='/AdminMaps' className={styles.hover}>
+              Maps
+            </Link>
+          </li>
+        ) : null}
+
+        {userRole === "admin" ? (
+          <li className={styles.list}>
+            <Link to='/AdminManageBusSchedule' className={styles.hover}>
+              <CgProfile className={styles.profileicon} />
+                Update Bus Schedule
+            </Link>
+          </li>
+        ) : null}
 
         {user_isRootAdmin ? (
           <li className={styles.list}>
-            <CgProfile className={styles.profileicon} />
             <Link to='/AdminManage' className={styles.hover}>
+              <CgProfile className={styles.profileicon} />
               Manage Admin
             </Link>
           </li>

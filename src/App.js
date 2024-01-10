@@ -18,102 +18,109 @@ import DriverBusSelect from './admin/component/driverpages/DriverBusSelect';
 import AdminFeedback from './admin/component/pages/AdminFeedback';
 import UserReport from './admin/component/userpages/UserReport';
 import AdminReport from './admin/component/pages/AdminReport';
+import AdminManageBusSchedule from './admin/component/pages/AdminManageBusSchedule';
 
 const App = () => {
   return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<UserMap />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/changepassword" element={<ChangePassword />} />
-          <Route path="/resetpassword" element={<ResetPassword />} />
+    <Router>
+      <Routes>
+        <Route path="/" element={<UserMap />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/changepassword" element={<ChangePassword />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
 
 
-          <Route path={'/'} element={
-            <RequireAuth loginPath={'/login'}>
-              <AdminNavbar />
-            </RequireAuth>
-          } />
+        <Route path={'/'} element={
+          <RequireAuth loginPath={'/login'}>
+            <AdminNavbar />
+          </RequireAuth>
+        } />
 
-          {/* <Route path={'/private'} element={
+        {/* <Route path={'/private'} element={
           <RequireAuth loginPath={'/login'}>
             <AdminNavbar />
           </RequireAuth>
         } /> */}
 
-          <Route path={'/ProfileInformation'} element={
-            <RequireAuth loginPath={'/login'}>
-              <AdminProfile />
-            </RequireAuth>
-          } />
+        <Route path={'/ProfileInformation'} element={
+          <RequireAuth loginPath={'/login'}>
+            <AdminProfile />
+          </RequireAuth>
+        } />
 
-          <Route path={'/AdminManage'} element={
-            <RequireAuth loginPath={'/login'}>
-              <AdminManage />
-            </RequireAuth>
-          } />
+        <Route path={'/AdminManage'} element={
+          <RequireAuth loginPath={'/login'}>
+            <AdminManage />
+          </RequireAuth>
+        } />
 
-          <Route path={'/ProfileInformationEdit'} element={
-            <RequireAuth loginPath={'/login'}>
-              <AdminProfileEdit />
-            </RequireAuth>
-          } />
+        <Route path={'/ProfileInformationEdit'} element={
+          <RequireAuth loginPath={'/login'}>
+            <AdminProfileEdit />
+          </RequireAuth>
+        } />
 
-          <Route path={'/AddNewAdmin'} element={
-            <RequireAuth loginPath={'/login'}>
-              <AddNewAdmin />
-            </RequireAuth>
-          } />
+        <Route path={'/AddNewAdmin'} element={
+          <RequireAuth loginPath={'/login'}>
+            <AddNewAdmin />
+          </RequireAuth>
+        } />
 
-          <Route path={'/AddNewBusDriver'} element={
-            <RequireAuth loginPath={'/AddNewBusDriver'}>
-              <AddNewBusDriver />
-            </RequireAuth>
-          } />
+        <Route path={'/AddNewBusDriver'} element={
+          <RequireAuth loginPath={'/AddNewBusDriver'}>
+            <AddNewBusDriver />
+          </RequireAuth>
+        } />
 
-          <Route path={'/resetpassword'} element={
-            <RequireAuth loginPath={'/login'}>
-              <ResetPassword />
-            </RequireAuth>
-          } />
+        <Route path={'/resetpassword'} element={
+          <RequireAuth loginPath={'/login'}>
+            <ResetPassword />
+          </RequireAuth>
+        } />
 
-          <Route path={'/AdminMaps'} element={
-            <RequireAuth loginPath={'/login'}>
-              <LocationTracker />
-            </RequireAuth>
-          } />
+        <Route path={'/AdminMaps'} element={
+          <RequireAuth loginPath={'/login'}>
+            <LocationTracker />
+          </RequireAuth>
+        } />
 
-          <Route path={'/AdminManageBus'} element={
-            <RequireAuth loginPath={'/login'}>
-              <AdminManageBus />
-            </RequireAuth>
-          } />
+        <Route path={'/AdminManageBus'} element={
+          <RequireAuth loginPath={'/login'}>
+            <AdminManageBus />
+          </RequireAuth>
+        } />
 
-          <Route path={'/AdminFeedback'} element={
-            <RequireAuth loginPath={'/login'}>
-              <AdminFeedback />
-            </RequireAuth>
-          } />
+        <Route path={'/AdminFeedback'} element={
+          <RequireAuth loginPath={'/login'}>
+            <AdminFeedback />
+          </RequireAuth>
+        } />
 
-          <Route path={'/UserMap'} element={
-            <UserMap />
-          } />
+        <Route path={'/UserMap'} element={
+          <UserMap />
+        } />
 
-          <Route path={'/UserFeedback'} element={
-            <UserFeedback />
-          } />
+        <Route path={'/UserFeedback'} element={
+          <UserFeedback />
+        } />
 
-          <Route path={'/DriverBusSelect'} element={
-            <RequireAuth loginPath={'/login'}>
-              <DriverBusSelect />
-            </RequireAuth>
-          } />
+        <Route path={'/DriverBusSelect'} element={
+          <RequireAuth loginPath={'/login'}>
+            <DriverBusSelect />
+          </RequireAuth>
+        } />
 
-          <Route path={'/AdminReport'} element={
-            <RequireAuth loginPath={'/login'}>
-              <AdminReport />
-            </RequireAuth>
-          } />
+        <Route path={'/AdminReport'} element={
+          <RequireAuth loginPath={'/login'}>
+            <AdminReport />
+          </RequireAuth>
+        } />
+
+        <Route path={'/AdminManageBusSchedule'} element={
+          <RequireAuth loginPath={'/login'}>
+            <AdminManageBusSchedule />
+          </RequireAuth>
+        } />
 
         <Route path={'/UserReport'} element={
           <UserReport />

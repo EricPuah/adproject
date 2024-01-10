@@ -3,7 +3,7 @@ import { getAuth } from 'firebase/auth';
 import { serverTimestamp, getDatabase, ref, push, set, query, orderByChild, equalTo, onValue, get, child, update } from 'firebase/database';
 import { hash, compare } from 'bcryptjs'
 import emailjs from 'emailjs-com';
-import { getStorage, ref as storageRef, getDownloadURL } from "firebase/storage";
+import { getStorage, ref as storageRef, getDownloadURL, uploadBytes } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAUv4mDaTr3XY5qnLT08hx8eECGtsP3beE",
@@ -14,12 +14,11 @@ const firebaseConfig = {
   messagingSenderId: "11058095143",
   appId: "1:11058095143:web:e49a26bf0aa1b5e84f9a02",
 };
-
+ 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getDatabase(app);
 const storage = getStorage();
-const pdfRef = storageRef(storage, 'bus_schedule.pdf');
 
 //RootRegister.js query (OLD)
 const registerUserInFirebase = async (username, password) => {
@@ -271,10 +270,24 @@ const addCommentToReport = async (reportId, adminUsername, commentText) => {
   }
 };
 
+const updatePdfFile = async (newPdfFile) => {
+  console.log('Updating PDF file...');
+  console.log('newPdfFile:', newPdfFile);
 
-
+  const pdfRef = storageRef(storage, 'new/bus_schedule.pdf');
+  
+  try {
+    const snapshot = await uploadBytes(pdfRef, newPdfFile);
+    console.log('File has been overwritten successfully!');
+    return snapshot;
+  } catch (error) {
+    console.error('Error overwriting file:', error.code, error.message);
+    throw error;
+  }
+};
 
 const getPdfUrl = async () => {
+  const pdfRef = storageRef(storage, 'new/bus_schedule.pdf');
   try {
     const url = await getDownloadURL(pdfRef);
     return url;
@@ -284,4 +297,5 @@ const getPdfUrl = async () => {
   }
 };
 
-export { auth, db, getPdfUrl, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB, submitReportToFirebase,  addCommentToReport };
+
+export { auth, db, getPdfUrl, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB, submitReportToFirebase,  addCommentToReport, updatePdfFile };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow, Polyline, mapId } from '@react-google-maps/api';
 import '../../component/pages/LocationTracker';
-import { usePageVisibility } from 'react-page-visibility';
+// import { usePageVisibility } from 'react-page-visibility';
 import AdminNavbar from '../pages/AdminNavbar';
 import style from '../pages/AdminNavBar.module.css';
 import CustomMarker from '../../../assets/bus-stop.png';
