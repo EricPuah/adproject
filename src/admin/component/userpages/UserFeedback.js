@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import UserSideBar from './UserSideBar';
 import { FaRegStar, FaStar } from "react-icons/fa";
+import style from './UserSideBar.module.css'; // Create a CSS module for styling
 import styles from './UserFeedback.module.css'; // Create a CSS module for styling
 import { ref, onValue } from 'firebase/database';
 import { db } from './../firebase.js';
@@ -112,7 +113,7 @@ function UserFeedback() {
     return (
         <div >
             <UserSideBar />
-            <div className={styles.mainContentContainer}>
+            <div className={style.mainContentContainer}>
                 <div className={styles.feedbackContainer}>
                     <div className={styles.feedbackContent}>
                         <h1 className={styles.h1}>User Feedback</h1>
