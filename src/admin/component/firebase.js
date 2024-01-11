@@ -14,7 +14,7 @@ const firebaseConfig = {
   messagingSenderId: "11058095143",
   appId: "1:11058095143:web:e49a26bf0aa1b5e84f9a02",
 };
- 
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getDatabase(app);
@@ -283,10 +283,10 @@ const updatePdfFile = async (newPdfFile) => {
   const pdfRef = storageRef(storage, 'bus_schedule.pdf');
 
   try {
-    // Upload the new file and overwrite the existing one
+    console.log("Before");
     await uploadBytes(pdfRef, newPdfFile);
+    console.log("After");
 
-    // Retrieve and log the download URL after successful completion
     const downloadURL = await getDownloadURL(pdfRef);
     console.log('Download URL:', downloadURL);
 
@@ -310,4 +310,4 @@ const getPdfUrl = async () => {
 };
 
 
-export { auth, db, getPdfUrl, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB, submitReportToFirebase,  addCommentToReport, updatePdfFile };
+export { auth, db, getPdfUrl, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB, submitReportToFirebase, addCommentToReport, updatePdfFile };
