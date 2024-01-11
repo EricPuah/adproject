@@ -54,7 +54,7 @@
   transition: margin 0.3s;
 }
 
-@media screen and (max-width: 1080px) {
+@media screen and (max-width: 1440px) {
   .sidebar {
     width: 100%;
     height: auto;
