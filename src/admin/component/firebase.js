@@ -274,20 +274,32 @@ const updatePdfFile = async (newPdfFile) => {
   console.log('Updating PDF file...');
   console.log('newPdfFile:', newPdfFile);
 
-  const pdfRef = storageRef(storage, 'new/bus_schedule.pdf');
-  
+  // Check if newPdfFile is valid
+  if (!newPdfFile || !(newPdfFile instanceof Blob || newPdfFile instanceof File)) {
+    console.error('Invalid file object.');
+    return;
+  }
+
+  const pdfRef = storageRef(storage, 'bus_schedule.pdf');
+
   try {
-    const snapshot = await uploadBytes(pdfRef, newPdfFile);
+    // Upload the new file and overwrite the existing one
+    await uploadBytes(pdfRef, newPdfFile);
+
+    // Retrieve and log the download URL after successful completion
+    const downloadURL = await getDownloadURL(pdfRef);
+    console.log('Download URL:', downloadURL);
+
     console.log('File has been overwritten successfully!');
-    return snapshot;
   } catch (error) {
     console.error('Error overwriting file:', error.code, error.message);
     throw error;
   }
 };
 
+
 const getPdfUrl = async () => {
-  const pdfRef = storageRef(storage, 'new/bus_schedule.pdf');
+  const pdfRef = storageRef(storage, 'bus_schedule.pdf');
   try {
     const url = await getDownloadURL(pdfRef);
     return url;
