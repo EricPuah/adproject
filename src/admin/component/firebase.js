@@ -3,7 +3,7 @@ import { getAuth } from 'firebase/auth';
 import { serverTimestamp, getDatabase, ref, push, set, query, orderByChild, equalTo, onValue, get, child, update } from 'firebase/database';
 import { hash, compare } from 'bcryptjs'
 import emailjs from 'emailjs-com';
-import { getStorage, ref as storageRef, getDownloadURL, uploadBytes } from "firebase/storage";
+import { getStorage, ref as storageRef, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAUv4mDaTr3XY5qnLT08hx8eECGtsP3beE",
@@ -14,7 +14,7 @@ const firebaseConfig = {
   messagingSenderId: "11058095143",
   appId: "1:11058095143:web:e49a26bf0aa1b5e84f9a02",
 };
- 
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getDatabase(app);
@@ -80,10 +80,10 @@ const AddAdminInFirebase = async (fullname, username, email, phone, staffID, rol
   try {
     const length = 8;
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let temporaryPassword = '';
-    for (let i = 0; i < length; i++) {
-      temporaryPassword += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
+    let temporaryPassword = 'Abc@1234';
+    // for (let i = 0; i < length; i++) {
+    //   temporaryPassword += characters.charAt(Math.floor(Math.random() * characters.length));
+    // }
     const hashedPass = await hash(temporaryPassword, 10);
     const usersRef = ref(db, 'Admin');
     const newUser = {
@@ -102,7 +102,7 @@ const AddAdminInFirebase = async (fullname, username, email, phone, staffID, rol
       subject: 'BusTeknologi: Your New Account Details',
       message: `Hello ${fullname},\n\nYour account has been created successfully!\nUsername: ${username}\nTemporary Password: ${temporaryPassword}`,
     };
-    await emailjs.send('service_26lac6k', 'template_2xd2bje', emailParams, 'PRJ-0y9h6INVAd4ZA');
+    // await emailjs.send('service_26lac6k', 'template_2xd2bje', emailParams, 'PRJ-0y9h6INVAd4ZA');
     const newChildRef = push(usersRef);
     await set(newChildRef, newUser);
     return true; // Success
@@ -275,14 +275,24 @@ const updatePdfFile = async (newPdfFile) => {
   console.log('newPdfFile:', newPdfFile);
 
   const pdfRef = storageRef(storage, 'new/bus_schedule.pdf');
-  
+
+  // Delete the old file
+  // try {
+  //   await deleteObject(pdfRef);
+  //   console.log('Old file deleted successfully!');
+  // } catch (deleteError) {
+  //   console.error('Error deleting old file:', deleteError.code, deleteError.message);
+  //   throw deleteError;
+  // }
+
+  // Upload the new file
   try {
     const snapshot = await uploadBytes(pdfRef, newPdfFile);
     console.log('File has been overwritten successfully!');
     return snapshot;
-  } catch (error) {
-    console.error('Error overwriting file:', error.code, error.message);
-    throw error;
+  } catch (uploadError) {
+    console.error('Error overwriting file:', uploadError.code, uploadError.message);
+    throw uploadError;
   }
 };
 
@@ -297,5 +307,32 @@ const getPdfUrl = async () => {
   }
 };
 
+const uploadProfilePic = async (profilePic, user) => {
+  if (!storage) {
+    console.log("Storage is not connected.")
+  }
+  else {
+    const profilePicRef = storageRef(storage, `profile_pic/${user}.png`);
+    try {
+      const snapshot = await uploadBytes(profilePicRef, profilePic);
+      console.log('Uploaded a blob or file!', snapshot);
+    } catch (error) {
+      console.error('Error uploading file:', error.code, error.message);
+    }
+  }
+}
 
-export { auth, db, getPdfUrl, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB, submitReportToFirebase,  addCommentToReport, updatePdfFile };
+const getProfilePic = async (user) => {
+  console.log(user);
+  const profilePicRef = storageRef(storage, `profile_pic/${user}.png`);
+  try {
+    const url = await getDownloadURL(profilePicRef);
+    return url;
+  } catch (error) {
+    console.error('Error getting Image download URL:', error);
+    throw new Error('An error occurred: ' + error.message);
+  }
+};
+
+
+export { auth, db, getPdfUrl, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB, submitReportToFirebase, addCommentToReport, updatePdfFile, uploadProfilePic, getProfilePic };

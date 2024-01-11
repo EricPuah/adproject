@@ -2,8 +2,9 @@ import { useRef, useState, useEffect } from 'react';
 import { faCheck, faTimes, faInfoCircle, faFontAwesome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './RootRegister.module.css';
-import { AddDriverInFirebase, AddAdminInFirebase, checkRepeatedUser } from "./firebase";
+import { AddDriverInFirebase, AddAdminInFirebase, checkRepeatedUser, uploadProfilePic } from "./firebase";
 import AdminNavbar from './pages/AdminNavbar';
+import Avatar from 'react-avatar-edit';
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -44,6 +45,7 @@ const AddNewStaff = () => {
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
+    const [image, setImage] = useState(null);
 
     useEffect(() => {
         userRef.current.focus();
@@ -94,6 +96,12 @@ const AddNewStaff = () => {
         setErrMsg('');
     }, [user]);
 
+    const handleChange = (e) => {
+        if (e.target.files[0]) {
+            setImage(e.target.files[0]);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validName) {
@@ -102,14 +110,15 @@ const AddNewStaff = () => {
         }
 
         try {
-                await AddAdminInFirebase(fullName, user, email, phone, StaffID, role); //Register user into DB
-            
+            await AddAdminInFirebase(fullName, user, email, phone, StaffID, role); //Register user into DB
+            await uploadProfilePic(image, user);
             setSuccess(true);
         } catch (error) {
             console.error('Firebase Error:', error);
             setErrMsg('An error occurred: ' + error.message);
         }
     }
+
 
     return (
         <div>
@@ -288,45 +297,16 @@ const AddNewStaff = () => {
                             type="text"
                             id="staffRole"
                             autoComplete='off'
-                            value = {"UTMFleet Management Admin"}
+                            value={"UTMFleet Management Admin"}
                             disabled
                             aria-invalid={validStaffID ? "false" : "true"}
                             aria-describedby='uidnote'
                         ></input>
 
-                        {/* <select className={styles.option} required onChange={(e) => setRole(e.target.value)}>
-                            <option value="" disabled selected>Select an option</option>
-                            <option value="admin">UTMFleet Management Admin</option>
-                            <option value="driver">UTMFleet Bus Driver</option>
-                        </select> */}
-
-                        {/* {role === 'driver' && (
-                            <>
-                                <label htmlFor="username" className={styles.label}>
-                                    License Expiry:
-                                    {DriverExpiry && (
-                                        <>
-                                            <span className={(role) ? styles.hide : styles.invalid}>
-                                                <FontAwesomeIcon icon={faTimes} />
-                                            </span>
-                                            <span className={role ? styles.valid : styles.hide}>
-                                                <FontAwesomeIcon icon={faCheck} />
-                                            </span>
-                                        </>
-                                    )}
-                                </label>
-                                <input
-                                    className={styles.input}
-                                    type="date"
-                                    id="licenseexpiry"
-                                    autoComplete='off'
-                                    onChange={(e) => setDriverExpiry(e.target.value)}
-                                    required
-                                    aria-invalid={validStaffID ? "false" : "true"}
-                                    aria-describedby='uidnote'
-                                    onFocus={() => setDriverExpiryFocus(true)}
-                                    onBlur={() => setDriverExpiryFocus(false)}
-                                /> */}
+                        <label htmlFor="username" className={styles.label}>
+                            Upload Profile Picture:
+                        </label>
+                        <input type="file" onChange={handleChange} />
 
 
                         {/* Sign Up Button */}
