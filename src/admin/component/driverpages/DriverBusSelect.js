@@ -27,8 +27,6 @@ const busList = ['A1', 'A2', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3', 'D1', 'D2', 'E1
 const routeKeys = Object.keys(busRoutes);
 
 function DriverBusSelect() {
-  const isPageVisible = usePageVisibility();
-
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyCJ6a-xeKOWK4JWSifzJJfSUNWvlGaLfzU',
@@ -110,15 +108,7 @@ function DriverBusSelect() {
           };
 
           setDriverLocation(location);
-
-          if (isPageVisible) {
-            sendDriverLocationToServer(location);
-          } else {
-            // Use the Background Sync API to register a sync event
-            navigator.serviceWorker.ready
-              .then(registration => registration.sync.register('updateDriverLocation'))
-              .catch(err => console.error('Error registering sync event:', err));
-          }
+          sendDriverLocationToServer(location);
         },
         (error) => {
           console.error('Error getting user location:', error);
@@ -162,15 +152,7 @@ function DriverBusSelect() {
             };
 
             setDriverLocation(location);
-
-            if (isPageVisible) {
-              sendDriverLocationToServer(location);
-            } else {
-              // Use the Background Sync API to register a sync event
-              navigator.serviceWorker.ready
-                .then(registration => registration.sync.register('updateDriverLocation'))
-                .catch(err => console.error('Error registering sync event:', err));
-            }
+            sendDriverLocationToServer(location);
           },
           (error) => {
             console.error('Error getting user location:', error);
@@ -196,7 +178,7 @@ function DriverBusSelect() {
       }
       clearInterval(updateLocationInterval);
     };
-  }, [map, isLoaded, onLoad, onUnmount, selectedBus, isPageVisible]);
+  }, [map, isLoaded, onLoad, onUnmount, selectedBus]);
 
   useEffect(() => {
     const fetchPdfUrl = async () => {

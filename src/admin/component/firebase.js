@@ -15,6 +15,7 @@ const firebaseConfig = {
   appId: "1:11058095143:web:e49a26bf0aa1b5e84f9a02",
 };
 
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getDatabase(app);
@@ -297,7 +298,7 @@ const updatePdfFile = async (newPdfFile) => {
 };
 
 const getPdfUrl = async () => {
-  const pdfRef = storageRef(storage, 'new/bus_schedule.pdf');
+  const pdfRef = storageRef(storage, 'bus_schedule.pdf');
   try {
     const url = await getDownloadURL(pdfRef);
     return url;

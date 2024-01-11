@@ -1,3 +1,5 @@
+/* Default styles */
+
 .sidebar {
   width: 250px;
   height: 100%;
@@ -36,15 +38,14 @@
 
 .hover:hover {
   color: #2980b9;
-  /* Hover color change */
 }
 
-.mapsicon{
+.mapsicon {
   margin-right: 10px;
   margin-bottom: -3px;
 }
 
-.routesicon{
+.routesicon {
   margin-right: 10px;
   margin-bottom: -3px;
 }
@@ -53,4 +54,25 @@
   margin-left: 250px;
   padding: 20px;
   transition: margin 0.3s;
+}
+
+/* Responsive styles */
+
+@media screen and (max-width: 736px) {
+  .sidebar {
+    width: 10%;
+    height: auto;
+    position: relative;
+    font-size: 14px; /* Adjust font size for better readability on mobile */
+  }
+
+  /* .dashboard,
+  .list {
+    width: 90%;
+    font-size: 18px; 
+  } */
+
+  .mainContentContainer {
+    margin-left: 0;
+  }
 }
