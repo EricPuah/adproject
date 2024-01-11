@@ -235,7 +235,7 @@ const submitReportToFirebase = async (name, matricNumber, email, phone, busRoute
   try {
     const reportsRef = ref(db, 'reports');
     const newReport = {
-      dateOfCreation: serverTimestamp(),
+      dateOfCreation:new Date().toLocaleDateString('en-GB'),
       name: name,
       matricNumber: matricNumber,
       email: email,
