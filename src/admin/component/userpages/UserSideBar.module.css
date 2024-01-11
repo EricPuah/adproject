@@ -1,5 +1,7 @@
+/* Default styles */
+
 .sidebar {
-  width: 100%;
+  width: 250px;
   height: 100%;
   background-color: #2F4050;
   color: #fff;
@@ -38,12 +40,12 @@
   color: #2980b9;
 }
 
-.mapsicon{
+.mapsicon {
   margin-right: 10px;
   margin-bottom: -3px;
 }
 
-.routesicon{
+.routesicon {
   margin-right: 10px;
   margin-bottom: -3px;
 }
@@ -54,11 +56,20 @@
   transition: margin 0.3s;
 }
 
-@media screen and (max-width: 1440px) {
+/* Responsive styles */
+
+@media screen and (max-width: 767px) {
   .sidebar {
     width: 100%;
     height: auto;
     position: relative;
+    font-size: 14px; /* Adjust font size for better readability on mobile */
+  }
+
+  .dashboard,
+  .list {
+    width: 100%;
+    font-size: 18px; /* Adjust font size for better readability on mobile */
   }
 
   .mainContentContainer {
