@@ -1,9 +1,8 @@
-// Import the necessary dependencies
 import React, { useState } from 'react';
 import styles from './AdminManageBusSchedule.module.css';
 import AdminNavbar from './AdminNavbar';
 import { storage } from './../firebase';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { ref, uploadBytes } from 'firebase/storage';
 
 function AdminManageBusSchedule() {
   const [pdfFile, setPdfFile] = useState(null);
@@ -15,7 +14,7 @@ function AdminManageBusSchedule() {
   const handleUpload = async (newPdfFile) => {
     console.log('Updating PDF file...');
     console.log('newPdfFile:', newPdfFile);
-  
+
     try {
       console.log("New File");
       const pdfRef = ref(storage, 'new/bus_schedule.pdf');
@@ -29,21 +28,20 @@ function AdminManageBusSchedule() {
     }
   };
 
-  /*const handleUpload = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
     if (pdfFile) {
       try {
-        // Call the function to update the PDF file in Firebase Storage
-        await updatePdfFile(pdfFile);
-
-        console.log('PDF file overwritten successfully!');
-
+        await handleUpload(pdfFile);
+        console.log('PDF file uploaded successfully!');
+        // Additional logic if needed
       } catch (error) {
-        console.error('Error overwriting PDF file:', error.message);
+        console.error('Error uploading PDF file:', error.message);
       }
     } else {
       console.error('Please select a PDF file to upload.');
     }
-  };*/
+  };
 
   return (
     <div>
@@ -52,14 +50,14 @@ function AdminManageBusSchedule() {
         <div className={styles.manageBusScheduleContainer}>
           <div className={styles.manageBusScheduleContent}>
             <h1 className={styles.h1}>Manage Bus Schedule</h1>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={handleSubmit}>
               <div className={styles.formGroup}>
                 <label className={styles.label}>
                   Upload New Bus Schedule:
                 </label>
                 <input className={styles.input} type="file" onChange={handleFileChange} />
               </div>
-              <button className={styles.button} onClick={() => handleUpload(pdfFile)}>Update PDF</button>
+              <button className={styles.button} type="submit">Update PDF</button>
             </form>
           </div>
         </div>
