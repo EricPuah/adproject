@@ -10,16 +10,10 @@ import { searchUserProfile, getProfilePic } from '../firebase';
 const AdminProfile = () => {
   const [profilePicUrl, setProfilePicUrl] = useState(null);
   const [data, setData] = useState({});
+  const [username, setUsername] = useState(null);
 
   useEffect(() => {
-    const fetchProfilePicUrl = async () => {
-      try {
-        const url = await getProfilePic(data.username);
-        setProfilePicUrl(url);
-      } catch (error) {
-        console.error('Error fetching profile pic URL:', error);
-      }
-    };
+
 
     const fetchData = async () => {
       try {
@@ -28,6 +22,7 @@ const AdminProfile = () => {
           const cookieUsername = cookieData.username;
           const userProfileData = await searchUserProfile(cookieUsername);
           setData(userProfileData);
+          setUsername(userProfileData.username);
         } else {
           console.error('Admin data not found in localStorage');
         }
@@ -36,9 +31,20 @@ const AdminProfile = () => {
       }
     };
 
-    fetchProfilePicUrl();
+    const fetchProfilePicUrl = async () => {
+      console.log(username);
+      try {
+        const url = await getProfilePic(username);
+        setProfilePicUrl(url);
+      } catch (error) {
+        console.error('Error fetching profile pic URL:', error);
+      }
+    };
+
     fetchData();
-  }, []);
+    fetchProfilePicUrl();
+
+  }, [username]);
 
   console.log(data);
 
