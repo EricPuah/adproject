@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import styles from './AdminManageBusSchedule.module.css';
 import AdminNavbar from './AdminNavbar';
-import { updatePdfFile } from './../firebase';
+import { storage } from './../firebase';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
 
 function AdminManageBusSchedule() {
   const [pdfFile, setPdfFile] = useState(null);
@@ -11,7 +12,24 @@ function AdminManageBusSchedule() {
     setPdfFile(e.target.files[0]);
   }
 
-  const handleUpload = async () => {
+  const handleUpload = async (newPdfFile) => {
+    console.log('Updating PDF file...');
+    console.log('newPdfFile:', newPdfFile);
+  
+    try {
+      console.log("New File");
+      const pdfRef = ref(storage, 'new/bus_schedule.pdf');
+      console.log(pdfRef.fullPath);
+      const snapshot = await uploadBytes(pdfRef, newPdfFile);
+      console.log('File has been overwritten successfully!', snapshot);
+      return snapshot;
+    } catch (uploadError) {
+      console.error('Error overwriting file:', uploadError.code, uploadError.message);
+      throw uploadError;
+    }
+  };
+
+  /*const handleUpload = async () => {
     if (pdfFile) {
       try {
         // Call the function to update the PDF file in Firebase Storage
@@ -25,7 +43,7 @@ function AdminManageBusSchedule() {
     } else {
       console.error('Please select a PDF file to upload.');
     }
-  };
+  };*/
 
   return (
     <div>
@@ -41,7 +59,7 @@ function AdminManageBusSchedule() {
                 </label>
                 <input className={styles.input} type="file" onChange={handleFileChange} />
               </div>
-              <button className={styles.button} onClick={handleUpload}>Update PDF</button>
+              <button className={styles.button} onClick={() => handleUpload(pdfFile)}>Update PDF</button>
             </form>
           </div>
         </div>

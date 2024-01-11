@@ -19,7 +19,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getDatabase(app);
-const storage = getStorage();
+export const storage = getStorage(app);
 
 //RootRegister.js query (OLD)
 const registerUserInFirebase = async (username, password) => {
@@ -275,21 +275,12 @@ const updatePdfFile = async (newPdfFile) => {
   console.log('Updating PDF file...');
   console.log('newPdfFile:', newPdfFile);
 
-  const pdfRef = storageRef(storage, 'new/bus_schedule.pdf');
-
-  // Delete the old file
-  // try {
-  //   await deleteObject(pdfRef);
-  //   console.log('Old file deleted successfully!');
-  // } catch (deleteError) {
-  //   console.error('Error deleting old file:', deleteError.code, deleteError.message);
-  //   throw deleteError;
-  // }
-
-  // Upload the new file
   try {
+    console.log("New File");
+    const pdfRef = storageRef(storage, 'new/bus_schedule.pdf');
+    console.log(pdfRef.name);
     const snapshot = await uploadBytes(pdfRef, newPdfFile);
-    console.log('File has been overwritten successfully!');
+    console.log('File has been overwritten successfully!', snapshot);
     return snapshot;
   } catch (uploadError) {
     console.error('Error overwriting file:', uploadError.code, uploadError.message);
