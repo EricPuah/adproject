@@ -14,7 +14,7 @@ const firebaseConfig = {
   messagingSenderId: "11058095143",
   appId: "1:11058095143:web:e49a26bf0aa1b5e84f9a02",
 };
- 
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getDatabase(app);
@@ -274,20 +274,14 @@ const updatePdfFile = async (newPdfFile) => {
   console.log('Updating PDF file...');
   console.log('newPdfFile:', newPdfFile);
 
-  const pdfRef = storageRef(storage, 'new/bus_schedule.pdf');
-  
-  try {
-    const snapshot = await uploadBytes(pdfRef, newPdfFile);
-    console.log('File has been overwritten successfully!');
-    return snapshot;
-  } catch (error) {
-    console.error('Error overwriting file:', error.code, error.message);
-    throw error;
-  }
+  const pdfRef = storageRef(storage, 'gs://bus-teknologi-a772c.appspot.com/bus_schedule.pdf');
+  await uploadBytes(pdfRef, newPdfFile);
+
+  console.log('File has been overwritten successfully!');
 };
 
 const getPdfUrl = async () => {
-  const pdfRef = storageRef(storage, 'new/bus_schedule.pdf');
+  const pdfRef = storageRef(storage, 'bus_schedule.pdf');
   try {
     const url = await getDownloadURL(pdfRef);
     return url;
@@ -298,4 +292,4 @@ const getPdfUrl = async () => {
 };
 
 
-export { auth, db, getPdfUrl, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB, submitReportToFirebase,  addCommentToReport, updatePdfFile };
+export { auth, db, getPdfUrl, AddAdminInFirebase, AddDriverInFirebase, registerUserInFirebase, checkRepeatedUser, authenticateUser, searchUserProfile, changePasswordInDB, submitReportToFirebase, addCommentToReport, updatePdfFile };
