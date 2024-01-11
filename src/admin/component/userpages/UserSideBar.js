@@ -23,7 +23,7 @@ function UserSideBar() {
 
         <li className={styles.list}>
           <Link to='/UserMap' className={styles.hover}>
-            <FaLocationDot className={styles.mapsicon} />Nearby
+            <FaLocationDot className={styles.mapsicon} />Nearbyy
           </Link>
         </li>
 
