@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow, Polyline } from '@react-google-maps/api';
+import style from './UserSideBar.module.css'; // Create a CSS module for styling
 import styles from './UserMap.module.css';
 import CustomMarker from '../../../assets/currentLocation.png';
 import busStops from '../../../assets/bus-stop.png';
@@ -12,11 +13,9 @@ import { getPdfUrl } from '../firebase'; // Update the path accordingly
 
 
 const containerStyle = {
-    width: '50%',
+    width: '90%',
     height: '600px',
-    position: 'absolute',
-    top: '40px',
-    left: '250px',
+    position: 'relative',
     padding: '20px',
 };
 
@@ -197,128 +196,128 @@ function UserMap() {
                     <UserSideBar />
                 </div>
             </div>
-
-            <div style={containerStyle}>
-                <GoogleMap
-                    mapContainerStyle={{ width: '100%', height: '100%' }}
-                    center={defaultCenter}
-                    zoom={16}
-                    onLoad={onLoad}
-                    onUnmount={onUnmount}
-                    options={{ mapId: '556e9663519326d5' }}
-                    className="google-map"
-                >
-                    {selectedRoute && (
-                        <Polyline
-                            path={selectedRoute}
-                            options={{
-                                strokeColor: "#FF0000",
-                                strokeOpacity: 1,
-                                strokeWeight: 5,
-                            }}
-                        />
-                    )}
-                    {staticMarkers.map((marker) => (
-                        <div key={marker.name}>
-                            <Marker
-                                position={marker.position}
-                                onClick={() => handleMarkerClick(marker)}
+            <div className={style.mainContentContainer}>
+                <div style={containerStyle}>
+                    <GoogleMap
+                        mapContainerStyle={{ width: '100%', height: '100%' }}
+                        center={defaultCenter}
+                        zoom={16}
+                        onLoad={onLoad}
+                        onUnmount={onUnmount}
+                        options={{ mapId: '556e9663519326d5' }}
+                        className="google-map"
+                    >
+                        {selectedRoute && (
+                            <Polyline
+                                path={selectedRoute}
                                 options={{
-                                    icon: {
-                                        url: busStops,
-                                        scaledSize: new window.google.maps.Size(18, 18),
-                                    },
+                                    strokeColor: "#FF0000",
+                                    strokeOpacity: 1,
+                                    strokeWeight: 5,
                                 }}
                             />
-                            {selectedMarker === marker && (
-                                <InfoWindow
+                        )}
+                        {staticMarkers.map((marker) => (
+                            <div key={marker.name}>
+                                <Marker
                                     position={marker.position}
-                                    onCloseClick={() => setSelectedMarker(null)}
-                                >
-                                    <div>
-                                        <h3>{marker.name}</h3>
-                                    </div>
-                                </InfoWindow>
-                            )}
-                        </div>
-                    ))}
-                    {/* Display the user's current location marker */}
-                    {userLocation && (
-                        <Marker
-                            position={userLocation}
-                            onClick={() => handleMarkerClick(userLocation)}
-                            options={{
-                                icon: {
-                                    url: CustomMarker,
-                                    scaledSize: new window.google.maps.Size(50, 50),
-                                },
-                            }}
-                        />
-                    )}
-                    {Object.keys(driverLocations).map((busId) => (
-                        <div key={busId}>
-                            <Marker
-                                position={driverLocations[busId]}
-                                icon={{
-                                    url: busD,
-                                    scaledSize: new window.google.maps.Size(45, 45),
-                                }}
-                                onClick={() => handleMarkerClick(driverLocations[busId])}
-                            >
-                                {selectedMarker === driverLocations[busId] && (
-                                    <InfoWindow onCloseClick={() => setSelectedMarker(null)}>
+                                    onClick={() => handleMarkerClick(marker)}
+                                    options={{
+                                        icon: {
+                                            url: busStops,
+                                            scaledSize: new window.google.maps.Size(18, 18),
+                                        },
+                                    }}
+                                />
+                                {selectedMarker === marker && (
+                                    <InfoWindow
+                                        position={marker.position}
+                                        onCloseClick={() => setSelectedMarker(null)}
+                                    >
                                         <div>
-                                            <h3>Bus {busId}</h3>
+                                            <h3>{marker.name}</h3>
                                         </div>
                                     </InfoWindow>
                                 )}
-                            </Marker>
-                        </div>
-                    ))}
-                </GoogleMap>
-            </div>
+                            </div>
+                        ))}
+                        {/* Display the user's current location marker */}
+                        {userLocation && (
+                            <Marker
+                                position={userLocation}
+                                onClick={() => handleMarkerClick(userLocation)}
+                                options={{
+                                    icon: {
+                                        url: CustomMarker,
+                                        scaledSize: new window.google.maps.Size(50, 50),
+                                    },
+                                }}
+                            />
+                        )}
+                        {Object.keys(driverLocations).map((busId) => (
+                            <div key={busId}>
+                                <Marker
+                                    position={driverLocations[busId]}
+                                    icon={{
+                                        url: busD,
+                                        scaledSize: new window.google.maps.Size(45, 45),
+                                    }}
+                                    onClick={() => handleMarkerClick(driverLocations[busId])}
+                                >
+                                    {selectedMarker === driverLocations[busId] && (
+                                        <InfoWindow onCloseClick={() => setSelectedMarker(null)}>
+                                            <div>
+                                                <h3>Bus {busId}</h3>
+                                            </div>
+                                        </InfoWindow>
+                                    )}
+                                </Marker>
+                            </div>
+                        ))}
+                    </GoogleMap>
+                </div>
 
-            <div className={styles.rightBottomButton2}>
-                {/* Button to show bus activity */}
-                {['A1', 'A2', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3', 'D1', 'D2', 'E1', 'E2', 'E3', 'F1', 'F2', 'G1', 'G2', 'G3', 'H'].map((busId) => (
-                    <button
-                        key={busId}
-                        onClick={() => handleBusButtonClick(busId)}
-                        style={{
-                            margin: '5px',
-                            backgroundColor: driverLocations[busId] ? 'inherit' : '#e0e0e0', // Grey out if inactive
-                            cursor: driverLocations[busId] ? 'pointer' : 'not-allowed', // Show different cursor if inactive
-                            pointerEvents: driverLocations[busId] ? 'auto' : 'none', // Disable pointer events if inactive
-                        }}
-                    >
-                        <span style={{ marginRight: '5px' }}>{busId}</span>
-                        {driverLocations[busId] ? 'Active' : 'Inactive'}
-                    </button>
-                ))}
-            </div>
-
-            <div className={styles.rightBottomButton}>
-                {routeKeys.slice(0, 8).map((routeKey) => {
-                    const isRouteVisible = visibleRoute === routeKey;
-
-                    return (
+                <div className={styles.rightBottomButton2}>
+                    {/* Button to show bus activity */}
+                    {['A1', 'A2', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3', 'D1', 'D2', 'E1', 'E2', 'E3', 'F1', 'F2', 'G1', 'G2', 'G3', 'H'].map((busId) => (
                         <button
-                            key={routeKey}
-                            onClick={() => handleShowBusRoute(routeKey)}
-                            style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
+                            key={busId}
+                            onClick={() => handleBusButtonClick(busId)}
+                            style={{
+                                margin: '5px',
+                                backgroundColor: driverLocations[busId] ? 'inherit' : '#e0e0e0', // Grey out if inactive
+                                cursor: driverLocations[busId] ? 'pointer' : 'not-allowed', // Show different cursor if inactive
+                                pointerEvents: driverLocations[busId] ? 'auto' : 'none', // Disable pointer events if inactive
+                            }}
                         >
-                            {`${routeKey}`}
+                            <span style={{ marginRight: '5px' }}>{busId}</span>
+                            {driverLocations[busId] ? 'Active' : 'Inactive'}
                         </button>
-                    );
-                })}
-            </div>
+                    ))}
+                </div>
 
-            <div className={styles.iframeContainer}>
-                {pdfUrl && (
-                    <iframe title="PDF Viewer" src={pdfUrl} width="100%" height="800px" />
-                )}
-            </div>
+                <div className={styles.rightBottomButton}>
+                    {routeKeys.slice(0, 8).map((routeKey) => {
+                        const isRouteVisible = visibleRoute === routeKey;
 
+                        return (
+                            <button
+                                key={routeKey}
+                                onClick={() => handleShowBusRoute(routeKey)}
+                                style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
+                            >
+                                {`${routeKey}`}
+                            </button>
+                        );
+                    })}
+                </div>
+
+                <div className={styles.iframeContainer}>
+                    {pdfUrl && (
+                        <iframe title="PDF Viewer" src={pdfUrl} width="100%" height="800px" />
+                    )}
+                </div>
+            </div>
         </div>
     );
 }
