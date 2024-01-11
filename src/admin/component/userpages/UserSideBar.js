@@ -9,13 +9,22 @@ import { CiLogin } from "react-icons/ci";
 
 function UserSideBar() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <div className={styles.sidebar}>
+    <div className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ''}`}>
+      <button className={styles.toggleButton} onClick={toggleSidebar}>
+        ☰
+      </button>
       <ul>
         <li className={styles.dashboard}>
           <AiOutlineDashboard className={styles.dashboardicon} />Dashboard

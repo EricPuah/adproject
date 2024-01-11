@@ -9,6 +9,25 @@
   font-size: 16px;
   display: flex;
   flex-direction: column;
+  transition: width 0.5s;
+  overflow: hidden;
+}
+
+.open {
+  width: 0px;
+}
+
+.toggleButton {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  background-color: #2F4050;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
 }
 
 .dashboard {
@@ -60,19 +79,26 @@
 
 @media screen and (max-width: 736px) {
   .sidebar {
-    width: 10%;
-    height: auto;
-    position: relative;
-    font-size: 14px; /* Adjust font size for better readability on mobile */
+    width: 0;
   }
 
-  /* .dashboard,
+  .open {
+    width: 60%;
+  }
+
+  .dashboard,
   .list {
     width: 90%;
     font-size: 18px; 
-  } */
+  }
 
   .mainContentContainer {
     margin-left: 0;
+  }
+
+  @media screen and (max-width: 736px) {
+    .toggleButton {
+      display: block;
+    }
   }
 }
