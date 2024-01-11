@@ -82,10 +82,8 @@
     display: none;
 }
 
-/* Optional: Add hover effect on stars */
 .starLabel:hover {
     color: #ff9800;
-    /* Hovered star color */
 }
 
 .stars {
@@ -161,10 +159,29 @@
     margin-left: 250px;
     padding: 20px;
     transition: margin 0.3s;
-}
+}cscscc
 
 .error {
     color: #ff0000; /* Red color for the error message */
     font-size: 14px;
     margin-top: 5px;
+}
+
+@media screen and (max-width: 768px) {
+    .feedbackContent {
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    .form {
+        max-width: 100%;
+    }
+
+    .starContainer {
+        margin-top: 10px;
+    }
+
+    .mainContentContainer {
+        margin: 10px;
+    }
 }
