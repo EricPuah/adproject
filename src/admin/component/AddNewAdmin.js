@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './RootRegister.module.css';
 import { AddDriverInFirebase, AddAdminInFirebase, checkRepeatedUser, uploadProfilePic } from "./firebase";
 import AdminNavbar from './pages/AdminNavbar';
-import Avatar from 'react-avatar-edit';
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
