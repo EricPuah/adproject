@@ -6,11 +6,14 @@ import { ref, onValue, query, orderByChild, equalTo, get, remove } from 'firebas
 import { db } from './../firebase';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import Modal from 'react-modal'
 
 function AdminManage() {
     const [admins, setAdmins] = useState([]);
     const [isRootAdmin, setisRootAdmin] = useState(false);
     const [role, setRole] = useState(false);
+    const [deleteConfirmationModalIsOpen, setDeleteConfirmationModalIsOpen] = useState(false);
+    const [selectedBusDriverusername, setselectedBusDriverusername] = useState('');
 
     useEffect(() => {
         const cookieData = Cookies.get('_auth_state');
@@ -38,20 +41,29 @@ function AdminManage() {
 
     const handleDeleteAdmin = async (username) => {
         try {
-            const adminRef = ref(db, 'Admin');
-            const adminquery = query(adminRef, orderByChild('username'), equalTo(username));
-            const snapshot = await get(adminquery);
-
-            if (snapshot.exists()) {
-                const adminData = Object.values(snapshot.val())[0];
-                const adminKey = Object.keys(snapshot.val())[0];
-
-                await remove(ref(db, `Admin/${adminKey}`));
-            }
+            setselectedBusDriverusername(username);
+            setDeleteConfirmationModalIsOpen(true);
         } catch (error) {
             console.error('Error deleting admin:', error);
         }
     };
+
+    const confirmDeleteBusDriver = async () => {
+        try {
+            const busDriverRef = ref(db, 'Admin');
+            const busDriverQuery = query(busDriverRef, orderByChild('username'), equalTo(selectedBusDriverusername));
+            const snapshot = await get(busDriverQuery);
+
+            if (snapshot.exists()) {
+                const busDriverKey = Object.keys(snapshot.val())[0];
+
+                await remove(ref(db, `Admin/${busDriverKey}`));
+                setDeleteConfirmationModalIsOpen(false);
+            }
+        } catch (error) {
+            console.error ('Error deleting bus driver: ', error);
+        }
+    }
 
     return (
         <div>
@@ -126,6 +138,21 @@ function AdminManage() {
                     </div>
                 </div>
             </div>
+            <Modal
+                isOpen={deleteConfirmationModalIsOpen}
+                onRequestClose={() => setDeleteConfirmationModalIsOpen(false)}
+                className={styles.modal}
+                overlayClassName={styles.overlay}
+            >
+                <div className={styles.modalContent}>
+                    <h2 className={styles.h2delete}>Confirm Deletion</h2>
+                    <p>Are you sure you want to delete this admin?</p>
+                    <div className={styles.modalButtons}>
+                        <button className={styles.nobutton} onClick={() => setDeleteConfirmationModalIsOpen(false)}>No</button>
+                        <button className={styles.yesbutton} onClick={confirmDeleteBusDriver}>Yes</button>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 }

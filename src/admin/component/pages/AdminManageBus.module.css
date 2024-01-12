@@ -37,10 +37,11 @@
   padding: 10px;
   border: 1px solid #e0e0e0;
   text-align: left;
+  background-color: #FFFBD6;
 }
 
 .header{
-  background-color: #007BFF;
+  background-color: #990000;
   color: #fff;
 }
 
@@ -63,7 +64,7 @@
 }
 
 .addadminbutton {
-  background-color: #007BFF; /* Green color, adjust as needed */
+  background-color: #c01b6a; /* Green color, adjust as needed */
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -72,3 +73,71 @@
   cursor: pointer;
 }
 
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modalContent {
+  text-align: center;
+}
+
+.modalButtons {
+  margin-top: 20px;
+}
+
+.yesbutton {
+  background-color: rgb(247, 100, 100); /* Green color, adjust as needed */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px; /* Add spacing to the right */
+}
+
+.yesbutton:hover {
+  background-color: rgb(252, 34, 34); /* Green color, adjust as needed */
+}
+
+.nobutton {
+  background-color: grey; /* Green color, adjust as needed */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 10px; /* Add spacing to the left */
+}
+
+.nobutton:hover{
+  background-color: rgb(92, 92, 92); /* Green color, adjust as needed */
+}
+
+.addadminbutton:hover {
+  background-color: rgb(88, 24, 69);
+}
+
+.h2delete {
+  color: #ffc107;
+}

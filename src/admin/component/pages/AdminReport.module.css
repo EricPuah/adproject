@@ -1,97 +1,87 @@
-/* AdminReport.module.css */
+/* AdminFeedback.module.css */
 
 /* Additional styles for the container */
 .container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 }
 
-/* Additional styles for the list container */
+/* Additional styles for the box */
 .listcontainer {
-  max-width: auto;
-  overflow: auto; /* Allow horizontal scrolling if needed */
-  margin: 20px auto; /* Center the list */
-  padding: 20px; /* Added padding for a nicer look */
-  border-radius: 5px; /* Added border-radius for rounded corners */
-  background-color: #fff; /* Background color for a clean look */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle lift */
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 1200px; /* Adjust as needed */
+  margin: 20px auto;
 }
 
-/* Additional styles for the heading */
+
+/* Additional styles for headings */
 .listtitle {
   font-size: 24px;
   margin-bottom: 20px;
+  color: #333;
+  text-align: center;
 }
 
 /* Additional styles for the table */
 .listtable {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin-top: 10px;
+}
+
+.header,
+.data {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+  background-color: #FFFBD6;
 }
 
 .header {
-  background-color: #007BFF;
+  background-color: #990000;
   color: #fff;
-  padding: 10px;
-  text-align: left;
 }
 
+/* Additional styles for the list item */
 .listitem {
-  border-bottom: 1px solid #ddd;
+  background-color: #f9f9f9;
 }
 
-.data {
-  padding: 10px;
-}
-
+/* Style span elements inside list items */
 .detaillabel {
-  display: block;
   font-weight: bold;
+  margin-right: 10px;
+  color: #333;
 }
 
-.messageColumn {
-  max-width: 300px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* Additional styles for the add admin button */
+.addadminbuttoncontainer {
+  text-align: center;
+  margin-top: 20px;
 }
 
-.commentRow {
-  background-color: #f9f9f9; /* Background color for comment row */
-}
-
-.commentCell {
-  padding: 10px;
-}
-
-.comment {
-  margin-bottom: 10px;
-}
-
-/* Additional styles for the main content container */
-.mainContentContainer {
-  margin-left: 250px;
-  padding: 20px;
-  transition: margin 0.3s;
-}
-
-/* Additional styles for the buttons */
-.addCommentButton {
-  background-color: #28a745; /* Green color for success */
+.addadminbutton {
+  background-color: #007BFF;
   color: #fff;
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Add a smooth transition effect */
 }
 
-.addCommentButton:hover {
-  background-color: #218838; /* Darker green color on hover */
+.messageColumn {
+  max-width: 300px;
+  overflow: hidden;
+  white-space: normal;
+  text-align: justify;
 }
+
+
 
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {

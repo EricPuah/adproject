@@ -6,10 +6,13 @@ import { ref, onValue, query, orderByChild, equalTo, get, remove } from 'firebas
 import { db } from '../firebase';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import Modal from 'react-modal';
 
 function AdminManage() {
     const [admins, setAdmins] = useState([]);
     const [isRootAdmin, setisRootAdmin] = useState(false);
+    const [deleteConfirmationModalIsOpen, setDeleteConfirmationModalIsOpen] = useState(false);
+    const [selectedAdminUsername, setSelectedAdminUsername] = useState('');
 
     useEffect(() => {
         const cookieData = Cookies.get('_auth_state');
@@ -36,15 +39,24 @@ function AdminManage() {
 
     const handleDeleteAdmin = async (username) => {
         try {
+            setSelectedAdminUsername(username);
+            setDeleteConfirmationModalIsOpen(true);
+        } catch (error) {
+            console.error('Error deleting admin:', error);
+        }
+    };
+
+    const confirmDeleteAdmin = async () => {
+        try {
             const adminRef = ref(db, 'Admin');
-            const adminquery = query(adminRef, orderByChild('username'), equalTo(username));
+            const adminquery = query(adminRef, orderByChild('username'), equalTo(selectedAdminUsername));
             const snapshot = await get(adminquery);
 
             if (snapshot.exists()) {
-                const adminData = Object.values(snapshot.val())[0];
                 const adminKey = Object.keys(snapshot.val())[0];
 
                 await remove(ref(db, `Admin/${adminKey}`));
+                setDeleteConfirmationModalIsOpen(false);
             }
         } catch (error) {
             console.error('Error deleting admin:', error);
@@ -120,6 +132,21 @@ function AdminManage() {
                     </div>
                 </div>
             </div>
+            <Modal
+                isOpen={deleteConfirmationModalIsOpen}
+                onRequestClose={() => setDeleteConfirmationModalIsOpen(false)}
+                className={styles.modal}
+                overlayClassName={styles.overlay}
+            >
+                <div className={styles.modalContent}>
+                    <h2 className={styles.h2delete}>Confirm Deletion</h2>
+                    <p>Are you sure you want to delete this admin?</p>
+                    <div className={styles.modalButtons}>
+                        <button className={styles.nobutton} onClick={() => setDeleteConfirmationModalIsOpen(false)}>No</button>
+                        <button className={styles.yesbutton} onClick={confirmDeleteAdmin}>Yes</button>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 }
