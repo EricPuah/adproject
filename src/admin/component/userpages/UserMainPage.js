@@ -24,7 +24,7 @@ function UserMainPage() {
         <div className={styles.sidebar}>
           <UserSideBar />
         </div>
-        <div className={styles.mainContentContainer}>
+        <div className={style.mainContentContainer}>
           <div className={styles.searchContainer}>
             <input
               type="text"
