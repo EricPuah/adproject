@@ -64,7 +64,7 @@
 }
 
 .addadminbutton {
-  background-color: #c01b6a; /* Green color, adjust as needed */
+  background-color: #82022b;  /* Green color, adjust as needed */
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -105,7 +105,7 @@
 }
 
 .yesbutton {
-  background-color: rgb(247, 100, 100); /* Green color, adjust as needed */
+  background-color: #82022b;  /* Green color, adjust as needed */
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -116,7 +116,7 @@
 }
 
 .yesbutton:hover {
-  background-color: rgb(252, 34, 34); /* Green color, adjust as needed */
+  background-color:#5c001e; /* Green color, adjust as needed */
 }
 
 .nobutton {
@@ -135,7 +135,7 @@
 }
 
 .addadminbutton:hover {
-  background-color: rgb(88, 24, 69);
+  background-color:#5c001e; 
 }
 
 .h2delete {

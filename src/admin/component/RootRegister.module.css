@@ -1,26 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
-.section {
-  width: 100%;
-  max-width: 420px;
-  min-height: 400px;
+
+
+.feedbackContainer {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  background-color: #3498db;
-  /* Blue background for the section */
-  margin: auto;
-  /* Center the section horizontally */
+  justify-content: center;
+  align-items: center;
+}
+
+.feedbackContent {
+  text-align: left;
+  border: 3px solid #82022b ;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  padding: 40px 50px 40px 30px;
+  margin-top: 28px;
+
+}
+
+.h1 {
+  color: #82022b;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  flex-grow: 1;
-  padding: 20px;
-  background-color: #ecf0f1;
-  /* Light gray background for the form */
+  display: inline-block;
+  text-align: left;
+  max-width: 400px;
 }
 
 .a,
@@ -35,53 +45,27 @@
 .input[type="email"],
 .input[type="password"],
 .option .textarea {
-  font-family: 'Nunito', sans-serif;
-  font-size: 22px;
-  padding: 0.25rem;
-  border-radius: 0.5rem;
-  background-color: #fff;
-  /* White background for inputs */
-  border: 1px solid #bdc3c7;
-  /* Light gray border */
-  color: #2c3e50;
-  /* Dark gray text color for inputs */
+  width: 95%;
+  padding: 2%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 5px;
 }
 
 .label {
-  font-family: 'Nunito', sans-serif;
-  font-size: 22px;
-  color: #2c3e50;
-  /* Dark gray color for labels and buttons */
-  margin-top: 1rem;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
 .button {
-  appearance: button;
-  backface-visibility: hidden;
-  background-color: #405cf5;
-  border-radius: 6px;
-  border-width: 0;
-  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .1) 0 2px 5px 0, rgba(0, 0, 0, .07) 0 1px 1px 0;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  font-family: 'Nunito', sans-serif;
-  font-size: 22px;
-  height: 44px;
-  line-height: 1.15;
-  margin: 12px 0 0;
-  outline: none;
-  overflow: hidden;
-  padding: 0 25px;
-  position: relative;
-  text-align: center;
-  text-transform: none;
-  transform: translateZ(0);
-  transition: all .2s, box-shadow .08s ease-in;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: 100%;
+  background-color: #82022b; 
+  color: #fff; 
+  border: none; 
+  border-radius: 5px; 
+  padding: 8px 20px; 
+  cursor: pointer; 
+  font-size: 16px; 
+  margin-top: 5% #c01b6a
 }
 
 .button:disabled {
@@ -89,7 +73,7 @@
 }
 
 .button:hover {
-  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
+  background-color:#5c001e; 
 }
 
 
@@ -149,4 +133,8 @@
   background-color: #f0f0f0; /* Change this to the desired background color for disabled input */
   border: 1px solid #ccc; /* Change this to the desired border color for disabled input */
   /* Add any other styles as needed */
+}
+
+.formGroup {
+  margin-bottom: 15px;
 }
