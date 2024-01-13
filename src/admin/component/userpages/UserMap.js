@@ -15,8 +15,9 @@ const containerStyle = {
     width: '87%',
     height: '700px',
     position: 'relative',
-    padding: '20px',
     zIndex: '1',
+    border: '5px solid #82022b',
+    borderRadius: '5px',
 };
 
 const defaultCenter = {
