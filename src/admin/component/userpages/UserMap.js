@@ -278,7 +278,7 @@ function UserMap() {
                     <table className={styles.button2table}>
                         <thead>
                             <tr>
-                                <th className={styles.button2th}>Bus ID</th>
+                                <th className={styles.button2th}>Bus Activity</th>
                             </tr>
                         </thead>
                         <tbody>

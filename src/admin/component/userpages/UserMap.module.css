@@ -1,7 +1,13 @@
 .map-container {
   margin-left: 25%;
   padding-top: 2%;
-  z-index: 2;
+  z-index: 3;
+  width: 60%;
+  height: 600px;
+  position: absolute;
+  top: 40px;
+  left: 250px;
+  padding: 20px;
 }
 
 .sidebar {
@@ -9,7 +15,7 @@
   width: 250px;
   background-color: #2F4050;
   position: fixed;
-  z-index: 1;
+  z-index: 0;
 }
 
 .searchContainer {
@@ -66,32 +72,11 @@
   display: flex;
 }
 
-.mapContainer {
-  width: 60%;
-  height: 600px;
-  position: absolute;
-  top: 40px;
-  left: 250px;
-  padding: 20px;
-}
-
 .iframeContainer {
   flex: 1;
   padding-left: 65%;
   padding-right: 1%;
   padding-top: 1%
-}
-
-.rightBottomButton {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-}
-
-.rightBottomButton2 {
-  position: fixed;
-  bottom: 60px;
-  right: 20px;
 }
 
 .buttonBusContainerStyle {
