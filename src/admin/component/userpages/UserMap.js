@@ -279,21 +279,34 @@ function UserMap() {
 
                 <div className={styles.rightBottomButton2}>
                     {/* Button to show bus activity */}
-                    {['A1', 'A2', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3', 'D1', 'D2', 'E1', 'E2', 'E3', 'F1', 'F2', 'G1', 'G2', 'G3', 'H'].map((busId) => (
-                        <button
-                            key={busId}
-                            onClick={() => handleBusButtonClick(busId)}
-                            style={{
-                                margin: '5px',
-                                backgroundColor: driverLocations[busId] ? 'inherit' : '#e0e0e0', // Grey out if inactive
-                                cursor: driverLocations[busId] ? 'pointer' : 'not-allowed', // Show different cursor if inactive
-                                pointerEvents: driverLocations[busId] ? 'auto' : 'none', // Disable pointer events if inactive
-                            }}
-                        >
-                            <span style={{ marginRight: '5px' }}>{busId}</span>
-                            {driverLocations[busId] ? 'Active' : 'Inactive'}
-                        </button>
-                    ))}
+                    <table className={styles.button2table}>
+                        <thead>
+                            <tr>
+                                <th className={styles.button2th}>Bus ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {['A1', 'A2', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3', 'D1', 'D2', 'E1', 'E2', 'E3', 'F1', 'F2', 'G1', 'G2', 'G3', 'H'].map((busId) => (
+                                <tr>
+                                    <td className={styles.button2td}>
+                                        <button
+                                            key={busId}
+                                            onClick={() => handleBusButtonClick(busId)}
+                                            style={{
+                                                margin: '5px',
+                                                backgroundColor: driverLocations[busId] ? 'inherit' : '#e0e0e0', // Grey out if inactive
+                                                cursor: driverLocations[busId] ? 'pointer' : 'not-allowed', // Show different cursor if inactive
+                                                pointerEvents: driverLocations[busId] ? 'auto' : 'none', // Disable pointer events if inactive
+                                            }}
+                                        >
+                                            <span style={{ marginRight: '5px' }}>{busId}</span>
+                                            {driverLocations[busId] ? 'Active' : 'Inactive'}
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
 
                 <div className={styles.rightBottomButton}>

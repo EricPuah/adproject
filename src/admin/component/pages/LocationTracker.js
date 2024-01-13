@@ -312,7 +312,7 @@ function LocationTracker() {
 
       <div className={styles.iframeContainer}>
         {pdfUrl && (
-          <iframe title="PDF Viewer" src={pdfUrl} width="100%" height="800px" />
+          <iframe className={styles.pdf} title="PDF Viewer" src={pdfUrl} width="100%" height="800px" />
         )}
       </div>
 

@@ -29,10 +29,20 @@
 }
 
 .iframeContainer {
-  flex: 1;
-  padding-left: 65%;
-  padding-right: 1%;
-  padding-top: 1%
+  position: absolute;
+  margin-left: 270px;
+  margin-top: 700px;
+  width: 50%;
+  padding: 10px; /* Optional: Add padding for better appearance */
+  background-color: #fff; /* Optional: Add a background color if needed */
+  box-shadow: 0px -5px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for separation */
+}
+
+.iframeContainer iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
 .rightBottomButton {
@@ -81,4 +91,3 @@
 .button2th {
   background-color: #f2f2f2;
 }
-
