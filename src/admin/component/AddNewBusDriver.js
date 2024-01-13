@@ -3,7 +3,7 @@ import { faCheck, faTimes, faInfoCircle, faFontAwesome } from '@fortawesome/free
 import { Navigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './RootRegister.module.css';
-import { AddDriverInFirebase, AddAdminInFirebase, checkRepeatedUser } from "./firebase";
+import { AddDriverInFirebase, AddAdminInFirebase, checkRepeatedUser, uploadProfilePic } from "./firebase";
 import AdminNavbar from './pages/AdminNavbar';
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
@@ -44,6 +44,8 @@ const AddNewBusDriver = () => {
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
+
+    const [image, setImage] = useState(null);
 
 
     useEffect(() => {
@@ -95,6 +97,12 @@ const AddNewBusDriver = () => {
         setErrMsg('');
     }, [user]);
 
+    const handleChange = (e) => {
+        if (e.target.files[0]) {
+            setImage(e.target.files[0]);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validName) {
@@ -103,11 +111,8 @@ const AddNewBusDriver = () => {
         }
 
         try {
-            if (role === 'driver') {
-                await AddDriverInFirebase(fullName, user, email, phone, StaffID, role, DriverExpiry); //Register user into DB
-            } else {
-                await AddAdminInFirebase(fullName, user, email, phone, StaffID, role); //Register user into DB
-            }
+            await AddDriverInFirebase(fullName, user, email, phone, StaffID, role, DriverExpiry); //Register user into DB
+            await uploadProfilePic(image, user);
             setSuccess(true);
         } catch (error) {
             console.error('Firebase Error:', error);
@@ -120,7 +125,7 @@ const AddNewBusDriver = () => {
             <AdminNavbar />
 
             {success ? (
-                    <Navigate to="/AdminManageBus" />
+                <Navigate to="/AdminManageBus" />
             ) : (
                 <section className={styles.section}>
                     {/* Register Form */}
@@ -290,12 +295,12 @@ const AddNewBusDriver = () => {
                             type="text"
                             id="staffRole"
                             autoComplete='off'
-                            value = {"UTMFleet Bus Driver"}
+                            value={"UTMFleet Bus Driver"}
                             disabled
                             aria-invalid={validStaffID ? "false" : "true"}
                             aria-describedby='uidnote'
                         ></input>
-                        
+
                         {role === 'driver' && (
                             <>
                                 <label htmlFor="username" className={styles.label}>
@@ -325,6 +330,11 @@ const AddNewBusDriver = () => {
                                 />
                             </>
                         )}
+
+                        <label htmlFor="username" className={styles.label}>
+                            Upload Profile Picture:
+                        </label>
+                        <input type="file" onChange={handleChange} />
 
 
                         {/* Sign Up Button */}

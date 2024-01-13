@@ -6,7 +6,7 @@
 
 .reportContent {
     text-align: left;
-    border: 2px solid #3498db;
+    border: 3px solid #82022b ;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -16,7 +16,7 @@
 }
 
 .h1 {
-    color: #3498db;
+    color: #82022b;
     display: flex;
     justify-content: center;
     margin: 0 auto;
@@ -47,17 +47,20 @@
     margin-top: 5px;
 }
 
-.button {
-    background-color: #3498db;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+.button { 
+    background-color: #82022b; 
+    color: #fff; 
+    border: none; 
+    border-radius: 5px; 
+    padding: 8px 20px; 
+    cursor: pointer; 
+    font-size: 16px; 
+    margin-top: 5% #c01b6a
+  }
 
-.button:hover {
-    background-color: #2980b9;
+
+  .button:hover{ 
+    background-color:#5c001e; 
 }
 
 .p {

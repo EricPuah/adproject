@@ -19,6 +19,7 @@ import AdminFeedback from './admin/component/pages/AdminFeedback';
 import UserReport from './admin/component/userpages/UserReport';
 import AdminReport from './admin/component/pages/AdminReport';
 import AdminManageBusSchedule from './admin/component/pages/AdminManageBusSchedule';
+import UserBusSchedule from './admin/component/userpages/UserBusSchedule';
 
 const App = () => {
   return (
@@ -102,6 +103,10 @@ const App = () => {
 
         <Route path={'/UserFeedback'} element={
           <UserFeedback />
+        } />
+
+        <Route path={'/UserBusSchedule'} element={
+          <UserBusSchedule />
         } />
 
         <Route path={'/DriverBusSelect'} element={
