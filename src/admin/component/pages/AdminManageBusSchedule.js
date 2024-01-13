@@ -66,7 +66,7 @@ function AdminManageBusSchedule() {
     <div>
       <AdminNavbar />
       <section className={styles.section}>
-      <div className={style.mainContentContainer}>
+      <div className={styles.mainContentContainer}>
         <div className={styles.manageBusScheduleContainer}>
           <div className={styles.manageBusScheduleContent}>
             <h1 className={styles.h1}>Manage Bus Schedule</h1>
@@ -88,7 +88,7 @@ function AdminManageBusSchedule() {
                     data={pdfUrl}
                     type="application/pdf"
                     width="100%"
-                    height="800px"
+                    height="100%"
                   >
                     <p>It appears you don't have a PDF plugin for this browser. No biggie... you can <a href={pdfUrl}>click here to download the PDF file.</a></p>
                   </object>
@@ -97,7 +97,7 @@ function AdminManageBusSchedule() {
                     title="PDF Viewer"
                     src={pdfUrl}
                     width="100%"
-                    height="500px"
+                    height="100%"
                   />
                 )}
               </>

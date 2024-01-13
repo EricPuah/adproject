@@ -141,7 +141,7 @@ function AdminManage() {
             >
                 <div className={styles.modalContent}>
                     <h2 className={styles.h2delete}>Confirm Deletion</h2>
-                    <p>Are you sure you want to delete this admin?</p>
+                    <p>Are you sure you want to delete <span style={{ fontWeight: 'bold' }}>{selectedAdminUsername}</span>?</p>
                     <div className={styles.modalButtons}>
                         <button className={styles.nobutton} onClick={() => setDeleteConfirmationModalIsOpen(false)}>No</button>
                         <button className={styles.yesbutton} onClick={confirmDeleteAdmin}>Yes</button>
