@@ -88,18 +88,6 @@
   padding-top: 1%
 }
 
-.rightBottomButton {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-}
-
-.rightBottomButton2 {
-  position: fixed;
-  bottom: 60px;
-  right: 20px;
-}
-
 .buttonBusContainerStyle {
   position: fixed;
   bottom: 10px;
@@ -141,8 +129,8 @@
 
 .rightBottomButton {
   position: absolute;
-  bottom: 20px; /* Adjust the distance from the bottom */
-  left : 10px; /* Adjust the distance from the right */
+  bottom: -60px; /* Adjust the distance from the bottom */
+  left : 280px; /* Adjust the distance from the right */
   padding: 10px;
   z-index: -2;
 }
@@ -150,7 +138,7 @@
 .rightBottomButton2 {
   position: absolute;
   top: 30px;
-  right: -160px;
+  right: 0px;
   /* Set the width as needed */
   padding: 10px;
   background-color: #fff;
