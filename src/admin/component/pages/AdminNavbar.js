@@ -42,7 +42,7 @@ const AdminNavbar = () => {
           <li className={styles.list}>
             <Link to='/AdminManageBusSchedule' className={styles.hover}>
               <CgProfile className={styles.profileicon} />
-                Update Bus Schedule
+              Update Bus Schedule
             </Link>
           </li>
         ) : null}
@@ -98,6 +98,12 @@ const AdminNavbar = () => {
         <li className={styles.list}>
           <Link to='/login' className={styles.logout} onClick={handleLogout}>
             <IoMdLogOut className={styles.logouticon} />Logout
+          </Link>
+        </li>
+
+        <li className={styles.list}>
+          <Link to='/BusDriverSchedule' className={styles.hover}>
+            <MdSchedule className={styles.routesicon} />Bus Schedule
           </Link>
         </li>
       </ul>
