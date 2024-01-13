@@ -20,12 +20,13 @@
 .toggleButton {
   display: none;
   position: fixed;
-  top: 10px;
+  top: 13px;
   left: 10px;
   font-size: 20px;
   background-color: #2F4050;
   color: #fff;
   border: none;
+  border-radius: 3px;
   cursor: pointer;
   z-index: 2;
 }
@@ -73,7 +74,7 @@
   margin-left: 250px;
   padding: 20px;
   transition: margin 0.3s;
-  /* background-image: url(https://dvcdev.utm.my/wp-content/uploads/sites/22/2018/11/UTMimage13.jpg); */
+  background-image: url(https://dvcdev.utm.my/wp-content/uploads/sites/22/2018/11/UTMimage13.jpg);
   background-size: cover;
   background-position: center;
   scroll-margin-bottom: 20px;
@@ -100,6 +101,7 @@
 
   .mainContentContainer {
     margin-left: 0;
+    padding: 2%;
     transition: margin 0.3s;
   }
 

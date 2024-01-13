@@ -179,7 +179,7 @@
     }
 
     .feedbackList {
-        width: 80%;
+        width: 100%;
         max-width: 2000px;
         margin: 20px auto; /* Center the list */
         overflow-x: auto;
@@ -194,7 +194,5 @@
         margin-top: 10px;
     }
 
-    .mainContentContainer {
-        margin: 10px;
-    }
+
 }
