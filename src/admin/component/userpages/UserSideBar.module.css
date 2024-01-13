@@ -97,9 +97,8 @@
     transition: margin 0.3s;
   }
 
-  @media screen and (max-width: 736px) {
     .toggleButton {
       display: block;
     }
-  }
+
 }

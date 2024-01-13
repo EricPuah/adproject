@@ -8,12 +8,7 @@ import { MdOutlineReportProblem } from "react-icons/md";
 import { CiLogin } from "react-icons/ci";
 
 function UserSideBar() {
-  const [searchQuery, setSearchQuery] = useState('');
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
