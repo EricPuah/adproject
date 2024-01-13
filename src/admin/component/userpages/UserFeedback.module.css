@@ -121,7 +121,10 @@
 .listTable {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px; /* Adjust as needed */
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding-bottom: 1%;
+    margin-bottom: 1%;
 }
 
 .header,
@@ -129,10 +132,11 @@
     padding: 10px;
     border: 1px solid #e0e0e0;
     text-align: left;
+    background-color: #FFFBD6;
 }
 
 .header {
-    background-color: #82022b;
+    background-color: #990000;
     color: #fff;
 }
 
@@ -150,10 +154,12 @@
 
 .listTitle {
     font-size: 24px;
-
+    margin-bottom: 0;
     color: #82022b;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.9);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .pageSpace {

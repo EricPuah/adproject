@@ -266,7 +266,7 @@ function LocationTracker() {
         <table className={styles.button2table}>
           <thead>
             <tr>
-              <th className={styles.button2th}>Bus ID</th>
+              <th className={styles.button2th}>Bus Activity</th>
               <th className={styles.button2th}>Status</th>
             </tr>
           </thead>
@@ -297,13 +297,13 @@ function LocationTracker() {
         <table className={styles.buttontable}>
           <thead>
             <tr>
-              <th className={styles.buttonth}>Bus Routes</th>
+              <th className={styles.buttonth} colSpan="8">Bus Routes</th>
             </tr>
           </thead>
           <tbody>
-            {routeKeys.slice(0, 8).map((routeKey) => (
-              <tr key={routeKey}>
-                <td className={styles.buttontd}>
+            <tr>
+              {routeKeys.slice(0, 8).map((routeKey) => (
+                <td key={routeKey} className={styles.buttontd}>
                   <button
                     onClick={() => handleShowBusRoute(routeKey)}
                     className={styles.routeButton}
@@ -312,17 +312,17 @@ function LocationTracker() {
                     {routeKey}
                   </button>
                 </td>
-              </tr>
-            ))}
+              ))}
+            </tr>
           </tbody>
         </table>
       </div>
 
-      <div className={styles.iframeContainer}>
+      {/* <div className={styles.iframeContainer}>
         {pdfUrl && (
           <iframe className={styles.pdf} title="PDF Viewer" src={pdfUrl} width="100%" height="800px" />
         )}
-      </div>
+      </div> */}
 
     </div>
   );
