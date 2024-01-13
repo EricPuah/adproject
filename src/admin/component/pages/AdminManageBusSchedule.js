@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './AdminManageBusSchedule.module.css';
+import style from './AdminNavBar.module.css';
 import AdminNavbar from './AdminNavbar';
 import { storage, getPdfUrl } from './../firebase';
 import { ref, uploadBytes } from 'firebase/storage';
@@ -65,6 +66,7 @@ function AdminManageBusSchedule() {
     <div>
       <AdminNavbar />
       <section className={styles.section}>
+      <div className={style.mainContentContainer}>
         <div className={styles.manageBusScheduleContainer}>
           <div className={styles.manageBusScheduleContent}>
             <h1 className={styles.h1}>Manage Bus Schedule</h1>
@@ -101,6 +103,7 @@ function AdminManageBusSchedule() {
               </>
             )}
           </div>
+        </div>
         </div>
       </section>
     </div>
