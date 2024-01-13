@@ -7,7 +7,6 @@
     background-position: center;
     scroll-margin-bottom: 20px;
     z-index: -1;
-    position: relative;
   }
 
   @media screen and (max-width: 736px) {
