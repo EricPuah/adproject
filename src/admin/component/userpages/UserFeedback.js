@@ -215,7 +215,7 @@ function UserFeedback() {
                         <thead>
                             <tr>
                                 <th className={styles.header}>No.</th>
-                                {/* <th className={styles.header}>Date of Creation</th> */}
+                                <th className={styles.header}>Date of Creation</th>
                                 <th className={styles.header}>Name</th>
                                 <th className={styles.header}>Category</th>
                                 <th className={styles.header}>Message</th>
@@ -226,9 +226,9 @@ function UserFeedback() {
                             {feedbackData.map((feedback, index) => (
                                 <tr key={index} className={styles.listitem}>
                                     <td className={styles.data}>{index + 1}</td>
-                                    {/* <td className={styles.data}>
-                                        <span className={styles.detaillabel}>{feedback.dateOfCreation}</span>
-                                    </td> */}
+                                    <td className={styles.data}>
+                                        <span className={styles.detaillabel}>{feedback.timestamp}</span>
+                                    </td>
                                     <td className={styles.data}>
                                         <span className={styles.detaillabel}>{feedback.name}</span>
                                     </td>
