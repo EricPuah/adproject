@@ -143,8 +143,8 @@
 }
 
 .feedbackList {
-    max-width: 1000px;
-
+    width: 80%;
+    max-width: 2000px;
     margin: 20px auto; /* Center the list */
 }
 
@@ -164,7 +164,7 @@
     margin-left: 250px;
     padding: 20px;
     transition: margin 0.3s;
-}cscscc
+}
 
 .error {
     color: #ff0000; /* Red color for the error message */
