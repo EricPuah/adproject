@@ -31,7 +31,7 @@ function UserBusSchedule() {
                         <h1 className={styles.h1}>Bus Schedule</h1>
                         <div className={styles.iframeContainer}>
                             {pdfUrl && (
-                                <iframe title="PDF Viewer" src={pdfUrl} width="100%" height="800px" />
+                                <object title="PDF Viewer" data={pdfUrl} type='application/pdf' width="100%" height="800px" />
                             )}
                         </div>
                     </div>
