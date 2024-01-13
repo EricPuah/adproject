@@ -109,7 +109,7 @@
 }
 
 .buttonBusContainerStyle button.active {
-  background-color: inherit;
+  background-color: #3498db;
   /* Set background color for active buttons */
   cursor: pointer;
   /* Show pointer cursor for active buttons */
@@ -145,14 +145,14 @@
 }
 
 .button2table {
-  width: 50%;
+  width: 100%;
   border-collapse: collapse;
 }
 
 .button2th,
 .button2td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
   text-align: center;
 }
 
@@ -164,14 +164,16 @@
 
 .buttontd, .buttonth {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
   text-align: center;
 }
 
 .buttonth {
-  background-color: #f2f2f2;
+  background-color: #333333;
+  color: #ffffff;
 }
 
 .button2th {
-  background-color: #f2f2f2;
+  background-color: #333333;
+  color: #ffffff;
 }
