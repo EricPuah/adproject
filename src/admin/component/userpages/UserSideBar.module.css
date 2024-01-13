@@ -86,6 +86,7 @@
 @media screen and (max-width: 736px) {
   .sidebar {
     width: 0;
+    z-index: 1;
   }
 
   .open {
