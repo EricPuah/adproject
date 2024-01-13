@@ -6,4 +6,14 @@
     background-size: cover;
     background-position: center;
     scroll-margin-bottom: 20px;
+    z-index: -1;
+    position: relative;
+  }
+
+  @media screen and (max-width: 736px) {
+    .mainContentContainer {
+      margin-left: 0;
+      padding: 2%;
+      transition: margin 0.3s;
+    }
   }

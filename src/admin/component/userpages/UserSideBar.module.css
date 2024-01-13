@@ -11,6 +11,7 @@
   flex-direction: column;
   transition: width 0.5s;
   overflow: hidden;
+  z-index: 2;
 }
 
 .open {
@@ -84,7 +85,7 @@
 
 @media screen and (max-width: 736px) {
   .sidebar {
-    z-index: 0;
+    z-index: 2;
     width: 0;
   }
 

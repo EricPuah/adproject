@@ -18,6 +18,9 @@ const containerStyle = {
     zIndex: '1',
     border: '5px solid #82022b',
     borderRadius: '5px',
+    '@media (max-width: 768px)': {
+        zIndex: '1',
+      },
 };
 
 const defaultCenter = {
