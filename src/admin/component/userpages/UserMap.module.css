@@ -133,11 +133,17 @@
   /* Add z-index to make sure it appears on top of other elements */
 }
 
+.rightBottomButton {
+  position: absolute;
+  top: 30px;
+  right: -20px;
+  padding: 10px;
+}
+
 .rightBottomButton2 {
   position: absolute;
   top: 30px;
-  right: -180px;
-  width: 250px;
+  right: -160px;
   /* Set the width as needed */
   padding: 10px;
   background-color: #fff;
@@ -153,4 +159,24 @@
   border: 1px solid #ddd;
   padding: 8px;
   text-align: center;
+}
+
+.buttontable {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd; /* Add border to the table */
+}
+
+.buttontd, .buttonth {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.buttonth {
+  background-color: #f2f2f2;
+}
+
+.button2th {
+  background-color: #f2f2f2;
 }

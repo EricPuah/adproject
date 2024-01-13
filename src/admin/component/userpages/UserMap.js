@@ -310,19 +310,28 @@ function UserMap() {
                 </div>
 
                 <div className={styles.rightBottomButton}>
-                    {routeKeys.slice(0, 8).map((routeKey) => {
-                        const isRouteVisible = visibleRoute === routeKey;
-
-                        return (
-                            <button
-                                key={routeKey}
-                                onClick={() => handleShowBusRoute(routeKey)}
-                                style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
-                            >
-                                {`${routeKey}`}
-                            </button>
-                        );
-                    })}
+                    <table className={styles.buttontable}>
+                        <thead>
+                            <tr>
+                                <th className={styles.buttonth}>Bus Routes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {routeKeys.slice(0, 8).map((routeKey) => (
+                                <tr key={routeKey}>
+                                    <td className={styles.buttontd}>
+                                        <button
+                                            onClick={() => handleShowBusRoute(routeKey)}
+                                            className={styles.routeButton}
+                                            style={{ color: visibleRoute === routeKey ? '#FF0000' : 'inherit' }}
+                                        >
+                                            {routeKey}
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
 
                 <div className={styles.iframeContainer}>
