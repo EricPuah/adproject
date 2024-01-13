@@ -217,7 +217,6 @@ function UserFeedback() {
                                 <th className={styles.header}>No.</th>
                                 <th className={styles.header}>Date of Creation</th>
                                 <th className={styles.header}>Name</th>
-
                                 <th className={styles.header}>Category</th>
                                 <th className={styles.header}>Message</th>
                                 <th className={styles.header}>Rating</th>
