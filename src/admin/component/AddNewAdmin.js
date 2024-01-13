@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './RootRegister.module.css';
 import { AddDriverInFirebase, AddAdminInFirebase, checkRepeatedUser, uploadProfilePic } from "./firebase";
 import AdminNavbar from './pages/AdminNavbar';
+import { Navigate } from 'react-router-dom';
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -46,6 +47,7 @@ const AddNewStaff = () => {
 
     const [image, setImage] = useState(null);
 
+    
     useEffect(() => {
         userRef.current.focus();
     }, []);
@@ -124,9 +126,7 @@ const AddNewStaff = () => {
             <AdminNavbar />
 
             {success ? (
-                <section className={styles.section}>
-                    <h1>{user} signed up successfully!</h1>
-                </section>
+                <Navigate to="/AdminManage" />
             ) : (
                 <section className={styles.section}>
                     {/* Register Form */}

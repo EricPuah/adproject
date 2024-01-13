@@ -227,7 +227,7 @@ function UserFeedback() {
                                 <tr key={index} className={styles.listitem}>
                                     <td className={styles.data}>{index + 1}</td>
                                     <td className={styles.data}>
-                                        <span className={styles.detaillabel}>{feedback.dateOfCreation}</span>
+                                        <span className={styles.detaillabel}>{feedback.timestamp}</span>
                                     </td>
                                     <td className={styles.data}>
                                         <span className={styles.detaillabel}>{feedback.name}</span>

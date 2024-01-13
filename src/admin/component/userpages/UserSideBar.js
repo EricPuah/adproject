@@ -6,6 +6,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { MdOutlineFeedback } from "react-icons/md";
 import { MdOutlineReportProblem } from "react-icons/md";
 import { CiLogin } from "react-icons/ci";
+import { MdSchedule } from "react-icons/md";
 
 function UserSideBar() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -30,11 +31,11 @@ function UserSideBar() {
           </Link>
         </li>
 
-        {/* <li className={styles.list}>
-          <Link to='' className={styles.hover}>
-            <TbRouteSquare className={styles.routesicon} />Routes
+        <li className={styles.list}>
+          <Link to='/UserBusSchedule' className={styles.hover}>
+            <MdSchedule className={styles.routesicon} />Bus Schedule
           </Link>
-        </li> */}
+        </li>
 
         <li className={styles.list}>
           <Link to='/UserFeedback' className={styles.hover}>
