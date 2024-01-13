@@ -1,0 +1,62 @@
+.mainContentContainer {
+  margin-left: 250px;
+  padding: 20px;
+  transition: margin 0.3s;
+  background-image: url(https://dvcdev.utm.my/wp-content/uploads/sites/22/2018/11/UTMimage13.jpg);
+  background-size: cover;
+  background-position: center;
+  scroll-margin-bottom: 20px;
+}
+
+.busScheduleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.busScheduleContent {
+  text-align: left;
+  border: 3px solid #82022b ;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 50%;
+  padding: 2% 2%  2%  2% ;
+  margin-top: 1%;
+}
+
+.h1 {
+  color: #82022b;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.iframeContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2%;
+}
+
+/* Responsive styles */
+
+@media screen and (max-width: 736px) {
+  .busScheduleContent {
+      text-align: left;
+      border: 3px solid #82022b ;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      padding: 2% 2%  2%  2% ;
+      margin-top: 1%;
+  }
+
+  .iframeContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+}

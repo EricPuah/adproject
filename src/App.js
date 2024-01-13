@@ -20,6 +20,7 @@ import UserReport from './admin/component/userpages/UserReport';
 import AdminReport from './admin/component/pages/AdminReport';
 import AdminManageBusSchedule from './admin/component/pages/AdminManageBusSchedule';
 import UserBusSchedule from './admin/component/userpages/UserBusSchedule';
+import DriverBusSchedule from './admin/component/driverpages/DriverBusSchedule'
 
 const App = () => {
   return (
@@ -112,6 +113,12 @@ const App = () => {
         <Route path={'/DriverBusSelect'} element={
           <RequireAuth loginPath={'/login'}>
             <DriverBusSelect />
+          </RequireAuth>
+        } />
+
+        <Route path={'/DriverBusSchedule'} element={
+          <RequireAuth loginPath={'/login'}>
+            <DriverBusSchedule />
           </RequireAuth>
         } />
 

@@ -12,6 +12,8 @@ import Cookies from 'js-cookie';
 import { MdOutlineFeedback } from "react-icons/md";
 import { MdOutlineReportProblem } from "react-icons/md";
 import { GrUpdate } from "react-icons/gr";
+import { MdSchedule } from "react-icons/md";
+import { FaBus } from "react-icons/fa";
 
 
 const AdminNavbar = () => {
@@ -44,7 +46,7 @@ const AdminNavbar = () => {
           <li className={styles.list}>
             <Link to='/AdminManageBusSchedule' className={styles.hover}>
               <GrUpdate className={styles.profileicon} />
-                Update Bus Schedule
+              Update Bus Schedule
             </Link>
           </li>
         ) : null}
@@ -68,9 +70,18 @@ const AdminNavbar = () => {
 
         {userRole === "driver" ? (
           <li className={styles.list}>
-            <CgProfile className={styles.profileicon} />
+            <FaBus className={styles.profileicon} />
             <Link to='/DriverBusSelect' className={styles.hover}>
               Select Bus
+            </Link>
+          </li>
+        ) : null}
+
+        {userRole === "driver" ? (
+          <li className={styles.list}>
+            <MdSchedule className={styles.profileicon} />
+            <Link to='/DriverBusSchedule' className={styles.hover}>
+              Bus Schedule
             </Link>
           </li>
         ) : null}
