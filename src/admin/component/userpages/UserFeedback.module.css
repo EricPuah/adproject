@@ -41,8 +41,8 @@
 .input,
 .select,
 .textarea {
-    width: 100%;
-    padding: 10px;
+    width: 95%;
+    padding: 2%;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-top: 5px;
@@ -176,6 +176,14 @@
     .feedbackContent {
         padding: 20px;
         max-width: 100%;
+    }
+
+    .feedbackList {
+        width: 80%;
+        max-width: 2000px;
+        margin: 20px auto; /* Center the list */
+        overflow-x: auto;
+        font-size: 11px;
     }
 
     .form {
