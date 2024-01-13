@@ -46,6 +46,7 @@ function AdminManageBusSchedule() {
   return (
     <div>
       <AdminNavbar />
+      <section className={styles.section}>
       <div className={styles.mainContentContainer}>
         <div className={styles.manageBusScheduleContainer}>
           <div className={styles.manageBusScheduleContent}>
@@ -62,6 +63,7 @@ function AdminManageBusSchedule() {
           </div>
         </div>
       </div>
+      </section>
     </div>
   );
 }

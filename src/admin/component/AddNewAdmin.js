@@ -47,7 +47,7 @@ const AddNewStaff = () => {
 
     const [image, setImage] = useState(null);
 
-    
+
     useEffect(() => {
         userRef.current.focus();
     }, []);
@@ -128,190 +128,201 @@ const AddNewStaff = () => {
             {success ? (
                 <Navigate to="/AdminManage" />
             ) : (
-                <section className={styles.section}>
-                    {/* Register Form */}
+                <div className={styles.container}>
+                    <div className={styles.feedbackContainer}>
+                        <div className={styles.feedbackContent}>
+                            <h1 className={styles.h1}>Add New Admin</h1>
+                            <form onSubmit={handleSubmit} className={styles.form}>
+                                <p ref={errRef} className={errMsg ? `${styles.errmsg}` : `${styles.offscreen}`} aria-live="assertive">
+                                    {errMsg}
+                                </p>
+                                {/* Username Field & Validation Output */}
+                                <div className={styles.formGroup}>
+                                <label htmlFor="username" className={styles.label}>
+                                    Full Name:
+                                    {fullName && (
+                                        <>
+                                            <span className={(validFullName) ? styles.hide : styles.invalid}>
+                                                <FontAwesomeIcon icon={faTimes} />
+                                            </span>
+                                            <span className={validFullName ? styles.valid : styles.hide}>
+                                                <FontAwesomeIcon icon={faCheck} />
+                                            </span>
+                                        </>
+                                    )}
+                                </label>
+                                <input className={styles.input}
+                                    type="text"
+                                    id="fullName"
+                                    ref={userRef}
+                                    autoComplete='off'
+                                    onChange={(e) => setFullName(e.target.value)}
+                                    required
+                                    aria-invalid={validFullName ? "false" : "true"}
+                                    aria-describedby='uidnote'
+                                    onFocus={() => setFullNameFocus(true)}
+                                    onBlur={() => setFullNameFocus(false)}
+                                ></input>
+                                <p id='uidnote' className={fullNameFocus && fullName && !validFullName ? `${styles.instructions}` : `${styles.offscreen}`}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Please enter the valid full name.
+                                </p>
+                                </div>
+                                <div className={styles.formGroup}>
+                                <label htmlFor="username" className={styles.label}>
+                                    Username:
+                                    {user && (
+                                        <>
+                                            <span className={(validName && !usernameExists) ? styles.hide : styles.invalid}>
+                                                <FontAwesomeIcon icon={faTimes} />
+                                            </span>
+                                            <span className={validName && !usernameExists ? styles.valid : styles.hide}>
+                                                <FontAwesomeIcon icon={faCheck} />
+                                            </span>
+                                        </>
+                                    )}
+                                </label>
+                                <input className={styles.input}
+                                    type="text"
+                                    id="username"
+                                    ref={userRef}
+                                    autoComplete='off'
+                                    onChange={(e) => setUser(e.target.value)}
+                                    required
+                                    aria-invalid={validName ? "false" : "true"}
+                                    aria-describedby='uidnote'
+                                    onFocus={() => setUserFocus(true)}
+                                    onBlur={() => setUserFocus(false)}
+                                ></input>
+                                <p id='uidnote' className={userFocus && user && !validName ? `${styles.instructions}` : `${styles.offscreen}`}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    4 to 24 characters. <br />
+                                    Must begin with a letter. <br />
+                                    Letters, numbers, underscores, hyphens allowed. <br />
+                                </p>
+                                <p id='uidnote' className={(user && usernameExists) ? `${styles.instructions}` : `${styles.offscreen}`}>
+                                    <FontAwesomeIcon icon={faTimes} className={styles.invalid} />
+                                    The username has already been taken.
+                                </p>
+                                </div>
+                                <div className={styles.formGroup}>
+                                <label htmlFor="username" className={styles.label}>
+                                    Email:
+                                    {email && (
+                                        <>
+                                            <span className={(validEmail) ? styles.hide : styles.invalid}>
+                                                <FontAwesomeIcon icon={faTimes} />
+                                            </span>
+                                            <span className={validEmail ? styles.valid : styles.hide}>
+                                                <FontAwesomeIcon icon={faCheck} />
+                                            </span>
+                                        </>
+                                    )}
+                                </label>
+                                <input className={styles.input}
+                                    type="email"
+                                    id="email"
+                                    autoComplete='off'
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                    aria-invalid={validEmail ? "false" : "true"}
+                                    aria-describedby='uidnote'
+                                    onFocus={() => setEmailFocus(true)}
+                                    onBlur={() => setEmailFocus(false)}
+                                ></input>
+                                <p id='uidnote' className={emailFocus && email && !validEmail ? `${styles.instructions}` : `${styles.offscreen}`}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Please enter a valid email.
+                                </p>
+                                </div>
+                                <div className={styles.formGroup}>
+                                <label htmlFor="username" className={styles.label}>
+                                    Phone Number:
+                                    {phone && (
+                                        <>
+                                            <span className={(validPhone) ? styles.hide : styles.invalid}>
+                                                <FontAwesomeIcon icon={faTimes} />
+                                            </span>
+                                            <span className={validPhone ? styles.valid : styles.hide}>
+                                                <FontAwesomeIcon icon={faCheck} />
+                                            </span>
+                                        </>
+                                    )}
+                                </label>
+                                <input className={styles.input}
+                                    type="tel"
+                                    id="phone"
+                                    autoComplete='off'
+                                    onChange={(e) => setPhone(e.target.value)}
+                                    required
+                                    aria-invalid={validPhone ? "false" : "true"}
+                                    aria-describedby='uidnote'
+                                    onFocus={() => setPhoneFocus(true)}
+                                    onBlur={() => setPhoneFocus(false)}
+                                ></input>
+                                <p id='uidnote' className={phoneFocus && phone && !validPhone ? `${styles.instructions}` : `${styles.offscreen}`}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Please enter a valid phone number.
+                                </p>
+                                </div>
+                                <div className={styles.formGroup}>
+                                <label htmlFor="username" className={styles.label}>
+                                    UTM StaffID:
+                                    {StaffID && (
+                                        <>
+                                            <span className={(validStaffID) ? styles.hide : styles.invalid}>
+                                                <FontAwesomeIcon icon={faTimes} />
+                                            </span>
+                                            <span className={validStaffID ? styles.valid : styles.hide}>
+                                                <FontAwesomeIcon icon={faCheck} />
+                                            </span>
+                                        </>
+                                    )}
+                                </label>
+                                <input className={styles.input}
+                                    type="text"
+                                    id="staffID"
+                                    autoComplete='off'
+                                    onChange={(e) => setStaffID(e.target.value)}
+                                    required
+                                    aria-invalid={validStaffID ? "false" : "true"}
+                                    aria-describedby='uidnote'
+                                    onFocus={() => setStaffIDFocus(true)}
+                                    onBlur={() => setStaffIDFocus(false)}
+                                ></input>
+                                <p id='uidnote' className={staffIDFocus && StaffID && !validStaffID ? `${styles.instructions}` : `${styles.offscreen}`}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Please enter a valid UTM StaffID.
+                                </p>
+                                </div>
+                                <div className={styles.formGroup}>
+                                <label htmlFor="username" className={styles.label}>
+                                    Staff Role:
+                                </label>
+                                <input className={styles.input}
+                                    type="text"
+                                    id="staffRole"
+                                    autoComplete='off'
+                                    value={"UTMFleet Management Admin"}
+                                    disabled
+                                    aria-invalid={validStaffID ? "false" : "true"}
+                                    aria-describedby='uidnote'
+                                ></input>
+                                </div>
+                                <div className={styles.formGroup}>
+                                <label htmlFor="username" className={styles.label}>
+                                    Upload Profile Picture:
+                                </label>
+                                <input type="file" onChange={handleChange} />
+                                </div>
 
-                    <form onSubmit={handleSubmit} className={styles.form}>
-                        <p ref={errRef} className={errMsg ? `${styles.errmsg}` : `${styles.offscreen}`} aria-live="assertive">
-                            {errMsg}
-                        </p>
-                        <h1>Add New Admin</h1>
-                        {/* Username Field & Validation Output */}
-                        <label htmlFor="username" className={styles.label}>
-                            Full Name:
-                            {fullName && (
-                                <>
-                                    <span className={(validFullName) ? styles.hide : styles.invalid}>
-                                        <FontAwesomeIcon icon={faTimes} />
-                                    </span>
-                                    <span className={validFullName ? styles.valid : styles.hide}>
-                                        <FontAwesomeIcon icon={faCheck} />
-                                    </span>
-                                </>
-                            )}
-                        </label>
-                        <input className={styles.input}
-                            type="text"
-                            id="fullName"
-                            ref={userRef}
-                            autoComplete='off'
-                            onChange={(e) => setFullName(e.target.value)}
-                            required
-                            aria-invalid={validFullName ? "false" : "true"}
-                            aria-describedby='uidnote'
-                            onFocus={() => setFullNameFocus(true)}
-                            onBlur={() => setFullNameFocus(false)}
-                        ></input>
-                        <p id='uidnote' className={fullNameFocus && fullName && !validFullName ? `${styles.instructions}` : `${styles.offscreen}`}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            Please enter the valid full name.
-                        </p>
-                        <label htmlFor="username" className={styles.label}>
-                            Username:
-                            {user && (
-                                <>
-                                    <span className={(validName && !usernameExists) ? styles.hide : styles.invalid}>
-                                        <FontAwesomeIcon icon={faTimes} />
-                                    </span>
-                                    <span className={validName && !usernameExists ? styles.valid : styles.hide}>
-                                        <FontAwesomeIcon icon={faCheck} />
-                                    </span>
-                                </>
-                            )}
-                        </label>
-                        <input className={styles.input}
-                            type="text"
-                            id="username"
-                            ref={userRef}
-                            autoComplete='off'
-                            onChange={(e) => setUser(e.target.value)}
-                            required
-                            aria-invalid={validName ? "false" : "true"}
-                            aria-describedby='uidnote'
-                            onFocus={() => setUserFocus(true)}
-                            onBlur={() => setUserFocus(false)}
-                        ></input>
-                        <p id='uidnote' className={userFocus && user && !validName ? `${styles.instructions}` : `${styles.offscreen}`}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            4 to 24 characters. <br />
-                            Must begin with a letter. <br />
-                            Letters, numbers, underscores, hyphens allowed. <br />
-                        </p>
-                        <p id='uidnote' className={(user && usernameExists) ? `${styles.instructions}` : `${styles.offscreen}`}>
-                            <FontAwesomeIcon icon={faTimes} className={styles.invalid} />
-                            The username has already been taken.
-                        </p>
 
-                        <label htmlFor="username" className={styles.label}>
-                            Email:
-                            {email && (
-                                <>
-                                    <span className={(validEmail) ? styles.hide : styles.invalid}>
-                                        <FontAwesomeIcon icon={faTimes} />
-                                    </span>
-                                    <span className={validEmail ? styles.valid : styles.hide}>
-                                        <FontAwesomeIcon icon={faCheck} />
-                                    </span>
-                                </>
-                            )}
-                        </label>
-                        <input className={styles.input}
-                            type="email"
-                            id="email"
-                            autoComplete='off'
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            aria-invalid={validEmail ? "false" : "true"}
-                            aria-describedby='uidnote'
-                            onFocus={() => setEmailFocus(true)}
-                            onBlur={() => setEmailFocus(false)}
-                        ></input>
-                        <p id='uidnote' className={emailFocus && email && !validEmail ? `${styles.instructions}` : `${styles.offscreen}`}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            Please enter a valid email.
-                        </p>
-
-                        <label htmlFor="username" className={styles.label}>
-                            Phone Number:
-                            {phone && (
-                                <>
-                                    <span className={(validPhone) ? styles.hide : styles.invalid}>
-                                        <FontAwesomeIcon icon={faTimes} />
-                                    </span>
-                                    <span className={validPhone ? styles.valid : styles.hide}>
-                                        <FontAwesomeIcon icon={faCheck} />
-                                    </span>
-                                </>
-                            )}
-                        </label>
-                        <input className={styles.input}
-                            type="tel"
-                            id="phone"
-                            autoComplete='off'
-                            onChange={(e) => setPhone(e.target.value)}
-                            required
-                            aria-invalid={validPhone ? "false" : "true"}
-                            aria-describedby='uidnote'
-                            onFocus={() => setPhoneFocus(true)}
-                            onBlur={() => setPhoneFocus(false)}
-                        ></input>
-                        <p id='uidnote' className={phoneFocus && phone && !validPhone ? `${styles.instructions}` : `${styles.offscreen}`}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            Please enter a valid phone number.
-                        </p>
-
-                        <label htmlFor="username" className={styles.label}>
-                            UTM StaffID:
-                            {StaffID && (
-                                <>
-                                    <span className={(validStaffID) ? styles.hide : styles.invalid}>
-                                        <FontAwesomeIcon icon={faTimes} />
-                                    </span>
-                                    <span className={validStaffID ? styles.valid : styles.hide}>
-                                        <FontAwesomeIcon icon={faCheck} />
-                                    </span>
-                                </>
-                            )}
-                        </label>
-                        <input className={styles.input}
-                            type="text"
-                            id="staffID"
-                            autoComplete='off'
-                            onChange={(e) => setStaffID(e.target.value)}
-                            required
-                            aria-invalid={validStaffID ? "false" : "true"}
-                            aria-describedby='uidnote'
-                            onFocus={() => setStaffIDFocus(true)}
-                            onBlur={() => setStaffIDFocus(false)}
-                        ></input>
-                        <p id='uidnote' className={staffIDFocus && StaffID && !validStaffID ? `${styles.instructions}` : `${styles.offscreen}`}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            Please enter a valid UTM StaffID.
-                        </p>
-
-                        <label htmlFor="username" className={styles.label}>
-                            Staff Role:
-                        </label>
-                        <input className={styles.input}
-                            type="text"
-                            id="staffRole"
-                            autoComplete='off'
-                            value={"UTMFleet Management Admin"}
-                            disabled
-                            aria-invalid={validStaffID ? "false" : "true"}
-                            aria-describedby='uidnote'
-                        ></input>
-
-                        <label htmlFor="username" className={styles.label}>
-                            Upload Profile Picture:
-                        </label>
-                        <input type="file" onChange={handleChange} />
-
-
-                        {/* Sign Up Button */}
-                        <button className={styles.button} disabled={!validName || usernameExists}>Add New Staff</button>
-                    </form>
-                </section>
+                                {/* Sign Up Button */}
+                                <button className={styles.button} disabled={!validName || usernameExists}>Add New Staff</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             )
             }
         </div >
