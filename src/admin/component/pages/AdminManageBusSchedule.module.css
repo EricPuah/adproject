@@ -1,19 +1,14 @@
 .section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     height: 100vh;
     background-image: url('https://dvcdev.utm.my/wp-content/uploads/sites/22/2018/11/UTMimage13.jpg');
     background-size: cover;
     background-position: center;
   }
 
-.manageBusScheduleContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+  .manageBusScheduleContainer {
+    max-width: 1200px; /* Adjust the maximum width as needed */
+    margin: 0 auto; /* Center the container horizontally */
+  }
 
 .manageBusScheduleContent {
     text-align: left;
@@ -184,12 +179,43 @@
     font-size: 14px;
     margin-top: 5px;
 }
-
-.iframeContainer {
+  
+.section {
     display: flex;
-    justify-content: center;
+    height: 100vh;
+    background-image: url('https://dvcdev.utm.my/wp-content/uploads/sites/22/2018/11/UTMimage13.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .manageBusScheduleContainer {
+    display: flex;
+    justify-content: space-between; /* Use space-between to separate the items */
     align-items: center;
-    margin-top: 5%;
-    width: 200%;
+    max-width: 1000px; /* Adjust the maximum width as needed */
+    margin: 0 0 0 20%; /* Center the container horizontally */
+  }
+  
+  .manageBusScheduleContent {
+    text-align: left;
+    border: 3px solid #82022b;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px; /* Adjust the width as needed */
+    padding: 40px 50px 40px 30px;
+    margin-top: 28px;
+  }
+  
+  .iframeContainer {
+    width: 80%;
+    height: 80%;
+    margin-left: 40%;
+  }
+  
+  /* Add this style to make the iframe responsive */
+  iframe {
+    max-width: 100%;
+    height: 100%;
   }
   

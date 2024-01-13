@@ -6,6 +6,8 @@ import { ref, uploadBytes } from 'firebase/storage';
 
 function AdminManageBusSchedule() {
   const [pdfFile, setPdfFile] = useState(null);
+  const [pdfUrl, setPdfUrl] = useState(null);
+  const [supportsObjectTag, setSupportsObjectTag] = useState(true);
 
   const handleFileChange = (e) => {
     setPdfFile(e.target.files[0]);
@@ -43,9 +45,6 @@ function AdminManageBusSchedule() {
     }
   };
 
-  const [pdfUrl, setPdfUrl] = useState(null);
-  const [supportsObjectTag, setSupportsObjectTag] = useState(true);
-
   useEffect(() => {
     const fetchPdfUrl = async () => {
       try {
@@ -66,7 +65,6 @@ function AdminManageBusSchedule() {
     <div>
       <AdminNavbar />
       <section className={styles.section}>
-      <div className={styles.mainContentContainer}>
         <div className={styles.manageBusScheduleContainer}>
           <div className={styles.manageBusScheduleContent}>
             <h1 className={styles.h1}>Manage Bus Schedule</h1>
@@ -80,31 +78,30 @@ function AdminManageBusSchedule() {
               <button className={styles.button} type="submit">Update PDF</button>
             </form>
           </div>
+          <div className={styles.iframeContainer}>
+            {pdfUrl && (
+              <>
+                {supportsObjectTag ? (
+                  <object
+                    data={pdfUrl}
+                    type="application/pdf"
+                    width="100%"
+                    height="800px"
+                  >
+                    <p>It appears you don't have a PDF plugin for this browser. No biggie... you can <a href={pdfUrl}>click here to download the PDF file.</a></p>
+                  </object>
+                ) : (
+                  <iframe
+                    title="PDF Viewer"
+                    src={pdfUrl}
+                    width="100%"
+                    height="500px"
+                  />
+                )}
+              </>
+            )}
+          </div>
         </div>
-        <div className={styles.iframeContainer}>
-          {pdfUrl && (
-            <>
-              {supportsObjectTag ? (
-                <object
-                  data={pdfUrl}
-                  type="application/pdf"
-                  width="100%"
-                  height="800px"
-                >
-                  <p>It appears you don't have a PDF plugin for this browser. No biggie... you can <a href={pdfUrl}>click here to download the PDF file.</a></p>
-                </object>
-              ) : (
-                <iframe
-                  title="PDF Viewer"
-                  src={pdfUrl}
-                  width="100%"
-                  height="500px"
-                />
-              )}
-            </>
-          )}
-        </div>
-      </div>
       </section>
     </div>
   );
