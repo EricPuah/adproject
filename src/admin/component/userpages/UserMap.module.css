@@ -1,146 +1,15 @@
-.map-container {
-  margin-left: 25%;
-  padding-top: 2%;
-  z-index: 3;
-  width: 60%;
-  height: 600px;
-  position: absolute;
-  top: 40px;
-  left: 250px;
-  padding: 20px;
-}
-
-.sidebar {
-  height: 100%;
-  width: 250px;
-  background-color: #2F4050;
-  position: fixed;
-  z-index: 1;
-}
-
-.searchContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-  margin-right: 40px;
-}
-
-.searchInput {
-  width: 60%;
-  padding: 10px;
-  margin-top: 10px;
-  margin-left: 100px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  box-sizing: border-box;
-}
-
-.header {
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px;
-}
-
-.adminLoginButton {
-  background-color: #3498db;
-  /* Set the background color to a desired color */
-  color: #fff;
-  /* Set the text color to white or a contrasting color */
-  padding: 10px 15px;
-  margin-left: 50px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
-
-.adminLoginButton:hover {
-  background-color: #2980b9;
-  /* Change background color on hover */
-}
-
-.hover {
-  text-decoration: none;
-  display: inline-block;
-}
-
-.mapAndIframeContainer {
-  display: flex;
-}
-
-.mapContainer {
-  width: 60%;
-  height: 600px;
-  position: absolute;
-  top: 40px;
-  left: 250px;
-  padding: 20px;
-}
-
-.iframeContainer {
-  flex: 1;
-  padding-left: 65%;
-  padding-right: 1%;
-  padding-top: 1%
-}
-
-.buttonBusContainerStyle {
-  position: fixed;
-  bottom: 10px;
-  left: 10px;
-  display: flex;
-  gap: 10px;
-}
-
-.buttonBusContainerStyle button {
-  margin: 5px;
-  background-color: #e0e0e0;
-  /* Set a background color for inactive buttons */
-  cursor: not-allowed;
-  /* Show not-allowed cursor for inactive buttons */
-  pointer-events: none;
-  /* Disable pointer events for inactive buttons */
-  text-align: right;
-  white-space: nowrap;
-}
-
-.buttonBusContainerStyle button.active {
-  background-color: #3498db;
-  /* Set background color for active buttons */
-  cursor: pointer;
-  /* Show pointer cursor for active buttons */
-  pointer-events: auto;
-  /* Enable pointer events for active buttons */
-}
-
-.buttonContainerStyle {
-  position: fixed;
-  bottom: 10px;
-  left: 10px;
-  display: flex;
-  gap: 10px;
-  z-index: 2;
-  /* Add z-index to make sure it appears on top of other elements */
-}
-
 .rightBottomButton {
   position: absolute;
-  bottom: -60px; /* Adjust the distance from the bottom */
-  left : 280px; /* Adjust the distance from the right */
-  padding: 10px;
+  bottom: 50px;
   z-index: -2;
+  justify-content: center;
+  align-items: center;
 }
 
 .rightBottomButton2 {
   position: absolute;
-  top: 30px;
-  right: 0px;
-  /* Set the width as needed */
-  padding: 10px;
+  top: 20px;
+  right: 20px;
   background-color: #fff;
 }
 
@@ -152,14 +21,14 @@
 .button2th,
 .button2td {
   border: 1px solid #ddd;
-  padding: 10px;
+  padding: 5px;
   text-align: center;
 }
 
 .buttontable {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid #ddd; /* Add border to the table */
+  border: 1px solid #ddd;
 }
 
 .buttontd, .buttonth {
@@ -176,4 +45,53 @@
 .button2th {
   background-color: #333333;
   color: #ffffff;
+}
+
+@media screen and (max-width: 736px) {
+  .rightBottomButton {
+    position: absolute;
+    bottom: -50px;
+    z-index: -2;
+  }
+  
+  .rightBottomButton2 {
+    position: absolute;
+    top: 20px;
+    right: -80px;
+    background-color: #fff;
+  }
+  
+  .button2table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .button2th,
+  .button2td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  .buttontable {
+    width: 50%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+  }
+  
+  .buttontd, .buttonth {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .buttonth {
+    background-color: #333333;
+    color: #ffffff;
+  }
+  
+  .button2th {
+    background-color: #333333;
+    color: #ffffff;
+  }
 }
