@@ -11,7 +11,6 @@ function UserSideBar() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
-
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
