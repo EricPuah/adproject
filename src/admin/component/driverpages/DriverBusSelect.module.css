@@ -1,12 +1,10 @@
 /* DriverBusSelect.module.css */
 
 .buttonContainerStyle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
+    position: absolute;
+    top: 120px;
+    right: 330px;
+    background-color: #fff;
 }
 
 .buttonContainerStyle button {
@@ -25,10 +23,16 @@
 }
 
 .selectBusButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0px;
+    position: absolute;
+    top: 20px;
+    left: 270px;
+    background-color: #fff;
+}
+
+.buttontable {
+    width: 50%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
 }
 
 .selectBusButton button {
@@ -47,7 +51,30 @@
 }
 
 .iframeContainer {
-    flex: 1;
-    padding-left: 65%;
-    padding-right: 1%;
+    width: 22%;
+    padding: 0px;
+    margin-left: 800px;
+    box-sizing: border-box;
 }
+
+.button2table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.button2th,
+.button2td {
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: center;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('https://dvcdev.utm.my/wp-content/uploads/sites/22/2018/11/UTMimage13.jpg'); /* Replace 'path-to-your-image.jpg' with the actual path to your image file */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'Arial', sans-serif;
+  }

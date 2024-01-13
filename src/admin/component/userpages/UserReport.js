@@ -1,7 +1,7 @@
 // UserReport.js
 import React, { useState } from 'react';
 import UserSideBar from './UserSideBar';
-import style from '../../global.module.css';
+import style from './UserSideBar.module.css';
 import styles from './UserReport.module.css'; // Create a CSS module for styling
 import { submitReportToFirebase } from './../firebase.js';
 import { serverTimestamp } from 'firebase/database';

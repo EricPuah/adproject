@@ -184,3 +184,12 @@
     font-size: 14px;
     margin-top: 5px;
 }
+
+.iframeContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+    width: 200%;
+  }
+  

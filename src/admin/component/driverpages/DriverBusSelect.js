@@ -9,10 +9,10 @@ import staticMarkers from '../pages/BusStopsLocation';
 import { getPdfUrl } from '../firebase';
 
 const containerStyle = {
-  width: '50%',
+  width: '53%',
   height: '600px',
   position: 'absolute',
-  top: '40px',
+  top: '100px',
   left: '250px',
   padding: '20px',
 };
@@ -268,40 +268,63 @@ function DriverBusSelect() {
         </div>
 
         <div className={styles.selectBusButton}>
-          {busList.map((bus) => (
-            <button
-              key={bus}
-              onClick={() => handleBusSelection(bus)}
-              style={{ margin: '5px', color: selectedBus === bus ? '#FF0000' : 'inherit' }}
-            >
-              {bus}
-            </button>
-          ))}
+          <table className={styles.buttontable}>
+            <thead>
+              <tr>
+                <th className={styles.button2th} colSpan={19}>Choose any Bus</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {busList.map((bus) => (
+                  <td key={bus} className={styles.buttontd}>
+                    <button
+                      onClick={() => handleBusSelection(bus)}
+                      style={{ color: selectedBus === bus ? '#FF0000' : 'inherit' }}
+                    >
+                      {bus}
+                    </button>
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         <div className={styles.buttonContainerStyle}>
-          {routeKeys.slice(0, 8).map((routeKey) => {
-            const isRouteVisible = visibleRoute === routeKey;
-
-            return (
-              <button
-                key={routeKey}
-                onClick={() => handleShowBusRoute(routeKey)}
-                style={{ margin: '5px', color: isRouteVisible ? '#FF0000' : 'inherit' }}
-              >
-                {`${routeKey}`}
-              </button>
-            );
-          })}
-        </div>
+          <table className={styles.button2table}>
+            <thead>
+              <tr>
+                <th className={styles.button2th} colSpan="8">Bus Routes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {routeKeys.slice(0, 8).map((routeKey) => {
+                const isRouteVisible = visibleRoute === routeKey;
+                return (
+                  <tr key={routeKey}>
+                    <td className={styles.button2td}>
+                      <button
+                        onClick={() => handleShowBusRoute(routeKey)}
+                        style={{ color: isRouteVisible ? '#FF0000' : 'inherit' }}
+                      >
+                        {`${routeKey}`}
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
       </div>
+    </div>
 
-      <div className={styles.iframeContainer}>
+      {/* <div className={styles.iframeContainer}>
         {pdfUrl && (
           <iframe title="PDF Viewer" src={pdfUrl} width="100%" height="780px" />
         )}
-      </div>
-    </div>
+      </div> */}
+    </div >
   );
 }
 

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './AdminManageBusSchedule.module.css';
 import AdminNavbar from './AdminNavbar';
-import { storage } from './../firebase';
+import { storage, getPdfUrl } from './../firebase';
 import { ref, uploadBytes } from 'firebase/storage';
 
 function AdminManageBusSchedule() {
@@ -43,6 +43,25 @@ function AdminManageBusSchedule() {
     }
   };
 
+  const [pdfUrl, setPdfUrl] = useState(null);
+  const [supportsObjectTag, setSupportsObjectTag] = useState(true);
+
+  useEffect(() => {
+    const fetchPdfUrl = async () => {
+      try {
+        const url = await getPdfUrl();
+        setPdfUrl(url);
+      } catch (error) {
+        console.error('Error fetching PDF URL:', error);
+      }
+    };
+
+    // Check if the browser supports the <object> tag
+    setSupportsObjectTag('content' in document.createElement('object'));
+
+    fetchPdfUrl();
+  }, []);
+
   return (
     <div>
       <AdminNavbar />
@@ -61,6 +80,29 @@ function AdminManageBusSchedule() {
               <button className={styles.button} type="submit">Update PDF</button>
             </form>
           </div>
+        </div>
+        <div className={styles.iframeContainer}>
+          {pdfUrl && (
+            <>
+              {supportsObjectTag ? (
+                <object
+                  data={pdfUrl}
+                  type="application/pdf"
+                  width="100%"
+                  height="800px"
+                >
+                  <p>It appears you don't have a PDF plugin for this browser. No biggie... you can <a href={pdfUrl}>click here to download the PDF file.</a></p>
+                </object>
+              ) : (
+                <iframe
+                  title="PDF Viewer"
+                  src={pdfUrl}
+                  width="100%"
+                  height="500px"
+                />
+              )}
+            </>
+          )}
         </div>
       </div>
       </section>
