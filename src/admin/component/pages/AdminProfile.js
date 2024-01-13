@@ -13,8 +13,6 @@ const AdminProfile = () => {
   const [username, setUsername] = useState(null);
 
   useEffect(() => {
-
-
     const fetchData = async () => {
       try {
         const cookieData = JSON.parse(Cookies.get('_auth_state'));
@@ -55,31 +53,39 @@ const AdminProfile = () => {
         <div className={styles.box}>
           <div className={styles.container}>
             <h1 className={styles.heading}>Your Profile Information</h1>
-            {profilePicUrl && <img src={profilePicUrl} alt="Profile Pic" width={200} height={200}/>}
+            <div>
+              {profilePicUrl && <img src={profilePicUrl} alt="Profile Pic" className={styles.profilePic} width={200} height={200} />}
+            </div>
             <ul className={styles.list}>
-              <div>
+              <div className={styles.formGroup}>
                 <label className={styles.label}>Username: </label>
                 <li className={styles.listItem}>{data.username}</li>
+              </div>
+              <div className={styles.formGroup}>
                 <label className={styles.label}>UTM StaffID: </label>
                 <li className={styles.listItem}>{data.staffId}</li>
+              </div>
+              <div className={styles.formGroup}>
                 <label className={styles.label}>Email: </label>
                 <li className={styles.listItem}>{data.email}</li>
+              </div>
+              <div className={styles.formGroup}>
                 <label className={styles.label}>Phone Number: </label>
                 <li className={styles.listItem}>{data.phone}</li>
-                <Link to={'/ProfileInformationEdit'}>
-                  <button className={styles.button}>Edit Profile</button>
-                </Link>
-                <Link
-                  to={`/changepassword?email=${data.email}&code=${data.userKey}`}
-                >
-                  <button className={styles.buttonch}>Change Password</button>
-                </Link>
               </div>
+              <Link to={'/ProfileInformationEdit'}>
+                <button className={styles.button}>Edit Profile</button>
+              </Link>
+              <Link
+                to={`/changepassword?email=${data.email}&code=${data.userKey}`}
+              >
+                <button className={styles.buttonch}>Change Password</button>
+              </Link>
             </ul>
           </div>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 
