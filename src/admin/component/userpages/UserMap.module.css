@@ -1,7 +1,13 @@
 .map-container {
   margin-left: 25%;
   padding-top: 2%;
-  z-index: 1;
+  z-index: 3;
+  width: 60%;
+  height: 600px;
+  position: absolute;
+  top: 40px;
+  left: 250px;
+  padding: 20px;
 }
 
 .sidebar {
@@ -9,7 +15,70 @@
   width: 250px;
   background-color: #2F4050;
   position: fixed;
-  z-index: 3;
+  z-index: 1;
+}
+
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  margin-right: 40px;
+}
+
+.searchInput {
+  width: 60%;
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: 100px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.adminLoginButton {
+  background-color: #3498db;
+  /* Set the background color to a desired color */
+  color: #fff;
+  /* Set the text color to white or a contrasting color */
+  padding: 10px 15px;
+  margin-left: 50px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.adminLoginButton:hover {
+  background-color: #2980b9;
+  /* Change background color on hover */
+}
+
+.hover {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.mapAndIframeContainer {
+  display: flex;
+}
+
+.mapContainer {
+  width: 60%;
+  height: 600px;
+  position: absolute;
+  top: 40px;
+  left: 250px;
+  padding: 20px;
 }
 
 .iframeContainer {
@@ -17,6 +86,35 @@
   padding-left: 65%;
   padding-right: 1%;
   padding-top: 1%
+}
+
+.buttonBusContainerStyle {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.buttonBusContainerStyle button {
+  margin: 5px;
+  background-color: #e0e0e0;
+  /* Set a background color for inactive buttons */
+  cursor: not-allowed;
+  /* Show not-allowed cursor for inactive buttons */
+  pointer-events: none;
+  /* Disable pointer events for inactive buttons */
+  text-align: right;
+  white-space: nowrap;
+}
+
+.buttonBusContainerStyle button.active {
+  background-color: inherit;
+  /* Set background color for active buttons */
+  cursor: pointer;
+  /* Show pointer cursor for active buttons */
+  pointer-events: auto;
+  /* Enable pointer events for active buttons */
 }
 
 .buttonContainerStyle {
@@ -31,8 +129,8 @@
 
 .rightBottomButton {
   position: absolute;
-  bottom: 20px; /* Adjust the distance from the bottom */
-  left : 10px; /* Adjust the distance from the right */
+  bottom: -60px; /* Adjust the distance from the bottom */
+  left : 280px; /* Adjust the distance from the right */
   padding: 10px;
   z-index: -2;
 }
@@ -40,7 +138,7 @@
 .rightBottomButton2 {
   position: absolute;
   top: 30px;
-  right: -160px;
+  right: 0px;
   /* Set the width as needed */
   padding: 10px;
   background-color: #fff;

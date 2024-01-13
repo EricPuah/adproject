@@ -330,11 +330,11 @@ function UserMap() {
                     </table>
                 </div>
 
-            <div className={styles.iframeContainer}>
+            {/* <div className={styles.iframeContainer}>
                 {pdfUrl && (
                     <iframe title="PDF Viewer" src={pdfUrl} width="100%" height="800px" />
                 )}
-            </div>
+            </div> */}
         </div>
         </div >
     );
