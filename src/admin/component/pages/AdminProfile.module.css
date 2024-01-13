@@ -1,7 +1,17 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-image: url('https://dvcdev.utm.my/wp-content/uploads/sites/22/2018/11/UTMimage13.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
 .profilePic {
-  width: 40%;
-  height: 40%;
-  padding-left: 30%;
+  width: 30%;
+  height: 30%;
+  padding-left: 35%;
   padding-right: 25%;
 }
 
@@ -12,8 +22,9 @@
   background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   max-width: 600px;
-  padding: 40px 50px 10px 30px;
+  padding: 10px 50px 5px 30px;
   margin-top: 28px;
+  
 }
 
 .heading {

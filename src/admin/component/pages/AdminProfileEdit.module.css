@@ -1,24 +1,23 @@
 /* AdminProfileEdit.css */
 
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-image: url('https://dvcdev.utm.my/wp-content/uploads/sites/22/2018/11/UTMimage13.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+
 /* Container styling */
-.adminprofile {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    max-width: 400px;
-    margin: 0 auto;
-  }
+
   
   /* Label styling */
   .label {
-    display: block;
-    font-weight: bold;
     margin-bottom: 5px;
-    color: #333;
-    text-align: left;
-    padding-left: 10px;
+    font-weight: bold;
   }
   
   /* Input and select styling */
@@ -60,13 +59,14 @@
   
   /* Save button styling */
   .button[type="button"] {
-    background-color: #007BFF;
+    background-color: #82022b;
     color: #fff;
     border: none;
     border-radius: 5px;
-    padding: 10px 20px;
+    padding: 8px 20px;
     cursor: pointer;
     font-size: 16px;
+    margin-bottom: 20px;
   }
   
   /* Optional: Add media queries for responsiveness if needed */
@@ -77,8 +77,27 @@
   }
   
   .heading {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
-    text-align: center;
+    color: #82022b;
+    display: flex;
+    justify-content: center;
+    margin: 0 0 4% 0;
+  }
+  
+  .button[type="button"]:hover {
+    background-color: #5c001e;
+  }
+
+  .box {
+    text-align: left;
+    border: 3px solid #82022b;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    padding: 10px 50px 10px 30px;
+    margin-top: 28px;
+  }
+  
+  .formGroup {
+    margin-bottom: 15px;
   }

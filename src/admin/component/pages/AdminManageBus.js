@@ -68,6 +68,7 @@ function AdminManage() {
     return (
         <div>
             <AdminNavbar />
+            <section className={styles.section}>
             <div className={style.mainContentContainer}>
                 <div className={styles.container}>
                     <div className={styles.listcontainer}>
@@ -153,6 +154,7 @@ function AdminManage() {
                     </div>
                 </div>
             </Modal>
+            </section>
         </div>
     );
 }

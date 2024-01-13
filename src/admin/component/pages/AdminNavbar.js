@@ -11,6 +11,8 @@ import { GrFormSchedule } from "react-icons/gr";
 import Cookies from 'js-cookie';
 import { MdOutlineFeedback } from "react-icons/md";
 import { MdOutlineReportProblem } from "react-icons/md";
+import { GrUpdate } from "react-icons/gr";
+
 
 const AdminNavbar = () => {
   const signOut = useSignOut();
@@ -41,7 +43,7 @@ const AdminNavbar = () => {
         {userRole === "admin" ? (
           <li className={styles.list}>
             <Link to='/AdminManageBusSchedule' className={styles.hover}>
-              <CgProfile className={styles.profileicon} />
+              <GrUpdate className={styles.profileicon} />
                 Update Bus Schedule
             </Link>
           </li>

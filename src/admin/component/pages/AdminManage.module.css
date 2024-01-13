@@ -1,5 +1,13 @@
 /* AdminManage.css */
-
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-image: url('https://dvcdev.utm.my/wp-content/uploads/sites/22/2018/11/UTMimage13.jpg');
+  background-size: cover;
+  background-position: center;
+}
 /* Additional styles for the container */
 .container {
   display: flex;

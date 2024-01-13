@@ -49,6 +49,7 @@ const AdminProfile = () => {
   return (
     <div>
       <AdminNavbar />
+      <section className={styles.section}>
       <div className={style.mainContentContainer}>
         <div className={styles.box}>
           <div className={styles.container}>
@@ -85,6 +86,7 @@ const AdminProfile = () => {
           </div>
         </div>
       </div >
+      </section>
     </div >
   );
 };

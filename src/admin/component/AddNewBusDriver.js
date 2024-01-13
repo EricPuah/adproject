@@ -127,6 +127,7 @@ const AddNewBusDriver = () => {
             {success ? (
                 <Navigate to="/AdminManageBus" />
             ) : (
+                <section className={styles.section}>
                 <div className={styles.container}>
                     <div className={styles.feedbackContainer}>
                         <div className={styles.feedbackContent}>
@@ -353,6 +354,7 @@ const AddNewBusDriver = () => {
                         </div>
                     </div>
                 </div>
+                </section>
             )
             }
         </div >
