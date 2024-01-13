@@ -11,10 +11,12 @@
 }
 
 .buttonContainerStyle {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1000;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  gap: 10px;
+  z-index: 2;
 };
 
 @media (max-width: 768px) {
@@ -31,7 +33,7 @@
 .iframeContainer {
   position: absolute;
   margin-left: 270px;
-  margin-top: 700px;
+  margin-top: 800px;
   width: 50%;
   padding: 10px; /* Optional: Add padding for better appearance */
   background-color: #fff; /* Optional: Add a background color if needed */
@@ -47,16 +49,17 @@
 
 .rightBottomButton {
   position: absolute;
-  top: 40px;
-  right: 320px;
+  bottom: -80px; /* Adjust the distance from the bottom */
+  left : 280px; /* Adjust the distance from the right */
   padding: 10px;
+  z-index: -2;
 }
 
 .rightBottomButton2 {
   position: absolute;
-  top: 40px;
-  right: 20px;
-  width: 250px; /* Set the width as needed */
+  top: 30px;
+  right: 260px;
+  /* Set the width as needed */
   padding: 10px;
   background-color: #fff;
 }
@@ -68,7 +71,7 @@
 
 .button2th, .button2td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
   text-align: center;
 }
 
@@ -80,14 +83,16 @@
 
 .buttontd, .buttonth {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
   text-align: center;
 }
 
 .buttonth {
-  background-color: #f2f2f2;
+  background-color: #333333;
+  color: #ffffff;
 }
 
 .button2th {
-  background-color: #f2f2f2;
+  background-color: #333333;
+  color: #ffffff;
 }
