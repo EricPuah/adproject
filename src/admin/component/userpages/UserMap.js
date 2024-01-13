@@ -12,11 +12,11 @@ import staticMarkers from '../pages/BusStopsLocation';
 import { getPdfUrl } from '../firebase'; // Update the path accordingly
 
 const containerStyle = {
-    width: '90%',
-    height: '600px',
+    width: '87%',
+    height: '700px',
     position: 'relative',
     padding: '20px',
-    zIndex: '-2',
+    zIndex: '1',
 };
 
 const defaultCenter = {
@@ -27,7 +27,6 @@ const defaultCenter = {
 const routeKeys = Object.keys(busRoutes);
 
 function UserMap() {
-    const [searchQuery, setSearchQuery] = useState('');
     const [map, setMap] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
     const [selectedMarker, setSelectedMarker] = useState(null); // Track the user's location
@@ -237,7 +236,6 @@ function UserMap() {
                                 )}
                             </div>
                         ))}
-                        {/* Display the user's current location marker */}
                         {userLocation && (
                             <Marker
                                 position={userLocation}
@@ -274,7 +272,6 @@ function UserMap() {
                 </div>
 
                 <div className={styles.rightBottomButton2}>
-                    {/* Button to show bus activity */}
                     <table className={styles.button2table}>
                         <thead>
                             <tr>
@@ -329,12 +326,6 @@ function UserMap() {
                         </tbody>
                     </table>
                 </div>
-
-            {/* <div className={styles.iframeContainer}>
-                {pdfUrl && (
-                    <iframe title="PDF Viewer" src={pdfUrl} width="100%" height="800px" />
-                )}
-            </div> */}
         </div>
         </div >
     );
