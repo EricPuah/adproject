@@ -42,7 +42,7 @@ const AdminNavbar = () => {
           <li className={styles.list}>
             <Link to='/AdminManageBusSchedule' className={styles.hover}>
               <CgProfile className={styles.profileicon} />
-                Update Bus Schedule
+              Update Bus Schedule
             </Link>
           </li>
         ) : null}
