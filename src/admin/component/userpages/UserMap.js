@@ -191,11 +191,7 @@ function UserMap() {
 
     return (
         <div>
-            <div>
-                <div className={styles.sidebar}>
-                    <UserSideBar />
-                </div>
-            </div>
+            <UserSideBar />
             <div className={style.mainContentContainer}>
                 <div style={containerStyle}>
                     <GoogleMap
