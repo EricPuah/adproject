@@ -100,12 +100,6 @@ const AdminNavbar = () => {
             <IoMdLogOut className={styles.logouticon} />Logout
           </Link>
         </li>
-
-        <li className={styles.list}>
-          <Link to='/BusDriverSchedule' className={styles.hover}>
-            <MdSchedule className={styles.routesicon} />Bus Schedule
-          </Link>
-        </li>
       </ul>
     </div>
   );
