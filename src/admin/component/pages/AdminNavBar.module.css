@@ -1,14 +1,5 @@
 /* VerticalNavbar.css */
 
-/* Apply styles to the entire page */
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  /* overflow: hidden; */
-}
-
 .verticalnavbar {
   width: 250px;
   /* Set the desired width for your vertical navbar */

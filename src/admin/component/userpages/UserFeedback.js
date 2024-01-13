@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import UserSideBar from './UserSideBar';
 import { FaRegStar, FaStar } from "react-icons/fa";
-import style from '../../global.module.css';
+import style from './UserSideBar.module.css';
 import styles from './UserFeedback.module.css'; // Create a CSS module for styling
 import { ref, onValue } from 'firebase/database';
 import { db } from './../firebase.js';

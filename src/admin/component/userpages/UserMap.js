@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow, Polyline } from '@react-google-maps/api';
-import style from '../../global.module.css';
+import style from './UserSideBar.module.css';
 import styles from './UserMap.module.css';
 import CustomMarker from '../../../assets/currentLocation.png';
 import busStops from '../../../assets/bus-stop.png';
@@ -12,15 +12,16 @@ import staticMarkers from '../pages/BusStopsLocation';
 import { getPdfUrl } from '../firebase'; // Update the path accordingly
 
 const containerStyle = {
-    width: '85%',
-    height: '700px',
-    position: 'relative',
-    zIndex: '1',
+    position: 'fixed',
+    width: '80%',
+    height: '60%',
+    top: '25%',
+    zIndex: '-1',
     border: '5px solid #82022b',
     borderRadius: '5px',
     '@media (max-width: 768px)': {
-        zIndex: '1',
-      },
+        zIndex: '-1',
+    },
 };
 
 const defaultCenter = {
@@ -276,34 +277,21 @@ function UserMap() {
                 </div>
 
                 <div className={styles.rightBottomButton2}>
-                    <table className={styles.button2table}>
-                        <thead>
-                            <tr>
-                                <th className={styles.button2th}>Bus Activity</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {['A1', 'A2', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3', 'D1', 'D2', 'E1', 'E2', 'E3', 'F1', 'F2', 'G1', 'G2', 'G3', 'H'].map((busId) => (
-                                <tr>
-                                    <td className={styles.button2td}>
-                                        <button
-                                            key={busId}
-                                            onClick={() => handleBusButtonClick(busId)}
-                                            style={{
-                                                margin: '5px',
-                                                backgroundColor: driverLocations[busId] ? 'inherit' : '#e0e0e0', // Grey out if inactive
-                                                cursor: driverLocations[busId] ? 'pointer' : 'not-allowed', // Show different cursor if inactive
-                                                pointerEvents: driverLocations[busId] ? 'auto' : 'none', // Disable pointer events if inactive
-                                            }}
-                                        >
-                                            <span style={{ marginRight: '5px' }}>{busId}</span>
-                                            {driverLocations[busId] ? 'Active' : 'Inactive'}
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <label htmlFor="busActivityDropdown">Bus Activity:</label>
+                    <select
+                        id="busActivityDropdown"
+                        onChange={(e) => handleBusButtonClick(e.target.value)}
+                    >
+                        {['A1', 'A2', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3', 'D1', 'D2', 'E1', 'E2', 'E3', 'F1', 'F2', 'G1', 'G2', 'G3', 'H'].map((busId) => (
+                            <option
+                                key={busId}
+                                value={busId}
+                                disabled={!driverLocations[busId]}
+                            >
+                                {`${busId} - ${driverLocations[busId] ? 'Active' : 'Inactive'}`}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className={styles.rightBottomButton}>
@@ -330,7 +318,7 @@ function UserMap() {
                         </tbody>
                     </table>
                 </div>
-        </div>
+            </div>
         </div >
     );
 }

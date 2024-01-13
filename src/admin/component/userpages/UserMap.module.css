@@ -1,16 +1,23 @@
 .rightBottomButton {
-  position: absolute;
-  bottom: 50px;
-  z-index: -2;
+  position: fixed;
+  top: 5%;
+  @media screen and (max-width: 736px) {
+    left: 1%;
+  }
+  z-index: -1;
   justify-content: center;
   align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .rightBottomButton2 {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: #fff;
+  position: fixed;
+  top: 20%;
+  z-index: -1;
+  background-color: rgba(255, 255, 255, 0.8);
+  @media screen and (max-width: 736px) {
+    left: 1%;
+  }
 }
 
 .button2table {
@@ -48,28 +55,17 @@
 }
 
 @media screen and (max-width: 736px) {
-  .rightBottomButton {
-    position: absolute;
-    bottom: -50px;
-    z-index: -2;
-  }
-  
-  .rightBottomButton2 {
-    position: absolute;
-    top: 20px;
-    right: -80px;
-    background-color: #fff;
-  }
-  
   .button2table {
     width: 100%;
     border-collapse: collapse;
+    overflow-x: auto;
   }
   
   .button2th,
   .button2td {
     border: 1px solid #ddd;
     padding: 5px;
+    font-size: small;
     text-align: center;
   }
   
@@ -77,6 +73,7 @@
     width: 50%;
     border-collapse: collapse;
     border: 1px solid #ddd;
+    overflow-x: auto;
   }
   
   .buttontd, .buttonth {

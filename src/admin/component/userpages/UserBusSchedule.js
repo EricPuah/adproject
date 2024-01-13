@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UserSideBar from './UserSideBar';
-import style from '../../global.module.css';
+import style from './UserSideBar.module.css';
 import styles from './UserBusSchedule.module.css';
 import { getPdfUrl } from '../firebase';
 
