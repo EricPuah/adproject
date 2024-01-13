@@ -1,4 +1,13 @@
 /* AdminManage.css */
+.section{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-image: url('https://dvcdev.utm.my/wp-content/uploads/sites/22/2018/11/UTMimage13.jpg');
+  background-size: cover;
+  background-position: center;
+}
 
 /* Additional styles for the container */
 .container {
@@ -9,19 +18,22 @@
 
 /* Additional styles for the box */
 .listcontainer {
-  padding: 20px;
-  border-radius: 5px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   max-width: 2000px; /* Adjust as needed */
-  margin: 20px auto;
+  text-align: left;
+  border: 3px solid #82022b ;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding-left: 1%;
+  padding-bottom: 2%;
+  margin-top: 28px;
 }
 
 /* Additional styles for headings */
 .listtitle {
   font-size: 24px;
   margin-bottom: 20px;
-  color: #333;
+  color: #82022b;
   text-align: center;
 }
 

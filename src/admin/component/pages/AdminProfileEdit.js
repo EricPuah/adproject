@@ -92,25 +92,34 @@ function AdminProfileEdit() {
     return (
         <div>
             <AdminNavbar />
+            <section className={styles.section}>
             <div className={style.mainContentContainer}>
                 <div className={styles.box}>
                     <form>
                         <div className={styles.adminprofile}>
                             <h1 className={styles.heading}>Edit Profile Information</h1>
+                            <div className={styles.formGroup}>
                             <label className={styles.label}>Username: </label>
                             <label className={styles.username}>{username}</label>
+                            </div>
+                            <div className={styles.formGroup}>
                             <label className={styles.label}>UTM StaffID: </label>
                             <label className={styles.username}>{staffID}</label>
+                            </div>
+                            <div className={styles.formGroup}>
                             <label className={styles.label}>Email: </label>
                             <input className={styles.input} type='text' name='email' value={email} onChange={(e) => setEmail(e.target.value)}></input>
+                            </div>
+                            <div className={styles.formGroup}>
                             <label className={styles.label}>Phone Number: </label>
                             <input className={styles.input} type='text' name='phone' value={phone} onChange={(e) => setPhone(e.target.value)}></input>
+                            </div>
                             {!email || !isValidEmail(email) ? (
-                                <Link to="/AdminProfileEdit">
+                                <Link to="/ProfileInformationEdit">
                                     <button className={styles.button} type="button" onClick={() => alert('Please enter a valid email address.')}>Save</button>
                                 </Link>
                             ) : (
-                                <Link to="/AdminProfile">
+                                <Link to="/ProfileInformation">
                                     <button className={styles.button} type="button" onClick={updateProfile}>Save</button>
                                 </Link>
                             )}
@@ -118,6 +127,7 @@ function AdminProfileEdit() {
                     </form>
                 </div>
             </div>
+            </section>
         </div>
     );
 }

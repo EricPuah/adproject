@@ -26,6 +26,7 @@ function AdminFeedback() {
     return (
         <div>
             <AdminNavbar />
+            <section className={styles.section}>
                 <div className={style.mainContentContainer}>
                     <div className={styles.container}>
                         <div className={styles.listcontainer}>
@@ -72,6 +73,7 @@ function AdminFeedback() {
                         </div>
                     </div>
                 </div>
+            </section>
         </div>
     );
 }

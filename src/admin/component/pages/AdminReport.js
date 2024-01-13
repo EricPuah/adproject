@@ -115,6 +115,7 @@ function AdminReport() {
     return (
         <div>
             <AdminNavbar />
+            <section className={styles.section}>
             <div className={style.mainContentContainer}>
                 <div className={styles.container}>
                     <div className={styles.listcontainer}>
@@ -207,6 +208,7 @@ function AdminReport() {
                     </div>
                 </div>
             </div>
+            </section>
         </div>
     );
 }
