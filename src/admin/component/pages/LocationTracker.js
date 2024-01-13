@@ -239,22 +239,30 @@ function LocationTracker() {
               )}
             </div>
           ))}
-          {/* Display the user's current location marker */}
           {Object.keys(driverLocations).map((busId) => (
-            <Marker
-              key={busId}
-              position={driverLocations[busId]}
-              icon={{
-                url: busD,
-                scaledSize: new window.google.maps.Size(30, 30),
-              }}
-            />
+            <div key={busId}>
+              <Marker
+                position={driverLocations[busId]}
+                icon={{
+                  url: busD,
+                  scaledSize: new window.google.maps.Size(45, 45),
+                }}
+                onClick={() => handleMarkerClick(driverLocations[busId])}
+              >
+                {selectedMarker === driverLocations[busId] && (
+                  <InfoWindow onCloseClick={() => setSelectedMarker(null)}>
+                    <div>
+                      <h3>Bus {busId}</h3>
+                    </div>
+                  </InfoWindow>
+                )}
+              </Marker>
+            </div>
           ))}
         </GoogleMap>
       </div>
 
       <div className={styles.rightBottomButton2}>
-        {/* Button to show bus activity */}
         <table className={styles.button2table}>
           <thead>
             <tr>
