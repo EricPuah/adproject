@@ -289,7 +289,7 @@ const updatePdfFile = async (newPdfFile) => {
 };
 
 const getPdfUrl = async () => {
-  const pdfRef = storageRef(storage, 'bus_schedule.pdf');
+  const pdfRef = storageRef(storage, 'new/bus_schedule.pdf');
   try {
     const url = await getDownloadURL(pdfRef);
     return url;
