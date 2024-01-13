@@ -77,7 +77,6 @@
   background-size: cover;
   background-position: center;
   scroll-margin-bottom: 20px;
-  z-index: -1;
 }
 
 /* Responsive styles */
