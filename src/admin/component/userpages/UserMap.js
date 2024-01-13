@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow, Polyline } from '@react-google-maps/api';
-import style from './UserSideBar.module.css'; // Create a CSS module for styling
+import style from '../../global.module.css';
 import styles from './UserMap.module.css';
 import CustomMarker from '../../../assets/currentLocation.png';
 import busStops from '../../../assets/bus-stop.png';
@@ -12,7 +12,7 @@ import staticMarkers from '../pages/BusStopsLocation';
 import { getPdfUrl } from '../firebase'; // Update the path accordingly
 
 const containerStyle = {
-    width: '87%',
+    width: '85%',
     height: '700px',
     position: 'relative',
     padding: '20px',
