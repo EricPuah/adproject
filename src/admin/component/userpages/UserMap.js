@@ -12,7 +12,7 @@ import staticMarkers from '../pages/BusStopsLocation';
 import { getPdfUrl } from '../firebase'; // Update the path accordingly
 
 const containerStyle = {
-    position: 'fixed',
+    position: 'absolute',
     width: '80%',
     height: '60%',
     top: '25%',
@@ -197,6 +197,47 @@ function UserMap() {
         <div>
             <UserSideBar />
             <div className={style.mainContentContainer}>
+                <div className={styles.rightBottomButton}>
+                    <table className={styles.buttontable}>
+                        <thead>
+                            <tr>
+                                <th className={styles.buttonth} colSpan="8">Bus Routes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                {routeKeys.slice(0, 8).map((routeKey) => (
+                                    <td key={routeKey} className={styles.buttontd}>
+                                        <button
+                                            onClick={() => handleShowBusRoute(routeKey)}
+                                            className={styles.routeButton}
+                                            style={{ color: visibleRoute === routeKey ? '#FF0000' : 'inherit' }}
+                                        >
+                                            {routeKey}
+                                        </button>
+                                    </td>
+                                ))}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div className={styles.rightBottomButton2}>
+                    <label htmlFor="busActivityDropdown">Bus Activity:</label>
+                    <select
+                        id="busActivityDropdown"
+                        onChange={(e) => handleBusButtonClick(e.target.value)}
+                    >
+                        {['A1', 'A2', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3', 'D1', 'D2', 'E1', 'E2', 'E3', 'F1', 'F2', 'G1', 'G2', 'G3', 'H'].map((busId) => (
+                            <option
+                                key={busId}
+                                value={busId}
+                                disabled={!driverLocations[busId]}
+                            >
+                                {`${busId} - ${driverLocations[busId] ? 'Active' : 'Inactive'}`}
+                            </option>
+                        ))}
+                    </select>
+                </div>
                 <div style={containerStyle}>
                     <GoogleMap
                         mapContainerStyle={{ width: '100%', height: '100%' }}
@@ -274,49 +315,6 @@ function UserMap() {
                             </div>
                         ))}
                     </GoogleMap>
-                </div>
-
-                <div className={styles.rightBottomButton2}>
-                    <label htmlFor="busActivityDropdown">Bus Activity:</label>
-                    <select
-                        id="busActivityDropdown"
-                        onChange={(e) => handleBusButtonClick(e.target.value)}
-                    >
-                        {['A1', 'A2', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3', 'D1', 'D2', 'E1', 'E2', 'E3', 'F1', 'F2', 'G1', 'G2', 'G3', 'H'].map((busId) => (
-                            <option
-                                key={busId}
-                                value={busId}
-                                disabled={!driverLocations[busId]}
-                            >
-                                {`${busId} - ${driverLocations[busId] ? 'Active' : 'Inactive'}`}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-                <div className={styles.rightBottomButton}>
-                    <table className={styles.buttontable}>
-                        <thead>
-                            <tr>
-                                <th className={styles.buttonth} colSpan="8">Bus Routes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                {routeKeys.slice(0, 8).map((routeKey) => (
-                                    <td key={routeKey} className={styles.buttontd}>
-                                        <button
-                                            onClick={() => handleShowBusRoute(routeKey)}
-                                            className={styles.routeButton}
-                                            style={{ color: visibleRoute === routeKey ? '#FF0000' : 'inherit' }}
-                                        >
-                                            {routeKey}
-                                        </button>
-                                    </td>
-                                ))}
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div >
