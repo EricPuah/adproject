@@ -49,7 +49,7 @@
 
 .rightBottomButton {
   position: absolute;
-  bottom: -80px; /* Adjust the distance from the bottom */
+  bottom: 0px; /* Adjust the distance from the bottom */
   left : 280px; /* Adjust the distance from the right */
   padding: 10px;
   z-index: -2;
