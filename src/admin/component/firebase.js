@@ -81,10 +81,10 @@ const AddAdminInFirebase = async (fullname, username, email, phone, staffID, rol
   try {
     const length = 8;
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let temporaryPassword = 'Abc@1234';
-    // for (let i = 0; i < length; i++) {
-    //   temporaryPassword += characters.charAt(Math.floor(Math.random() * characters.length));
-    // }
+    let temporaryPassword = '';
+    for (let i = 0; i < length; i++) {
+      temporaryPassword += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
     const hashedPass = await hash(temporaryPassword, 10);
     const usersRef = ref(db, 'Admin');
     const newUser = {
@@ -103,7 +103,7 @@ const AddAdminInFirebase = async (fullname, username, email, phone, staffID, rol
       subject: 'BusTeknologi: Your New Account Details',
       message: `Hello ${fullname},\n\nYour account has been created successfully!\nUsername: ${username}\nTemporary Password: ${temporaryPassword}`,
     };
-    // await emailjs.send('service_26lac6k', 'template_2xd2bje', emailParams, 'PRJ-0y9h6INVAd4ZA');
+    await emailjs.send('service_26lac6k', 'template_2xd2bje', emailParams, 'PRJ-0y9h6INVAd4ZA');
     const newChildRef = push(usersRef);
     await set(newChildRef, newUser);
     return true; // Success
