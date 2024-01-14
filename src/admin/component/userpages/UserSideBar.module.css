@@ -77,6 +77,7 @@
   background-image: url(https://dvcdev.utm.my/wp-content/uploads/sites/22/2018/11/UTMimage13.jpg);
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
   scroll-margin-bottom: 20px;
 }
 
