@@ -194,136 +194,131 @@ function LocationTracker() {
       <div>
         <AdminNavbar />
       </div>
-
-      <div style={containerStyle}>
-        <GoogleMap
-          mapContainerStyle={{ width: '100%', height: '100%' }}
-          center={defaultCenter}
-          zoom={16}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-          options={{ mapId: '556e9663519326d5' }}
-          className="google-map"
-        >
-          {selectedRoute && (
-            <Polyline
-              path={selectedRoute}
-              options={{
-                strokeColor: "#FF0000",
-                strokeOpacity: 1,
-                strokeWeight: 5,
-              }}
-            />
-          )}
-          {staticMarkers.map((marker) => (
-            <div key={marker.name}>
-              <Marker
-                position={marker.position}
-                onClick={() => handleMarkerClick(marker)}
+      <section className={styles.section}>
+        <div style={containerStyle}>
+          <GoogleMap
+            mapContainerStyle={{ width: '100%', height: '100%' }}
+            center={defaultCenter}
+            zoom={16}
+            onLoad={onLoad}
+            onUnmount={onUnmount}
+            options={{ mapId: '556e9663519326d5' }}
+            className="google-map"
+          >
+            {selectedRoute && (
+              <Polyline
+                path={selectedRoute}
                 options={{
-                  icon: {
-                    url: busStops,
-                    scaledSize: new window.google.maps.Size(18, 18),
-                  },
+                  strokeColor: "#FF0000",
+                  strokeOpacity: 1,
+                  strokeWeight: 5,
                 }}
               />
-              {selectedMarker === marker && (
-                <InfoWindow
+            )}
+            {staticMarkers.map((marker) => (
+              <div key={marker.name}>
+                <Marker
                   position={marker.position}
-                  onCloseClick={() => setSelectedMarker(null)}
-                >
-                  <div>
-                    <h3>{marker.name}</h3>
-                  </div>
-                </InfoWindow>
-              )}
-            </div>
-          ))}
-          {Object.keys(driverLocations).map((busId) => (
-            <div key={busId}>
-              <Marker
-                position={driverLocations[busId]}
-                icon={{
-                  url: busD,
-                  scaledSize: new window.google.maps.Size(45, 45),
-                }}
-                onClick={() => handleMarkerClick(driverLocations[busId])}
-              >
-                {selectedMarker === driverLocations[busId] && (
-                  <InfoWindow onCloseClick={() => setSelectedMarker(null)}>
+                  onClick={() => handleMarkerClick(marker)}
+                  options={{
+                    icon: {
+                      url: busStops,
+                      scaledSize: new window.google.maps.Size(18, 18),
+                    },
+                  }}
+                />
+                {selectedMarker === marker && (
+                  <InfoWindow
+                    position={marker.position}
+                    onCloseClick={() => setSelectedMarker(null)}
+                  >
                     <div>
-                      <h3>Bus {busId}</h3>
+                      <h3>{marker.name}</h3>
                     </div>
                   </InfoWindow>
                 )}
-              </Marker>
-            </div>
-          ))}
-        </GoogleMap>
-      </div>
-
-      <div className={styles.rightBottomButton2}>
-        <table className={styles.button2table}>
-          <thead>
-            <tr>
-              <th className={styles.button2th}>Bus Activity</th>
-              <th className={styles.button2th}>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {['A1', 'A2', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3', 'D1', 'D2', 'E1', 'E2', 'E3', 'F1', 'F2', 'G1', 'G2', 'G3', 'H'].map((busId) => (
-              <tr key={busId}>
-                <td className={styles.button2td}>
-                  <button
-                    onClick={() => handleBusButtonClick(busId)}
-                    className={styles.busButton}
-                    style={{
-                      backgroundColor: driverLocations[busId] ? 'inherit' : '#e0e0e0',
-                      cursor: driverLocations[busId] ? 'pointer' : 'not-allowed',
-                      pointerEvents: driverLocations[busId] ? 'auto' : 'none',
-                    }}
-                  >
-                    {busId}
-                  </button>
-                </td>
-                <td className={styles.button2td}>{driverLocations[busId] ? 'Active' : 'Inactive'}</td>
-              </tr>
+              </div>
             ))}
-          </tbody>
-        </table>
-      </div>
+            {Object.keys(driverLocations).map((busId) => (
+              <div key={busId}>
+                <Marker
+                  position={driverLocations[busId]}
+                  icon={{
+                    url: busD,
+                    scaledSize: new window.google.maps.Size(45, 45),
+                  }}
+                  onClick={() => handleMarkerClick(driverLocations[busId])}
+                >
+                  {selectedMarker === driverLocations[busId] && (
+                    <InfoWindow onCloseClick={() => setSelectedMarker(null)}>
+                      <div>
+                        <h3>Bus {busId}</h3>
+                      </div>
+                    </InfoWindow>
+                  )}
+                </Marker>
+              </div>
+            ))}
+          </GoogleMap>
+        </div>
 
-      <div className={styles.rightBottomButton}>
-        <table className={styles.buttontable}>
-          <thead>
-            <tr>
-              <th className={styles.buttonth} colSpan="8">Bus Routes</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {routeKeys.slice(0, 8).map((routeKey) => (
-                <td key={routeKey} className={styles.buttontd}>
-                  <button
-                    onClick={() => handleShowBusRoute(routeKey)}
-                    className={styles.routeButton}
-                    style={{ color: visibleRoute === routeKey ? '#FF0000' : 'inherit' }}
-                  >
-                    {routeKey}
-                  </button>
-                </td>
+        <div className={styles.rightBottomButton2}>
+          <table className={styles.button2table}>
+            <thead>
+              <tr>
+                <th className={styles.button2th}>Bus Activity</th>
+                <th className={styles.button2th}>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {['A1', 'A2', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3', 'D1', 'D2', 'E1', 'E2', 'E3', 'F1', 'F2', 'G1', 'G2', 'G3', 'H'].map((busId) => (
+                <tr key={busId}>
+                  <td className={styles.button2td}>
+                    <button
+                      onClick={() => handleBusButtonClick(busId)}
+                      className={styles.busButton}
+                      style={{
+                        backgroundColor: driverLocations[busId] ? 'inherit' : '#e0e0e0',
+                        cursor: driverLocations[busId] ? 'pointer' : 'not-allowed',
+                        pointerEvents: driverLocations[busId] ? 'auto' : 'none',
+                      }}
+                    >
+                      {busId}
+                    </button>
+                  </td>
+                  <td className={styles.button2td}>{driverLocations[busId] ? 'Active' : 'Inactive'}</td>
+                </tr>
               ))}
-            </tr>
-          </tbody>
-        </table>
-      </div>
+            </tbody>
+          </table>
+        </div>
 
-      {/* <div className={styles.iframeContainer}>
-        {pdfUrl && (
-          <iframe className={styles.pdf} title="PDF Viewer" src={pdfUrl} width="100%" height="800px" />
-        )}
-      </div> */}
+        <div className={styles.rightBottomButton}>
+          <table className={styles.buttontable}>
+            <thead>
+              <tr>
+                <th className={styles.buttonth} colSpan="8">Bus Routes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {routeKeys.slice(0, 8).map((routeKey) => (
+                  <td key={routeKey} className={styles.buttontd}>
+                    <button
+                      onClick={() => handleShowBusRoute(routeKey)}
+                      className={styles.routeButton}
+                      style={{ color: visibleRoute === routeKey ? '#FF0000' : 'inherit' }}
+                    >
+                      {routeKey}
+                    </button>
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
+      </section>
     </div>
   );
 }
