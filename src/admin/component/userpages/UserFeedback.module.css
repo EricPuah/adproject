@@ -189,7 +189,7 @@
         width: 100%;
         max-width: 2000px;
         margin: 20px auto; /* Center the list */
-        overflow-x: auto;
+        overflow: auto;
         font-size: 11px;
     }
 
