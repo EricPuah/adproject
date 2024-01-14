@@ -1,7 +1,6 @@
 .map-container {
   margin-left: 25%;
   padding-top: 2%;
-  
 }
 
 .bus-route-toggle-button {
@@ -52,7 +51,6 @@
   position: absolute;
   bottom: 0px; /* Adjust the distance from the bottom */
   left : 280px; /* Adjust the distance from the right */
-  padding: 10px;
   background-color: #fff;
   border-radius: 5px;
 }
@@ -62,7 +60,6 @@
   top: 30px;
   right: 260px;
   /* Set the width as needed */
-  padding: 10px;
   background-color: #fff;
   border-radius: 5px;
 }
