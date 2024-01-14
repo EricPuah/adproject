@@ -206,6 +206,7 @@ function DriverBusSelect() {
       <div>
         <AdminNavbar />
       </div>
+      <section className={styles.section}>
       <div className={styles.mainContentContainer}>
         <div style={containerStyle}>
           <GoogleMap
@@ -318,6 +319,7 @@ function DriverBusSelect() {
         </table>
       </div>
     </div>
+    </section>
 
       {/* <div className={styles.iframeContainer}>
         {pdfUrl && (

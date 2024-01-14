@@ -5,6 +5,7 @@
     top: 120px;
     right: 330px;
     background-color: #fff;
+    border-radius: 5px;
 }
 
 .buttonContainerStyle button {
@@ -32,7 +33,7 @@
 .buttontable {
     width: 50%;
     border-collapse: collapse;
-    border: 1px solid #ddd;
+        border: 1px solid #ddd;
 }
 
 .selectBusButton button {
@@ -69,12 +70,12 @@
   text-align: center;
 }
 
-/* body {
-    margin: 0;
-    padding: 0;
+.section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
     background-image: url('https://dvcdev.utm.my/wp-content/uploads/sites/22/2018/11/UTMimage13.jpg');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    font-family: 'Arial', sans-serif;
-  } */
+  }
