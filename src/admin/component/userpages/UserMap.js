@@ -16,6 +16,7 @@ const containerStyle = {
     width: '80%',
     height: '60%',
     top: '25%',
+    left: '15%',
     zIndex: '-1',
     border: '5px solid #82022b',
     borderRadius: '5px',
