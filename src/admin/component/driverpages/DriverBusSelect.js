@@ -16,6 +16,7 @@ const containerStyle = {
   top: '100px',
   left: '250px',
   padding: '20px',
+  zIndex: '0'
 };
 
 const center = {
