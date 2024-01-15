@@ -100,14 +100,44 @@
   color: #e74c3c;
 }
 
-@media (max-width: 768px) {
-  .verticalnavbar {
-    width: 0;
-    /* Hide the navbar by default on mobile */
-  }
-}
-
 .mainContentContainer {
   margin-left: 250px;
   transition: margin 0.3s;
+}
+
+.toggleButton {
+  display: none;
+  position: fixed;
+  top: 13px;
+  left: 10px;
+  font-size: 20px;
+  background-color: #2F4050;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+@media screen and (max-width: 736px) {
+  .verticalnavbar {
+    width: 0;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .open {
+    z-index: 0;
+    width: 60%;
+  }
+
+  .dashboard,
+  .list {
+    width: 90%;
+    font-size: 18px; 
+  }
+
+  .toggleButton {
+    display: block;
+  }
 }

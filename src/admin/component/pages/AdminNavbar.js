@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import styles from './AdminNavBar.module.css';
 import { AiOutlineDashboard } from 'react-icons/ai';
@@ -23,12 +23,21 @@ const AdminNavbar = () => {
   const user_isRootAdmin = cookieData.isRootAdmin;
   const userRole = cookieData.role;
 
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
+
   const handleLogout = () => {
     signOut();
   };
 
   return (
-    <div className={styles.verticalnavbar}>
+    <div className={`${styles.verticalnavbar} ${isSidebarOpen ? styles.open : ''}`}>
+      <button className={styles.toggleButton} onClick={toggleSidebar}>
+        ☰
+      </button>
       <ul className={styles.navbarlist}>
         <li className={styles.dashboard}>
           <AiOutlineDashboard className={styles.dashboardicon} />Dashboard
