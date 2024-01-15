@@ -27,7 +27,7 @@ function DriverBusSchedule() {
     return (
         <div>
             <AdminNavbar />
-            <div className={styles.mainContentContainer}>
+            <div className={style.mainContentContainer}>
                 <div className={styles.busScheduleContainer}>
                     <div className={styles.busScheduleContent}>
                         <h1 className={styles.h1}>Bus Schedule</h1>

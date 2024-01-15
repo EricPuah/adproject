@@ -16,7 +16,11 @@ const containerStyle = {
   top: '100px',
   left: '250px',
   padding: '20px',
-  zIndex: '0'
+  zIndex: '0',
+  '@media (max-width: 768px)': {
+    width: '100%',  // Adjust the width for smaller screens
+    left: '0px', // Adjust the left position
+  },
 };
 
 const center = {
@@ -210,117 +214,118 @@ function DriverBusSelect() {
       </div>
       <section className={styles.section}>
         <div className={style.mainContentContainer}>
-            <div style={containerStyle}>
-              <GoogleMap
-                mapContainerStyle={{ width: '100%', height: '100%' }}
-                center={center}
-                zoom={16}
-                onLoad={onLoad}
-                onUnmount={onUnmount}
-                options={{ mapId: "556e9663519326d5" }}
-                className="google-map"
-              >
-                {selectedRoute && (
-                  <Polyline
-                    path={selectedRoute}
-                    options={{
-                      strokeColor: "#00FF00",
-                      strokeOpacity: 1,
-                      strokeWeight: 5,
-                    }}
-                  />
-                )}
+          <div style={containerStyle}>
+            <GoogleMap
+              mapContainerStyle={{ width: '100%', height: '100%' }}
+              center={center}
+              zoom={16}
+              onLoad={onLoad}
+              onUnmount={onUnmount}
+              options={{ mapId: "556e9663519326d5" }}
+              className="google-map"
+            >
+              {selectedRoute && (
+                <Polyline
+                  path={selectedRoute}
+                  options={{
+                    strokeColor: "#00FF00",
+                    strokeOpacity: 1,
+                    strokeWeight: 5,
+                  }}
+                />
+              )}
 
-                {staticMarkers.map((marker) => (
-                  <div key={marker.name}>
-                    <Marker
-                      position={marker.position}
-                      onClick={() => handleMarkerClick(marker)}
-                      options={{
-                        icon: {
-                          url: CustomMarker,
-                          scaledSize: new window.google.maps.Size(18, 18),
-                        },
-                      }}
-                    />
-                    {selectedMarker === marker && (
-                      <InfoWindow
-                        position={marker.position}
-                        onCloseClick={() => setSelectedMarker(null)}
-                      >
-                        <div>
-                          <h3>{marker.name}</h3>
-                        </div>
-                      </InfoWindow>
-                    )}
-                  </div>
-                ))}
-                {driverLocation && (
+              {staticMarkers.map((marker) => (
+                <div key={marker.name}>
                   <Marker
-                    position={driverLocation}
-                    onClick={() => handleMarkerClick(driverLocation)}
+                    position={marker.position}
+                    onClick={() => handleMarkerClick(marker)}
                     options={{
                       icon: {
-                        url: CustomBus,
-                        scaledSize: new window.google.maps.Size(30, 30),
+                        url: CustomMarker,
+                        scaledSize: new window.google.maps.Size(18, 18),
                       },
                     }}
                   />
-                )}
-              </GoogleMap>
-            </div>
+                  {selectedMarker === marker && (
+                    <InfoWindow
+                      position={marker.position}
+                      onCloseClick={() => setSelectedMarker(null)}
+                    >
+                      <div>
+                        <h3>{marker.name}</h3>
+                      </div>
+                    </InfoWindow>
+                  )}
+                </div>
+              ))}
+              {driverLocation && (
+                <Marker
+                  position={driverLocation}
+                  onClick={() => handleMarkerClick(driverLocation)}
+                  options={{
+                    icon: {
+                      url: CustomBus,
+                      scaledSize: new window.google.maps.Size(30, 30),
+                    },
+                  }}
+                />
+              )}
+            </GoogleMap>
+          </div>
 
-            <div className={styles.selectBusButton}>
-              <table className={styles.buttontable}>
-                <thead>
-                  <tr>
-                    <th className={styles.button2th} colSpan={19}>Choose any Bus</th>
+          <div className={styles.selectBusButton}>
+            <table className={styles.buttontable} style={{ width: '100%' }}>
+              <thead>
+                <tr>
+                  <th className={styles.button2th}>Choose any Bus</th>
+                </tr>
+              </thead>
+              <tbody>
+                {busList.map((bus) => (
+                  <tr key={bus}>
+                    <td className={styles.button2td}>
+                      <button
+                        onClick={() => handleBusSelection(bus)}
+                        style={{ color: selectedBus === bus ? '#FF0000' : 'inherit' }}
+                      >
+                        {bus}
+                      </button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    {busList.map((bus) => (
-                      <td key={bus} className={styles.buttontd}>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+
+          <div className={styles.buttonContainerStyle}>
+            <table className={styles.button2table} >
+              <thead>
+                <tr>
+                  <th className={styles.button2th} colSpan="8">Bus Routes</th>
+                </tr>
+              </thead>
+              <tbody>
+                {routeKeys.slice(0, 8).map((routeKey) => {
+                  const isRouteVisible = visibleRoute === routeKey;
+                  return (
+                    <tr key={routeKey}>
+                      <td className={styles.button2td}>
                         <button
-                          onClick={() => handleBusSelection(bus)}
-                          style={{ color: selectedBus === bus ? '#FF0000' : 'inherit' }}
+                          onClick={() => handleShowBusRoute(routeKey)}
+                          style={{ color: isRouteVisible ? '#FF0000' : 'inherit' }}
                         >
-                          {bus}
+                          {`${routeKey}`}
                         </button>
                       </td>
-                    ))}
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div className={styles.buttonContainerStyle}>
-              <table className={styles.button2table}>
-                <thead>
-                  <tr>
-                    <th className={styles.button2th} colSpan="8">Bus Routes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {routeKeys.slice(0, 8).map((routeKey) => {
-                    const isRouteVisible = visibleRoute === routeKey;
-                    return (
-                      <tr key={routeKey}>
-                        <td className={styles.button2td}>
-                          <button
-                            onClick={() => handleShowBusRoute(routeKey)}
-                            style={{ color: isRouteVisible ? '#FF0000' : 'inherit' }}
-                          >
-                            {`${routeKey}`}
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
+        </div>
       </section>
 
       {/* <div className={styles.iframeContainer}>
