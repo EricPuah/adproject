@@ -19,6 +19,8 @@ const containerStyle = {
   zIndex: '0',
   '@media (max-width: 768px)': {
     width: '100%',  // Adjust the width for smaller screens
+    height: '10%',
+    top: '10%',
     left: '0px', // Adjust the left position
   },
 };

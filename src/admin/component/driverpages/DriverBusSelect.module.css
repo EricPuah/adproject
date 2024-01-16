@@ -3,9 +3,15 @@
 .buttonContainerStyle {
     position: absolute;
     top: 120px;
-    right: 330px;
+    right: 200px;
     background-color: #fff;
     border-radius: 5px;
+    @media screen and (max-width: 736px){
+        top: 10%;
+        left: 43%;
+        width: 20%;
+        right: auto;
+    }
 }
 
 .buttonContainerStyle button {
@@ -25,9 +31,15 @@
 
 .selectBusButton {
     position: absolute;
-    top: 20px;
-    left: 20%;
+    top: 120px;
+    right: 60px;
     background-color: #fff;
+    @media screen and (max-width: 736px){
+        top: 10%;
+        left: 8%;
+        width: 30%;
+        right: auto;
+    }
 }
 
 .buttontable {
