@@ -171,7 +171,7 @@ function UserMap() {
         const updateLocationInterval = setInterval(() => {
             updateUserLocation();
             fetchDriverLocations();
-        }, 300);
+        }, 600);
 
         // Clean up the event listener when the component is unmounted
         return () => {

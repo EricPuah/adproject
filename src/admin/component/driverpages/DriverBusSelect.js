@@ -174,7 +174,7 @@ function DriverBusSelect() {
     requestDriverLocation();
     updateDriverLocation();
 
-    const updateLocationInterval = setInterval(updateDriverLocation, 400);
+    const updateLocationInterval = setInterval(updateDriverLocation, 600);
 
     if (isLoaded) {
       onLoad(map);
