@@ -120,7 +120,8 @@ function DriverBusSelect() {
         },
         (error) => {
           console.error('Error getting user location:', error);
-        }
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
       );
     } else {
       console.error('Geolocation is not supported by this browser, map is not available, or the page is not visible.');
@@ -174,7 +175,7 @@ function DriverBusSelect() {
     requestDriverLocation();
     updateDriverLocation();
 
-    const updateLocationInterval = setInterval(updateDriverLocation, 600);
+    const updateLocationInterval = setInterval(updateDriverLocation, 500);
 
     if (isLoaded) {
       onLoad(map);

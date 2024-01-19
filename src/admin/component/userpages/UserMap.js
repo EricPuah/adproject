@@ -40,6 +40,7 @@ function UserMap() {
     const [selectedRoute, setSelectedRoute] = useState(null);
     const [driverLocations, setDriverLocations] = useState({});
     const [pdfUrl, setPdfUrl] = useState(null);
+    const [selectedDriverLocation, setSelectedDriverLocation] = useState(null);
 
     const { isLoaded, loadError } = useJsApiLoader({
         id: 'google-map-script',
@@ -171,7 +172,7 @@ function UserMap() {
         const updateLocationInterval = setInterval(() => {
             updateUserLocation();
             fetchDriverLocations();
-        }, 600);
+        }, 500);
 
         // Clean up the event listener when the component is unmounted
         return () => {
@@ -185,6 +186,14 @@ function UserMap() {
     const handleMarkerClick = (marker) => {
         setSelectedMarker(marker);
     };
+
+    const handleMarkerClick1 = (marker, isDriverLocation) => {
+        if (isDriverLocation) {
+          setSelectedDriverLocation(marker);
+        } else {
+          setSelectedMarker(marker);
+        }
+      };
 
     if (loadError) {
         return <p>Error loading map: {loadError.message}</p>;
@@ -296,25 +305,24 @@ function UserMap() {
                             />
                         )}
                         {Object.keys(driverLocations).map((busId) => (
-                            <div key={busId}>
-                                <Marker
-                                    position={driverLocations[busId]}
-                                    icon={{
-                                        url: busD,
-                                        scaledSize: new window.google.maps.Size(45, 45),
-                                    }}
-                                    onClick={() => handleMarkerClick(driverLocations[busId])}
-                                >
-                                    {selectedMarker === driverLocations[busId] && (
-                                        <InfoWindow onCloseClick={() => setSelectedMarker(null)}>
-                                            <div>
-                                                <h3>Bus {busId}</h3>
-                                            </div>
-                                        </InfoWindow>
-                                    )}
-                                </Marker>
-                            </div>
-                        ))}
+            <div key={busId}>
+              <Marker
+                position={driverLocations[busId]}
+                icon={{
+                  url: busD,
+                  scaledSize: new window.google.maps.Size(45, 45),
+                }}
+                onClick={() => handleMarkerClick1(driverLocations[busId], true)}
+              />
+              {selectedDriverLocation === driverLocations[busId] && (
+                <InfoWindow onCloseClick={() => setSelectedDriverLocation(null)}>
+                  <div>
+                    <h3>Bus {busId}</h3>
+                  </div>
+                </InfoWindow>
+              )}
+            </div>
+          ))}
                     </GoogleMap>
                 </div>
             </div>

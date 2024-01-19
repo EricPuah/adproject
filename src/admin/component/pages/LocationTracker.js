@@ -165,7 +165,7 @@ function LocationTracker() {
     const updateLocationInterval = setInterval(() => {
       updateUserLocation();
       fetchDriverLocations();
-    }, 600);
+    }, 500);
 
     // Clean up the event listener when the component is unmounted
     return () => {
