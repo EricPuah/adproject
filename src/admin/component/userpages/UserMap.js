@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Navigate } from 'react-router-dom';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow, Polyline } from '@react-google-maps/api';
 import style from './UserSideBar.module.css';
 import styles from './UserMap.module.css';
@@ -35,7 +34,7 @@ const routeKeys = Object.keys(busRoutes);
 function UserMap() {
     const [map, setMap] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
-    const [selectedMarker, setSelectedMarker] = useState(null); // Track the user's location
+    const [selectedMarker, setSelectedMarker] = useState(null);
     const [visibleRoute, setVisibleRoute] = useState(null);
     const [selectedRoute, setSelectedRoute] = useState(null);
     const [driverLocations, setDriverLocations] = useState({});
@@ -56,32 +55,26 @@ function UserMap() {
     }, []);
 
     const handleShowBusRoute = (routeKey) => {
-        // Check if the clicked route is already visible
         if (visibleRoute === routeKey) {
-            // If yes, close the route
             setVisibleRoute(null);
             setSelectedRoute(null);
         } else {
-            // If not, set the clicked route to be visible
             setVisibleRoute(routeKey);
             setSelectedRoute(busRoutes[routeKey].route);
         }
     };
 
     const handleBusButtonClick = (busId) => {
-        // Check if the bus is active
         if (driverLocations[busId]) {
-            // Center the map to the selected bus
             const busLocation = driverLocations[busId];
             if (map) {
                 map.panTo(busLocation);
+                setSelectedDriverLocation(busLocation);
             }
         } else {
-            // Bus is inactive, handle accordingly (e.g., display a message)
             console.log(`Bus ${busId} is inactive. Cannot center the map.`);
         }
     };
-
 
     const updateUserLocation = () => {
         if (navigator.geolocation && map) {
@@ -91,7 +84,6 @@ function UserMap() {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude,
                     };
-
                     setUserLocation(location);
                 },
                 (error) => {
@@ -110,7 +102,6 @@ function UserMap() {
                 throw new Error('Failed to fetch active buses from the server');
             }
             const data = await response.json();
-
 
             if (data.success) {
                 const activeBusesLocations = {};
@@ -149,7 +140,6 @@ function UserMap() {
                             lat: position.coords.latitude,
                             lng: position.coords.longitude,
                         };
-
                         setUserLocation(location);
                     },
                     (error) => {
@@ -160,7 +150,6 @@ function UserMap() {
                 console.error('Geolocation is not supported by this browser or map is not available.');
             }
         };
-        // Function to request user's current location
         requestUserLocation();
         updateUserLocation();
         fetchDriverLocations();
@@ -174,7 +163,6 @@ function UserMap() {
             fetchDriverLocations();
         }, 500);
 
-        // Clean up the event listener when the component is unmounted
         return () => {
             if (map) {
                 onUnmount();
@@ -189,11 +177,11 @@ function UserMap() {
 
     const handleMarkerClick1 = (marker, isDriverLocation) => {
         if (isDriverLocation) {
-          setSelectedDriverLocation(marker);
+            setSelectedDriverLocation(marker);
         } else {
-          setSelectedMarker(marker);
+            setSelectedMarker(marker);
         }
-      };
+    };
 
     if (loadError) {
         return <p>Error loading map: {loadError.message}</p>;
@@ -269,17 +257,17 @@ function UserMap() {
                             />
                         )}
                         {staticMarkers.map((marker) => (
-                            <div key={marker.name}>
-                                <Marker
-                                    position={marker.position}
-                                    onClick={() => handleMarkerClick(marker)}
-                                    options={{
-                                        icon: {
-                                            url: busStops,
-                                            scaledSize: new window.google.maps.Size(18, 18),
-                                        },
-                                    }}
-                                />
+                            <Marker
+                                key={marker.name}
+                                position={marker.position}
+                                onClick={() => handleMarkerClick(marker)}
+                                options={{
+                                    icon: {
+                                        url: busStops,
+                                        scaledSize: new window.google.maps.Size(18, 18),
+                                    },
+                                }}
+                            >
                                 {selectedMarker === marker && (
                                     <InfoWindow
                                         position={marker.position}
@@ -290,7 +278,7 @@ function UserMap() {
                                         </div>
                                     </InfoWindow>
                                 )}
-                            </div>
+                            </Marker>
                         ))}
                         {userLocation && (
                             <Marker
@@ -305,28 +293,28 @@ function UserMap() {
                             />
                         )}
                         {Object.keys(driverLocations).map((busId) => (
-            <div key={busId}>
-              <Marker
-                position={driverLocations[busId]}
-                icon={{
-                  url: busD,
-                  scaledSize: new window.google.maps.Size(45, 45),
-                }}
-                onClick={() => handleMarkerClick1(driverLocations[busId], true)}
-              />
-              {selectedDriverLocation === driverLocations[busId] && (
-                <InfoWindow onCloseClick={() => setSelectedDriverLocation(null)}>
-                  <div>
-                    <h3>Bus {busId}</h3>
-                  </div>
-                </InfoWindow>
-              )}
-            </div>
-          ))}
+                            <Marker
+                                key={busId}
+                                position={driverLocations[busId]}
+                                icon={{
+                                    url: busD,
+                                    scaledSize: new window.google.maps.Size(45, 45),
+                                }}
+                                onClick={() => handleMarkerClick1(driverLocations[busId], true)}
+                            >
+                                {selectedDriverLocation === driverLocations[busId] && (
+                                    <InfoWindow onCloseClick={() => setSelectedDriverLocation(null)}>
+                                        <div>
+                                            <h3>Bus {busId}</h3>
+                                        </div>
+                                    </InfoWindow>
+                                )}
+                            </Marker>
+                        ))}
                     </GoogleMap>
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 
